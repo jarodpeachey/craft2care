@@ -1,0 +1,35 @@
+{
+  "path": "/blog/test",
+  "draft": false,
+  "blocks": [
+    {
+      "content": "At GJCommerce, we're building the next-generation of ecommerce stores. With our platform, you'll be able to edit your content real-time, directly from your site!",
+      "center": false,
+      "_template": "ContentBlock"
+    },
+    {
+      "buttonText": "Learn More",
+      "center": true,
+      "left": false,
+      "right": false,
+      "buttonLink": "/about",
+      "height": 0,
+      "_template": "ButtonBlock",
+      "content": "",
+      "buttonColor": "Primary"
+    }
+  ],
+  "title": "Test Post",
+  "authors": [
+    "8o6wb3xse"
+  ],
+  "hero": {
+    "image": "../images/fireworks_three.jpg",
+    "overlay": true,
+    "overlayColor": "#404040",
+    "center": true,
+    "showHero": true,
+    "height": 1
+  },
+  "date": "2020-03-19T00:00:00.000Z"
+}

@@ -1,0 +1,22 @@
+{
+  "path": "/about",
+  "blocks": [
+    {
+      "_template": "ContentBlock",
+      "center": false,
+      "content": "We are all about selling stuff with Jamstack! Come buy from us, get your JAM on! right now! Coming soon Try free for a week and only pay $10 monthly for your own store. You can have a store faster than a SNAP!"
+    }
+  ],
+  "title": "About Us",
+  "hero": {
+    "headline": "About JamSnap",
+    "textline": "",
+    "center": true,
+    "headlineColor": "#fff",
+    "textlineColor": "primary",
+    "image": "../images/IMAG0008.jpg",
+    "overlay": false,
+    "showHero": true,
+    "height": 1
+  }
+}

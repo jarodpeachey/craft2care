@@ -1,0 +1,30 @@
+{
+  "authors": [
+    {
+      "name": "Jarod P",
+      "id": "8o6wb3xse",
+      "email": "",
+      "link": ""
+    },
+    {
+      "name": "Katie Graham",
+      "id": "katie-graham",
+      "email": "test@test.com"
+    },
+    {
+      "id": "scott-byrne",
+      "name": "Scott Byrne",
+      "email": "scott.byrne@forestry.io",
+      "link": "mailto:scott.byrne@forestry.io"
+    },
+    {
+      "id": "john-yoost",
+      "name": "John Yoost",
+      "email": "jyoost@gmail.com",
+      "link": "mailto:jyoost@gmail.com"
+    }
+  ],
+  "__gatsby_resolved": {
+    "fileRelativePath": "/content/settings/authors.json"
+  }
+}

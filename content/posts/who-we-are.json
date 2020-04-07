@@ -1,0 +1,23 @@
+{
+  "title": "Who we are",
+  "path": "/blog/who-we-are",
+  "blocks": [
+    {
+      "content": "We have awesome technologies available to developers today.  Many have been around a long time many are new.  We have taken the best of the best, put them together  to bring you a product that will stand the test of time.\n\nMy name is John and I have 35 Years in the computer industry. I have worked on legacy software my whole career and in my retirement wanted to build something from scratch and put together the best of breed available today applying my experience of 35 years.\n\nThe products that were in existence early in my career such as Linux, Git, Apache, CouchDB, and Postgresql are still viable today and the knowledge gained from using them for years proved priceless. The picture above is my back yard \\[**🎉**\\]",
+      "center": false,
+      "_template": "ContentBlock"
+    }
+  ],
+  "hero": {
+    "image": "../images/IMAG0008.jpg",
+    "overlay": false,
+    "overlayColor": "#757575",
+    "showHero": true,
+    "height": 320
+  },
+  "draft": false,
+  "authors": [
+    "john-yoost"
+  ],
+  "date": "2020-03-19T00:00:00.000Z"
+}

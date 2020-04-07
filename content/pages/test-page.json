@@ -1,0 +1,19 @@
+{
+  "title": "Test Page",
+  "path": "/test",
+  "blocks": [
+    {
+      "content": "Welcome to my new page! Add sections in the sidebar to make me your own.",
+      "center": false,
+      "_template": "ContentBlock"
+    }
+  ],
+  "hero": {
+    "headline": "Test Page",
+    "center": true,
+    "overlay": true,
+    "overlayColor": "#867E7E"
+  },
+  "draft": false,
+  "authors": []
+}

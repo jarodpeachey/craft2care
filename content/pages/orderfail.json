@@ -1,0 +1,22 @@
+{
+  "title": "OOPS! Something went wrong, your order has not been placed",
+  "path": "/orderfail",
+  "blocks": [
+    {
+      "_template": "TitleBlock",
+      "title": "OOPS! Something went wrong, your order has not been placed",
+      "underline": true,
+      "content": "",
+      "center": true
+    },
+    {
+      "_template": "ContentBlock",
+      "content": "Something went wrong, please try again",
+      "center": false
+    }
+  ],
+  "displayTitle": true,
+  "hero": {
+    "showHero": false
+  }
+}
