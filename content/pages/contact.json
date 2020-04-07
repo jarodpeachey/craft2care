@@ -1,0 +1,53 @@
+{
+  "title": "Contact",
+  "path": "/contact",
+  "blocks": [
+    {
+      "height": 36,
+      "_template": "SpacerBlock"
+    },
+    {
+      "_template": "TitleBlock",
+      "title": "",
+      "underline": true,
+      "content": ""
+    },
+    {
+      "_template": "FormBlock",
+      "name": "Contact Form",
+      "style": "dark",
+      "fields": [
+        {
+          "label": "Name",
+          "inputType": "text",
+          "autocomplete": "name",
+          "_template": "nameInputBlock"
+        },
+        {
+          "label": "Email",
+          "inputType": "text",
+          "autocomplete": "email",
+          "_template": "emailInputBlock"
+        },
+        {
+          "label": "Message",
+          "inputType": "textarea",
+          "autocomplete": "",
+          "_template": "messageInputBlock"
+        }
+      ],
+      "content": ""
+    }
+  ],
+  "displayTitle": true,
+  "hero": {
+    "headline": "Contact Us",
+    "image": "../images/fireworks_three.jpg",
+    "headlineColor": "#fff",
+    "overlay": true,
+    "overlayColor": "#404040",
+    "center": true,
+    "showHero": true,
+    "height": 1
+  }
+}

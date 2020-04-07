@@ -1,0 +1,24 @@
+{
+  "title": "Blog",
+  "path": "/blog",
+  "blocks": [
+    {
+      "background": "f7f7f7",
+      "_template": "ContainerBlock",
+      "containerBlocks": [
+        {
+          "itemsToShow": 3,
+          "_template": "PostsBlock"
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "image": "../images/fireworks_seven.jpg",
+    "headline": "Blog",
+    "center": true,
+    "height": 480,
+    "showHero": true,
+    "headlineColor": ""
+  }
+}

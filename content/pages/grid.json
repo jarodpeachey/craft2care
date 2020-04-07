@@ -1,0 +1,83 @@
+{
+  "title": "Grid",
+  "path": "/grid",
+  "blocks": [
+    {
+      "background": "f7f7f7",
+      "_template": "ContainerBlock",
+      "containerBlocks": [
+        {
+          "title": "Grid System Demo",
+          "center": false,
+          "underline": true,
+          "_template": "TitleBlock"
+        },
+        {
+          "content": "Each column has a field for widthOne and widthTwo. Each of these corresponds with the breakpoints. If you leave the value at 0, the column will auto fill the rest of the available space. See below for example!",
+          "center": false,
+          "_template": "ContentBlock"
+        },
+        {
+          "maxNumberOfColumns": 3,
+          "_template": "GridBlock",
+          "demo": true,
+          "columns": [
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 5,
+              "widthTwo": 9
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 7,
+              "widthTwo": 3
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 12,
+              "widthTwo": 10
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 3,
+              "widthTwo": 0
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 0,
+              "widthTwo": 0
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 7,
+              "widthTwo": 5,
+              "columnBlocks": [
+                {
+                  "image": "../images/DONE.jpg",
+                  "_template": "ImageBlock"
+                }
+              ]
+            },
+            {
+              "_template": "ColumnBlock",
+              "widthOne": 5,
+              "columnBlocks": [
+                {
+                  "content": "### This is a column. Pretty nifty, eh?\n\nThe grid system supports a lot of cool stuff, like automatic fill and custom widths, breakpoints and spacing.",
+                  "center": false,
+                  "_template": "ContentBlock"
+                }
+              ],
+              "widthTwo": 7
+            }
+          ],
+          "columnSpacing": 12
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "height": 250,
+    "showHero": true
+  }
+}

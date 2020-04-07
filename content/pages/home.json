@@ -1,0 +1,44 @@
+{
+  "path": "/",
+  "blocks": [
+    {
+      "background": "FFF",
+      "_template": "ContainerBlock",
+      "content": "",
+      "rawJson": {
+        "blocks": [
+          {
+            "title": "Products",
+            "center": true,
+            "underline": true,
+            "_template": "TitleBlock"
+          }
+        ]
+      },
+      "containerBlocks": []
+    }
+  ],
+  "hero": {
+    "headline": "Welcome",
+    "ctas": [
+      {
+        "label": "Contact Us",
+        "link": "/contact",
+        "arrow": false,
+        "primary": false,
+        "backgroundColor": "primary"
+      }
+    ],
+    "image": "../images/cafe.jpg",
+    "center": false,
+    "textline": "Welcome to our website.",
+    "headlineColor": "#fff",
+    "textlineColor": "white",
+    "overlay": true,
+    "overlayColor": "#404040",
+    "height": 375,
+    "showHero": true
+  },
+  "displayTitle": true,
+  "title": "Home"
+}
