@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { AuthorsField } from './src/fields/authors';
 import { CategoriesField } from './src/fields/categories';
 import { RangeNumberField } from './src/fields/number';

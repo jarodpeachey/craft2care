@@ -15,15 +15,16 @@ import { Button, ButtonBlock } from '../blocks/button';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
 import { PageLayout } from '../components/pageLayout';
 import { ListAuthors } from '../components/authors';
+import { ListCategories } from '../components/categories';
 import { formatDate } from '../utils/formatDate';
 // import { useAuthors } from '../components/useAuthors';
 
-export default function({ data, ...props }) {
+export default function ({ data, ...props }) {
   const newDate = data.post.date;
 
   const [post] = useLocalJsonForm(
     data.post,
-    PostForm(data.settingsJson.authors, newDate)
+    PostForm(data.authors.authors, data.categories.categories, newDate)
   );
 
   // console.log(post);
@@ -31,6 +32,7 @@ export default function({ data, ...props }) {
   const blocks = post.blocks ? post.blocks : [];
 
   const authors = ListAuthors(data.post.authors);
+  const categories = ListAuthors(data.post.categories);
 
   console.log(post);
 
@@ -52,8 +54,16 @@ export default function({ data, ...props }) {
           {authors && authors.length > 0 && (
             <MetaSpan>
               <em>By</em>&nbsp;
-              {authors.map(author => (
+              {authors.map((author) => (
                 <span>{author.name}</span>
+              ))}
+            </MetaSpan>
+          )}
+          {categories && categories.length > 0 && (
+            <MetaSpan>
+              <em>By</em>&nbsp;
+              {categories.map((category) => (
+                <span>{category.name}</span>
               ))}
             </MetaSpan>
           )}
@@ -174,14 +184,14 @@ export default function({ data, ...props }) {
 }
 
 const Wrapper = styled.div`
-  // padding-top: ${props => props.padding.paddingTop}px !important;
-  // padding-bottom: ${props => props.padding.paddingBottom}px !important;
-  // padding-right: ${props => props.padding.paddingRight}px !important;
-  // padding-left: ${props => props.padding.paddingLeft}px !important;
-  // margin-top: ${props => props.margin.marginTop}px !important;
-  // margin-bottom: ${props => props.margin.marginBottom}px !important;
-  // margin-right: ${props => props.margin.marginRight}px !important;
-  // margin-left: ${props => props.margin.marginLeft}px !important;
+  // padding-top: ${(props) => props.padding.paddingTop}px !important;
+  // padding-bottom: ${(props) => props.padding.paddingBottom}px !important;
+  // padding-right: ${(props) => props.padding.paddingRight}px !important;
+  // padding-left: ${(props) => props.padding.paddingLeft}px !important;
+  // margin-top: ${(props) => props.margin.marginTop}px !important;
+  // margin-bottom: ${(props) => props.margin.marginBottom}px !important;
+  // margin-right: ${(props) => props.margin.marginRight}px !important;
+  // margin-left: ${(props) => props.margin.marginLeft}px !important;
 `;
 
 const Meta = styled.div`
@@ -254,7 +264,7 @@ const PostLink = styled(Link)`
   text-align: right;
   text-decoration: none;
   margin-left: auto;
-  color: ${props => props.theme.color.primary};
+  color: ${(props) => props.theme.color.primary};
   height: 44px;
   display: flex;
   width: fit-content;
@@ -267,7 +277,7 @@ const PostIcon = styled.span`
   margin-right: 8px;
 `;
 
-const PostForm = (authors, post) => {
+const PostForm = (authors, categories, post) => {
   return {
     // actions: [DeleteAction],
     label: 'Post',
@@ -275,19 +285,19 @@ const PostForm = (authors, post) => {
       {
         label: 'Title',
         name: 'rawJson.title',
-        component: 'text'
+        component: 'text',
       },
       {
         label: 'Authors',
         name: 'rawJson.authors',
         component: 'authors',
-        authors
+        authors,
       },
       {
-        label: 'Categories',
+        label: 'Add Categories',
         name: 'rawJson.categories',
         component: 'categories',
-        authors
+        categories,
       },
       {
         label: 'Hero',
@@ -298,49 +308,49 @@ const PostForm = (authors, post) => {
             label: 'Show Hero',
             name: 'showHero',
             component: 'toggle',
-            defaultValue: true
+            defaultValue: true,
           },
           {
             label: 'Height',
             name: 'height',
             component: 'rangeNumber',
-            defaultValue: 250
+            defaultValue: 250,
           },
           {
             label: 'Image',
             name: 'image',
             component: 'image',
-            parse: filename => `../images/${filename}`,
+            parse: (filename) => `../images/${filename}`,
             uploadDir: () => '/content/images/',
-            previewSrc: formValues => {
+            previewSrc: (formValues) => {
               if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image)
                 return '';
               return formValues.jsonNode.hero.image.childImageSharp.fluid.src;
-            }
+            },
           },
           {
             label: 'Overlay',
             description: 'Show overlay on hero',
             name: 'overlay',
-            component: 'toggle'
+            component: 'toggle',
           },
           {
             label: 'Overlay Color',
             name: 'overlayColor',
-            component: 'color'
-          }
-        ]
+            component: 'color',
+          },
+        ],
       },
       {
         name: 'rawJson.draft',
         component: 'toggle',
-        label: 'Draft'
+        label: 'Draft',
       },
       {
         label: 'Date',
         name: 'rawJson.date',
         component: 'date',
-        defaultValue: post && post.date ? post.date : ''
+        defaultValue: post && post.date ? post.date : '',
       },
       {
         label: 'Post Content',
@@ -353,10 +363,10 @@ const PostForm = (authors, post) => {
           ContentBlock,
           ContainerBlock,
           ButtonBlock,
-          SpacerBlock
-        }
-      }
-    ]
+          SpacerBlock,
+        },
+      },
+    ],
   };
 };
 
@@ -472,12 +482,22 @@ export const postQuery = graphql`
       rawJson
       fileRelativePath
     }
-    settingsJson(fileRelativePath: { eq: "/content/settings/authors.json" }) {
+    authors: settingsJson(
+      fileRelativePath: { eq: "/content/settings/authors.json" }
+    ) {
       authors {
         email
         name
         id
         link
+      }
+    }
+    categories: settingsJson(
+      fileRelativePath: { eq: "/content/settings/categories.json" }
+    ) {
+      categories {
+        name
+        id
       }
     }
   }

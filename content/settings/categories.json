@@ -5,6 +5,14 @@
       "id": "charity"
     },
     {
+      "name": "Shoeboxes",
+      "id": "shoeboxes"
+    },
+    {
+      "name": "Kids",
+      "id": "kids"
+    },
+    {
       "name": "Projects",
       "id": "projects"
     }

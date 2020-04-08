@@ -2,7 +2,9 @@
   "title": "Test Post",
   "path": "/blog/test-post",
   "date": "03/17/2020",
-  "categories": ["projects", "charity"],
+  "categories": [
+    "shoeboxes"
+  ],
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -15,8 +17,11 @@
     "center": true,
     "overlay": true,
     "overlayColor": "#867E7E",
-    "height": 300
+    "height": 300,
+    "showHero": true
   },
   "draft": false,
-  "authors": []
+  "authors": [
+    "8o6wb3xse"
+  ]
 }
