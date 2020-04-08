@@ -1,0 +1,15 @@
+{
+  "categories": [
+    {
+      "name": "Charity",
+      "id": "charity"
+    },
+    {
+      "name": "Projects",
+      "id": "projects"
+    }
+  ],
+  "__gatsby_resolved": {
+    "fileRelativePath": "/content/settings/categories.json"
+  }
+}

@@ -2,20 +2,21 @@
   "path": "/",
   "blocks": [
     {
-      "background": "FFF",
+      "background": "#f7f7f7",
       "_template": "ContainerBlock",
-      "content": "",
-      "rawJson": {
-        "blocks": [
-          {
-            "title": "Products",
-            "center": true,
-            "underline": true,
-            "_template": "TitleBlock"
-          }
-        ]
-      },
-      "containerBlocks": []
+      "containerBlocks": [
+        {
+          "title": "Charity",
+          "center": true,
+          "underline": true,
+          "_template": "TitleBlock"
+        },
+        {
+          "itemsToShow": 3,
+          "_template": "PostsBlock",
+          "maxNumberOfColumns": 4
+        }
+      ]
     }
   ],
   "hero": {
@@ -29,7 +30,7 @@
         "backgroundColor": "primary"
       }
     ],
-    "image": "../images/cafe.jpg",
+    "image": "../images/",
     "center": false,
     "textline": "Welcome to our website.",
     "headlineColor": "#fff",
@@ -37,7 +38,7 @@
     "overlay": true,
     "overlayColor": "#404040",
     "height": 375,
-    "showHero": true
+    "showHero": false
   },
   "displayTitle": true,
   "title": "Home"

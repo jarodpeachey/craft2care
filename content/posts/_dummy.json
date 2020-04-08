@@ -2,6 +2,10 @@
   "title": "Dummy",
   "path": "/blog/dummy",
   "date": "",
+  "categories": [
+    "projects",
+    "charity"
+  ],
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -101,12 +105,12 @@
     }
   ],
   "hero": {
+    "image": "../images/fireworks_three.jpg",
+    "overlay": true,
+    "overlayColor": "#404040",
+    "center": true,
     "showHero": true,
-    "image": "../images/ISeeTheLightTwo_2.12.1.jpg",
-    "overlay": false,
-    "overlayColor": "#757575",
-    "center": false,
-    "height": 120
+    "height": 1
   },
   "draft": false,
   "authors": ["john-yoost"]

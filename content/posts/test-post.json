@@ -2,6 +2,7 @@
   "title": "Test Post",
   "path": "/blog/test-post",
   "date": "03/17/2020",
+  "categories": ["projects", "charity"],
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",

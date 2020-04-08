@@ -29,21 +29,17 @@ const MobileNav = ({ classes, backgroundColor }) => {
   return (
     <Wrapper>
       <MenuIcon background={backgroundColor} onClick={() => toggleNavOpen()}>
-        <FontAwesomeIcon icon='bars' />
+        {navOpen ? (
+          <FontAwesomeIcon icon='times' />
+        ) : (
+          <FontAwesomeIcon icon='bars' />
+        )}
       </MenuIcon>
       <MenuOverlay open={navOpen} />
       <MenuDisplay open={navOpen}>
-        <IconButton
-          onClick={() => {
-            toggleNavOpen();
-          }}
-          className={classes.closeButton}
-        >
-          <FontAwesomeIcon icon='times' />
-        </IconButton>
         <MenuWrapper>
           <>
-            {menu.menuItems.map(item => (
+            {menu.menuItems.map((item) => (
               <MenuItem
                 key={`mobileMenuItem-${item.label.toLowerCase()}`}
                 onClick={() => toggleNavOpen()}
@@ -63,27 +59,27 @@ const styles = () => ({
   closeButton: {
     position: 'absolute',
     top: 8,
-    left: 8,
-    marginRight: 'auto',
+    right: 8,
+    marginLeft: 'auto',
     padding: '8px !important',
     fontSize: 22,
     zIndex: 1,
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 });
 
 const Wrapper = styled.span`
-  @media (max-width: ${props => props.theme.breakpoints.medium}px) {
-    display: inline-block;
-    margin-right: auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.medium}px) {
+    display: block;
+    margin-left: -50px;
   }
   display: none;
 `;
 
 const MenuIcon = styled(IconButton)`
   * {
-    color: ${props =>
+    color: ${(props) =>
       props.theme.header.transparent
         ? 'white'
         : bestContrast(
@@ -96,7 +92,7 @@ const MenuIcon = styled(IconButton)`
   }
   padding: 12px !important;
   font-size: 22pxpx;
-  z-index: 1;
+  z-index: 999;
   width: 50px !important;
   height: 50px !important;
 `;
@@ -105,35 +101,33 @@ const MenuDisplay = styled.div`
   content: '';
   position: fixed;
   color: black;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  height: 100vh;
-  width: 75%;
-  max-width: 350px;
+  height: fit-content;
+  display: block;
+  width: 100vw;
   background: white;
   transform-origin: 0 0;
-  opacity: ${props => (props.open ? 1 : 0)};
-  z-index: ${props => (props.open ? '19' : '-1')};
-  visibility: ${props => (props.open ? 'visible' : 'hidden')};
-  transform: ${props => (props.open ? 'translateX(0%)' : 'translateX(-100%)')};
+  opacity: ${(props) => (props.open ? 1 : 0)};
+  z-index: ${(props) => (props.open ? '-100' : '-100')};
+  visibility: ${(props) => (props.open ? 'visible' : 'hidden')};
+  transform: ${(props) =>
+    props.open ? 'translateY(0%)' : 'translateY(-100%)'};
   transition: all 0.275s 0.1s;
 `;
 
 const MenuOverlay = styled.div`
-  width: 200vw;
-  margin: 0;
-  padding: 0;
-  background: rgba(0, 0, 0, 0.3);
-  position: absolute;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  transform-origin: 0 0;
-  opacity: ${props => (props.open ? 1 : 0)};
-  z-index: ${props => (props.open ? '19' : '-1')};
-  visibility: ${props => (props.open ? 'visible' : 'hidden')};
-  transition: all 0.275s 0.1s;
+  // width: 200vw;
+  // margin: 0;
+  // padding: 0;
+  // background: rgba(0, 0, 0, 0.3);
+  // position: absolute;
+  // width: 100%;
+  // top: 0;
+  // right: 0;
+  // transform-origin: 0 0;
+  // opacity: ${(props) => (props.open ? 1 : 0)};
+  // z-index: ${(props) => (props.open ? '-1' : '-1')};
+  // visibility: ${(props) => (props.open ? 'visible' : 'hidden')};
+  // transition: all 0.275s 0.1s;
 `;
 
 const MenuWrapper = styled.div`

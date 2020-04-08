@@ -633,7 +633,7 @@ pre tt:after {
 
 .container.header {
   max-width: 9999px !important;
-  padding: 4px 0;
+  width: 100% !important;
   color: white;
   /* padding-right: 50px; */
 }

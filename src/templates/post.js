@@ -284,6 +284,12 @@ const PostForm = (authors, post) => {
         authors
       },
       {
+        label: 'Categories',
+        name: 'rawJson.categories',
+        component: 'categories',
+        authors
+      },
+      {
         label: 'Hero',
         name: 'rawJson.hero',
         component: 'group',
@@ -359,6 +365,7 @@ export const postQuery = graphql`
     post: postsJson(draft: { eq: false }, path: { eq: $path }) {
       title
       authors
+      categories
       date
       hero {
         showHero

@@ -11,23 +11,25 @@ import {
   shadow,
 } from '@tinacms/styles';
 
-export const AuthorsField = (props) => {
+export const CategoriesField = (props) => {
   const { input, field, form } = props;
   const [visible, setVisible] = React.useState(false);
-  const authors = field.authors;
-  const authorIDs = input.value || [];
+  const categories = field.categories;
+  const categoryIDs = input.value || [];
 
-  const addAuthor = React.useCallback(
-    (authorID) => {
-      form.mutators.insert(field.name, 0, authorID);
+  console.log(props);
+
+  const addCategory = React.useCallback(
+    (categoryID) => {
+      form.mutators.insert(field.name, 0, categoryID);
     },
     [field.name, form.mutators]
   );
 
   return (
     <>
-      <AuthorsHeader>
-        <FieldLabel>Authors</FieldLabel>
+      <CategoriesHeader>
+        <FieldLabel>Categories</FieldLabel>
         <IconButton
           primary
           small
@@ -36,48 +38,48 @@ export const AuthorsField = (props) => {
         >
           <AddIcon />
         </IconButton>
-        <AuthorMenu open={visible}>
-          <AuthorMenuList>
-            {authors.map((author) => (
-              <AuthorOption
+        <CategoryMenu open={visible}>
+          <CategoryMenuList>
+            {categories.map((category) => (
+              <CategoryOption
                 onClick={() => {
-                  addAuthor(author.id);
+                  addCategory(category.id);
                   setVisible(false);
                 }}
               >
-                {author.name}
-              </AuthorOption>
+                {category.name}
+              </CategoryOption>
             ))}
-          </AuthorMenuList>
-        </AuthorMenu>
-      </AuthorsHeader>
+          </CategoryMenuList>
+        </CategoryMenu>
+      </CategoriesHeader>
       <Droppable droppableId={field.name} type={field.name}>
         {(provider) => (
-          <AuthorList ref={provider.innerRef}>
-            {authorIDs.length === 0 && (
-              <EmptyList>There's no authors</EmptyList>
+          <CategoryList ref={provider.innerRef}>
+            {categoryIDs.length === 0 && (
+              <EmptyList>There's no categories</EmptyList>
             )}
-            {authorIDs.map((authorID, index) => {
-              const author = authors.find((author) => author.id === authorID);
+            {categoryIDs.map((categoryID, index) => {
+              const category = categories.find((category) => category.id === categoryID);
               return (
-                <AuthorListItem
-                  author={author}
+                <CategoryListItem
+                  category={category}
                   form={form}
                   field={field}
                   index={index}
-                ></AuthorListItem>
+                ></CategoryListItem>
               );
             })}
             {provider.placeholder}
-          </AuthorList>
+          </CategoryList>
         )}
       </Droppable>
     </>
   );
 };
 
-const AuthorListItem = ({ author, form, field, index }) => {
-  const removeAuthor = React.useCallback(() => {
+const CategoryListItem = ({ category, form, field, index }) => {
+  const removeCategory = React.useCallback(() => {
     form.mutators.remove(field.name, index);
   }, [form, field, index]);
 
@@ -97,13 +99,13 @@ const AuthorListItem = ({ author, form, field, index }) => {
         >
           <DragHandle />
           <ItemLabel>
-            {author && author.name ? (
-              author.name
+            {category && category.name ? (
+              category.name
             ) : (
-              <Placeholder>Unknown Author</Placeholder>
+              <Placeholder>Unknown Category</Placeholder>
             )}
           </ItemLabel>
-          <DeleteButton onClick={removeAuthor}>
+          <DeleteButton onClick={removeCategory}>
             <TrashIcon />
           </DeleteButton>
         </ListItem>
@@ -112,7 +114,7 @@ const AuthorListItem = ({ author, form, field, index }) => {
   );
 };
 
-const AuthorList = styled.div`
+const CategoryList = styled.div`
   margin-bottom: 1.5rem;
 `;
 
@@ -290,7 +292,7 @@ const EmptyList = styled.div`
   font-weight: 500;
 `;
 
-const AuthorsHeader = styled.div`
+const CategoriesHeader = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -317,7 +319,7 @@ const FieldLabel = styled.label`
     `};
 `;
 
-const AuthorMenu = styled.div`
+const CategoryMenu = styled.div`
   min-width: 12rem;
   border-radius: 5px;
   border: 1px solid #efefef;
@@ -342,12 +344,12 @@ const AuthorMenu = styled.div`
     `};
 `;
 
-const AuthorMenuList = styled.div`
+const CategoryMenuList = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const AuthorOption = styled.button`
+const CategoryOption = styled.button`
   position: relative;
   text-align: center;
   font-size: 12px;

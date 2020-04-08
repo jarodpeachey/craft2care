@@ -1,6 +1,7 @@
 {
   "path": "/blog/test",
   "draft": false,
+  "categories": ["projects", "charity"],
   "blocks": [
     {
       "content": "At GJCommerce, we're building the next-generation of ecommerce stores. With our platform, you'll be able to edit your content real-time, directly from your site!",
@@ -20,9 +21,7 @@
     }
   ],
   "title": "Test Post",
-  "authors": [
-    "8o6wb3xse"
-  ],
+  "authors": ["8o6wb3xse"],
   "hero": {
     "image": "../images/fireworks_three.jpg",
     "overlay": true,
