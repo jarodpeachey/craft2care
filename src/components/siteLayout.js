@@ -37,6 +37,7 @@ const MasterLayout = ({ children }) => {
         fileRelativePath: { eq: "/content/settings/site.json" }
       ) {
         title
+        description
       }
     }
   `);
@@ -48,7 +49,7 @@ const MasterLayout = ({ children }) => {
       </Helmet>
       <Theme>
         <SiteWrapper>
-          <Header siteTitle={data.site.title} />
+          <Header siteTitle={data.site.title} siteDescription={data.site.description} />
           {children}
           <Footer />
         </SiteWrapper>

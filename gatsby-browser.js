@@ -1,20 +1,25 @@
-import { AuthorsField } from "./src/fields/authors";
-import { RangeNumberField } from "./src/fields/number";
-import { AdvancedSelect } from "./src/fields/select";
+import { AuthorsField } from './src/fields/authors';
+import { CategoriesField } from './src/fields/categories';
+import { RangeNumberField } from './src/fields/number';
+import { AdvancedSelect } from './src/fields/select';
 
 export const onClientEntry = () => {
   window.tinacms.fields.add({
-    name: "authors",
-    Component: AuthorsField
+    name: 'authors',
+    Component: AuthorsField,
   });
 
   window.tinacms.fields.add({
-    name: "rangeNumber",
+    name: 'categories',
+    Component: CategoriesField,
+  });
+
+  window.tinacms.fields.add({
+    name: 'rangeNumber',
     Component: RangeNumberField,
-    parse: value => +value,
+    parse: (value) => +value,
     validate(number, allValues, meta, field) {
-      let min,
-            max;
+      let min, max;
       if (field.max) {
         max = field.max;
       } else {
@@ -27,25 +32,25 @@ export const onClientEntry = () => {
         min = 0;
       }
 
-      const isValidNumber = typeof number === "number";
+      const isValidNumber = typeof number === 'number';
       const isInRange = number <= max && number >= min;
 
-      if (!isValidNumber) return "Invalid number";
+      if (!isValidNumber) return 'Invalid number';
       if (!isInRange) return `Please enter a number between ${min} and ${max}.`;
 
       return false;
-    }
+    },
   });
 
   window.tinacms.fields.add({
-    name: "advancedSelect",
+    name: 'advancedSelect',
     Component: AdvancedSelect,
-    parse: value => +value,
+    parse: (value) => +value,
     validate(number, allValues, meta, field) {
       // if (!isValidNumber) return "Invalid number";
       // if (!isInRange) return `Please enter a number between ${min} and ${max}.`;
 
       return false;
-    }
+    },
   });
 };

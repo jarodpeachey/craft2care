@@ -13,7 +13,13 @@ import { bestContrast } from './style';
 
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 
-const Header = ({ isSignedIn, siteTitle, classes, ...styleProps }) => {
+const Header = ({
+  isSignedIn,
+  siteTitle,
+  siteDescription,
+  classes,
+  ...styleProps
+}) => {
   const [headerScrolled, setHeaderState] = useState(false);
 
   console.log(isSignedIn);
@@ -48,7 +54,6 @@ const Header = ({ isSignedIn, siteTitle, classes, ...styleProps }) => {
         return (
           <Wrapper scrolled={headerScrolled} backgroundColor={backgroundColor}>
             <Flex className='container header'>
-              <MobileNav backgroundColor={backgroundColor} />
               <SiteTitle
                 isSignedIn={isSignedIn}
                 backgroundColor={backgroundColor}
@@ -57,11 +62,13 @@ const Header = ({ isSignedIn, siteTitle, classes, ...styleProps }) => {
                   {siteTitle}
                 </Link>
               </SiteTitle>
+              <SiteDescription>{siteDescription}</SiteDescription>
               <Nav backgroundColor={backgroundColor} />
-              <AccountMenu
+              {/* <AccountMenu
                 isSignedIn={isSignedIn}
                 backgroundColor={backgroundColor}
-              />
+              /> */}
+              <MobileNav backgroundColor={backgroundColor} />
             </Flex>
           </Wrapper>
         );
@@ -76,18 +83,15 @@ const Wrapper = styled.div`
   top: 0;
   left: auto;
   right: 0;
-  position: fixed;
   width: 100%;
   display: flex;
   z-index: 1100;
   box-sizing: border-box;
   flex-shrink: 0;
   flex-direction: column;
-  box-shadow: ${(props) =>
-    props.scrolled
-      ? '0px 2px 4px -1px rgba(0, 0, 0, 0.2),0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
-      : null};
-  backdrop-filter: ${(props) => (props.scrolled ? 'blur(8px)' : null)};
+  @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
+    padding: 24px 0 0;
+  }
 `;
 
 const Flex = styled.div`
@@ -95,11 +99,42 @@ const Flex = styled.div`
   justify-content: center;
   align-items: center;
   @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
+  position: relative;
+  z-index: 999;
 `;
 
 const SiteTitle = styled.h1`
+  color: ${(props) => props.theme.color.primary};
+  text-decoration: none !important;
+  border: none !important;
+  font-weight: 600 !important;
+  margin: 0 auto;
+  @media (min-width: 769px) {
+    margin: 0;
+  }
+  @media (max-width: 769px) {
+    font-size: 32px;
+    position: relative;
+    a {
+      font-size: 32px;
+    }
+  }
+  a {
+    color: ${(props) => props.theme.color.primary};
+    text-decoration: none !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+`;
+
+const SiteDescription = styled.h4`
+  margin-top: 12px !important;
   color: ${(props) =>
     props.theme.header.transparent
       ? 'white'
@@ -112,13 +147,12 @@ const SiteTitle = styled.h1`
         )};
   text-decoration: none !important;
   border: none !important;
-  font-weight: 500 !important;
+  font-weight: 400 !important;
   margin: 0 auto;
   @media (min-width: 769px) {
     margin: 0;
   }
   @media (max-width: 769px) {
-    left: ${(props) => (props.isSignedIn ? '25px' : '0')};
     font-size: 32px;
     position: relative;
     a {

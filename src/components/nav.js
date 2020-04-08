@@ -21,7 +21,7 @@ export const Nav = ({ backgroundColor }) => {
   return (
     <>
       <Wrapper>
-        {menu.menuItems.map(item => {
+        {menu.menuItems.map((item) => {
           return (
             <StyledMenuItem
               backgroundColor={backgroundColor}
@@ -43,22 +43,25 @@ export const Nav = ({ backgroundColor }) => {
 
 const Wrapper = styled.div`
   display: none;
-  margin-left: auto;
-  @media (min-width: ${props => props.theme.breakpoints.medium}px) {
+  @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
     display: flex;
+    width: 100%;
     align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    border-top: 1px solid #f7f7f7;
+    border-bottom: 1px solid #f7f7f7;
   }
 `;
 
 const StyledMenuItem = styled.div`
-  ${props =>
+  ${(props) =>
     props.theme.header.transparent &&
     css`
       color: white;
       transition-duration: 0.3s;
       font-size: 18px;
       font-weight: 500;
-      border-bottom: ${props.active ? '2px solid #e7e7e7' : 'none'};
       a {
         width: 100%;
         height: 100%;
@@ -68,11 +71,13 @@ const StyledMenuItem = styled.div`
         padding: 8px 16px;
       }
       &:hover {
-        border-bottom: 2px solid #f7f7f7;
         transition-duration: 0.3s;
+        a {
+          color: ${props.theme.color.primary};
+        }
       }
     `};
-  ${props =>
+  ${(props) =>
     !props.theme.header.transparent &&
     css`
       color: ${props.theme.header.transparent
@@ -87,18 +92,19 @@ const StyledMenuItem = styled.div`
       transition-duration: 0.3s;
       font-size: 18px;
       font-weight: 500;
-      border-bottom: ${props.active ? '2px solid #e7e7e7' : 'none'};
       a {
         width: 100%;
         height: 100%;
         display: block;
         text-decoration: none;
-        color: inherit !important;
+        color: inherit;
         padding: 8px 16px;
       }
       &:hover {
-        border-bottom: 2px solid #f7f7f7;
         transition-duration: 0.3s;
+        a {
+          color: ${props.theme.color.primary} !important;
+        }
       }
     `};
 `;
@@ -110,8 +116,8 @@ export const MenuItem = {
   component: 'group',
   fields: [
     { name: 'label', label: 'Label', component: 'text' },
-    { name: 'link', label: 'Path', component: 'text' }
-  ]
+    { name: 'link', label: 'Path', component: 'text' },
+  ],
 };
 
 export const MenuForm = {
@@ -122,10 +128,10 @@ export const MenuForm = {
       name: 'rawJson.menuItems',
       component: 'blocks',
       templates: {
-        MenuItem
-      }
-    }
-  ]
+        MenuItem,
+      },
+    },
+  ],
 };
 
 export const navFragment = graphql`
@@ -144,8 +150,8 @@ export const NavForm = {
       label: 'Main Menu',
       name: 'rawJson.menuItems',
       component: 'group-list',
-      itemProps: item => ({
-        label: item.label
+      itemProps: (item) => ({
+        label: item.label,
       }),
       fields: [
         {
@@ -154,7 +160,7 @@ export const NavForm = {
           component: 'text',
           parse(value) {
             return value || '';
-          }
+          },
         },
         {
           label: 'Link',
@@ -162,51 +168,51 @@ export const NavForm = {
           component: 'text',
           parse(value) {
             return value || '';
-          }
+          },
         },
         {
           label: 'Sub Menu',
           name: 'subMenu',
           component: 'group-list',
-          itemProps: item => ({
+          itemProps: (item) => ({
             key: item.link,
-            label: item.label
+            label: item.label,
           }),
           fields: [
             {
               label: 'Label',
               name: 'label',
-              component: 'text'
+              component: 'text',
             },
             {
               label: 'Link',
               name: 'link',
-              component: 'text'
+              component: 'text',
             },
             {
               label: 'Sub Menu',
               name: 'subMenu',
               component: 'group-list',
-              itemProps: item => ({
+              itemProps: (item) => ({
                 key: item.link,
-                label: item.label
+                label: item.label,
               }),
               fields: [
                 {
                   label: 'Label',
                   name: 'label',
-                  component: 'text'
+                  component: 'text',
                 },
                 {
                   label: 'Link',
                   name: 'link',
-                  component: 'text'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+                  component: 'text',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

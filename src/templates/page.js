@@ -21,7 +21,7 @@ export default function Page({ data }) {
 
   return (
     <PageLayout page={page}>
-      {!page.hero.showHero && <Spacer height={58} />}
+      {/* {!page.hero.showHero && <Spacer height={58} />} */}
       {blocks &&
         blocks.map(({ _template, ...block }, index) => {
           // console.log('BLOCK: ', block);
