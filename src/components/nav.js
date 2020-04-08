@@ -43,14 +43,15 @@ export const Nav = ({ backgroundColor }) => {
 
 const Wrapper = styled.div`
   display: none;
-  @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
+  @media (min-width: ${(props) => props.theme.breakpoints.small}px) {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
     margin-top: 24px;
-    border-top: 1px solid #f7f7f7;
-    border-bottom: 1px solid #f7f7f7;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fafafa;
   }
 `;
 

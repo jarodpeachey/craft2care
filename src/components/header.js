@@ -7,7 +7,7 @@ import { transparentize } from 'polished';
 import { Nav } from './nav';
 import { ThemeContext } from './theme';
 import AccountMenu from './AccountMenu';
-import MobileNav from './mobileNav';
+import MobileNav from './MobileNav';
 import { withStyles } from '@material-ui/core/styles';
 import { bestContrast } from './style';
 
@@ -64,11 +64,12 @@ const Header = ({
               </SiteTitle>
               <SiteDescription>{siteDescription}</SiteDescription>
               <Nav backgroundColor={backgroundColor} />
+              <MobileNav backgroundColor={backgroundColor} />
               {/* <AccountMenu
                 isSignedIn={isSignedIn}
                 backgroundColor={backgroundColor}
               /> */}
-              <MobileNav backgroundColor={backgroundColor} />
+              {/* <MobileNav backgroundColor={backgroundColor} /> */}
             </Flex>
           </Wrapper>
         );
@@ -89,20 +90,16 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
   flex-direction: column;
-  @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
     padding: 24px 0 0;
-  }
 `;
 
 const Flex = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 999;
 `;
@@ -113,9 +110,6 @@ const SiteTitle = styled.h1`
   border: none !important;
   font-weight: 600 !important;
   margin: 0 auto;
-  @media (min-width: 769px) {
-    margin: 0;
-  }
   @media (max-width: 769px) {
     font-size: 32px;
     position: relative;
@@ -149,16 +143,6 @@ const SiteDescription = styled.h4`
   border: none !important;
   font-weight: 400 !important;
   margin: 0 auto;
-  @media (min-width: 769px) {
-    margin: 0;
-  }
-  @media (max-width: 769px) {
-    font-size: 32px;
-    position: relative;
-    a {
-      font-size: 32px;
-    }
-  }
   a {
     color: ${(props) =>
       props.theme.header.transparent

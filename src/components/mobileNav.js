@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton } from '@material-ui/core';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 
@@ -28,24 +28,19 @@ const MobileNav = ({ classes, backgroundColor }) => {
 
   return (
     <Wrapper>
-      <MenuIcon background={backgroundColor} onClick={() => toggleNavOpen()}>
-        {navOpen ? (
-          <FontAwesomeIcon icon='times' />
-        ) : (
-          <FontAwesomeIcon icon='bars' />
-        )}
-      </MenuIcon>
-      <MenuOverlay open={navOpen} />
+      <MenuToggle background={backgroundColor} onClick={() => toggleNavOpen()}>
+        {navOpen ? <span>Close</span> : <span>Menu</span>}
+      </MenuToggle>
       <MenuDisplay open={navOpen}>
         <MenuWrapper>
           <>
             {menu.menuItems.map((item) => (
-              <MenuItem
-                key={`mobileMenuItem-${item.label.toLowerCase()}`}
+              <StyledMenuItem
+                key={`mobileStyledMenuItem-${item.label.toLowerCase()}`}
                 onClick={() => toggleNavOpen()}
               >
                 <Link to={item.link}>{item.label}</Link>
-              </MenuItem>
+              </StyledMenuItem>
             ))}
             {/* <Checkout /> */}
           </>
@@ -55,63 +50,133 @@ const MobileNav = ({ classes, backgroundColor }) => {
   );
 };
 
-const styles = () => ({
-  closeButton: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    marginLeft: 'auto',
-    padding: '8px !important',
-    fontSize: 22,
-    zIndex: 1,
-    width: 50,
-    height: 50,
-  },
-});
+const styles = () => ({});
 
-const Wrapper = styled.span`
-  @media (max-width: ${(props) => props.theme.breakpoints.medium}px) {
-    display: block;
-    margin-left: -50px;
-  }
-  display: none;
+const Wrapper = styled.div`
+  width: 100vw;
 `;
 
-const MenuIcon = styled(IconButton)`
-  * {
+const MenuToggle = styled.div`
+  @media (max-width: ${(props) => props.theme.breakpoints.small}px) {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fafafa;
+    padding: 8px 0;
     color: ${(props) =>
       props.theme.header.transparent
         ? 'white'
         : bestContrast(
-            hexRegex.test(props.background)
-              ? props.background
+            hexRegex.test(props.backgroundColor)
+              ? props.backgroundColor
               : props.theme.color.primary,
             props.theme.color.white,
             props.theme.color.black
           )};
+    transition-duration: 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+    a {
+      width: 100%;
+      height: 100%;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 8px 16px;
+    }
+    &:hover {
+      transition-duration: 0.3s;
+      a {
+        color: ${(props) => props.theme.color.primary} !important;
+      }
+    }
+    :hover {
+      background: #f7f7f7;
+      cursor: pointer;
+    }
   }
-  padding: 12px !important;
-  font-size: 22pxpx;
-  z-index: 999;
-  width: 50px !important;
-  height: 50px !important;
+  display: none;
+`;
+
+const StyledMenuItem = styled.div`
+  ${(props) =>
+    props.theme.header.transparent &&
+    css`
+      color: white;
+      transition-duration: 0.3s;
+      font-size: 18px;
+      font-weight: 500;
+      a {
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-decoration: none;
+        color: inherit !important;
+        padding: 8px 16px;
+      }
+      &:hover {
+        transition-duration: 0.3s;
+        a {
+          color: ${props.theme.color.primary};
+        }
+      }
+    `};
+  ${(props) =>
+    !props.theme.header.transparent &&
+    css`
+      color: ${props.theme.header.transparent
+        ? 'white'
+        : bestContrast(
+            hexRegex.test(props.backgroundColor)
+              ? props.backgroundColor
+              : props.theme.color.primary,
+            props.theme.color.white,
+            props.theme.color.black
+          )};
+      transition-duration: 0.3s;
+      font-size: 18px;
+      font-weight: 500;
+      a {
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: 8px 16px;
+      }
+      &:hover {
+        transition-duration: 0.3s;
+        a {
+          color: ${props.theme.color.primary} !important;
+        }
+      }
+    `};
 `;
 
 const MenuDisplay = styled.div`
-  content: '';
-  position: fixed;
-  color: black;
-  height: fit-content;
-  display: block;
-  width: 100vw;
-  background: white;
-  transform-origin: 0 0;
-  opacity: ${(props) => (props.open ? 1 : 0)};
-  z-index: ${(props) => (props.open ? '-100' : '-100')};
-  visibility: ${(props) => (props.open ? 'visible' : 'hidden')};
-  transform: ${(props) =>
-    props.open ? 'translateY(0%)' : 'translateY(-100%)'};
-  transition: all 0.275s 0.1s;
+  -webkit-transition: max-height 0.35s;
+  -moz-transition: max-height 0.35s;
+  -ms-transition: max-height 0.35s;
+  -o-transition: max-height 0.35s;
+  transition: max-height 0.35s;
+  background: #e5feff;
+  overflow: hidden;
+  max-height: 0;
+  ${(props) =>
+    props.open &&
+    css`
+      max-height: 500px;
+      -webkit-transition: max-height 0.6s;
+      -moz-transition: max-height 0.6s;
+      -ms-transition: max-height 0.6s;
+      -o-transition: max-height 0.6s;
+      transition: max-height 0.6s;
+      border-bottom: 1px solid #e8e8e8;
+    `};
 `;
 
 const MenuOverlay = styled.div`
@@ -134,7 +199,7 @@ const MenuWrapper = styled.div`
   height: 100%;
   width: 100%;
   background: white;
-  padding: 66px 0 76px;
+  padding: 24px 0;
 `;
 
 const MenuItem = styled.div`

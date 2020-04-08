@@ -14,11 +14,11 @@
     }
   ],
   "hero": {
-    "image": "../images/fireworks_seven.jpg",
+    "image": "../images/",
     "headline": "Blog",
     "center": true,
     "height": 480,
-    "showHero": true,
+    "showHero": false,
     "headlineColor": ""
   }
 }

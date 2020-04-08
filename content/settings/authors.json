@@ -1,12 +1,6 @@
 {
   "authors": [
     {
-      "name": "Jarod P",
-      "id": "8o6wb3xse",
-      "email": "",
-      "link": ""
-    },
-    {
       "name": "Katie Graham",
       "id": "katie-graham",
       "email": "test@test.com"
@@ -22,6 +16,12 @@
       "name": "John Yoost",
       "email": "jyoost@gmail.com",
       "link": "mailto:jyoost@gmail.com"
+    },
+    {
+      "name": "Jarod P",
+      "id": "8o6wb3xse",
+      "email": "",
+      "link": ""
     }
   ],
   "__gatsby_resolved": {

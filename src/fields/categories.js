@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -10,14 +11,15 @@ import {
   IconButton,
   shadow,
 } from '@tinacms/styles';
+import { useLocalJsonForm } from 'gatsby-tinacms-json';
 
 export const CategoriesField = (props) => {
-  const { input, field, form } = props;
-  const [visible, setVisible] = React.useState(false);
-  const categories = field.categories;
-  const categoryIDs = input.value || [];
-
-  console.log(props);
+  const { input, field, form, meta } = props;
+  const [menuVisible, setMenuVisible] = React.useState(false);
+  const [formVisible, setFormVisible] = React.useState(false);
+  const [customCategory, setCustomCategory] = React.useState(false);
+  const allCategories = field.categories;
+  const postCategories = input.value || [];
 
   const addCategory = React.useCallback(
     (categoryID) => {
@@ -26,54 +28,149 @@ export const CategoriesField = (props) => {
     [field.name, form.mutators]
   );
 
+  const addGlobalCategory = (category) => {
+    field.categories.push({
+      name: category,
+      id: category.toLowerCase(),
+    });
+  };
+
+  // const isPostCategory = (category) => {
+  //   console.log(postCategories);
+  //   if (postCategories.length !== 0) {
+  //     postCategories.map((postCategoryID) => {
+  //       console.log(category.id);
+  //       console.log(postCategoryID);
+  //       if (postCategoryID === category.id) {
+  //         console.log(`${postCategoryID} === ${category.id}`);
+  //         return true;
+  //       }
+  //     });
+  //   }
+  // };
+
+  const unusedCategories = allCategories.filter(
+    (category) => !postCategories.includes(category.id)
+  );
+
+  if (unusedCategories.length === 0) {
+    setCustomCategory(true);
+  }
+
+  const keyUpFunction = (e) => {
+    if (e.target.keycode === 13) {
+      if (e.target.value !== '') {
+        addGlobalCategory(e.target.value);
+      }
+    } else {
+      searchArray(e.target.value);
+    }
+  };
+
+  const searchArray = (value) => {
+    let removed = 0;
+
+    console.log('Searcing array');
+    const filter = value.toUpperCase();
+    const div = document.getElementById('dropdown');
+    const a = div.getElementsByClassName(`${CategoryOption.styledComponentId}`);
+    console.log(a);
+
+    for (let i = 0; i < a.length; i++) {
+      const txtValue = a[i].textContent || a[i].innerText;
+      console.log(a[i]);
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = '';
+      } else {
+        a[i].style.display = 'none';
+        console.log('Removing');
+        removed++;
+      }
+    }
+
+    if (removed === a.length) {
+      setCustomCategory(true);
+    } else {
+      setCustomCategory(false);
+    }
+  };
+
   return (
     <>
-      <CategoriesHeader>
-        <FieldLabel>Categories</FieldLabel>
-        <IconButton
-          primary
-          small
-          onClick={() => setVisible(!visible)}
-          open={visible}
-        >
-          <AddIcon />
-        </IconButton>
-        <CategoryMenu open={visible}>
-          <CategoryMenuList>
-            {categories.map((category) => (
-              <CategoryOption
-                onClick={() => {
-                  addCategory(category.id);
-                  setVisible(false);
-                }}
-              >
-                {category.name}
-              </CategoryOption>
-            ))}
-          </CategoryMenuList>
-        </CategoryMenu>
-      </CategoriesHeader>
-      <Droppable droppableId={field.name} type={field.name}>
-        {(provider) => (
-          <CategoryList ref={provider.innerRef}>
-            {categoryIDs.length === 0 && (
-              <EmptyList>There's no categories</EmptyList>
-            )}
-            {categoryIDs.map((categoryID, index) => {
-              const category = categories.find((category) => category.id === categoryID);
-              return (
-                <CategoryListItem
-                  category={category}
-                  form={form}
-                  field={field}
-                  index={index}
-                ></CategoryListItem>
-              );
-            })}
-            {provider.placeholder}
-          </CategoryList>
+      <Wrapper>
+        <CategoriesHeader>
+          <FieldLabel>Categories</FieldLabel>
+          <IconButton
+            primary
+            small
+            onClick={() => setFormVisible(!formVisible)}
+            open={formVisible}
+          >
+            <AddIcon />
+          </IconButton>
+        </CategoriesHeader>
+        {formVisible ? (
+          <>
+            <Label htmFor={input.name}>{field.label || field.name}</Label>
+            <Description>{field.description}</Description>
+            <InputWrapper>
+              <Input
+                onKeyUp={keyUpFunction}
+                onFocus={() => setMenuVisible(true)}
+              />
+              <CategoryMenu id='dropdown' open={menuVisible}>
+                {!customCategory ? (
+                  <>
+                    <CategoryMenuList>
+                      {unusedCategories.map((category) => (
+                        <CategoryOption
+                          key='key'
+                          onClick={() => {
+                            addCategory(category.id);
+                          }}
+                        >
+                          {category.name}
+                        </CategoryOption>
+                      ))}
+                    </CategoryMenuList>
+                    <Button>Done</Button>
+                  </>
+                ) : (
+                  <>
+                    <CategoryMenuList flex>
+                      <p>There are no categories that match that.</p>
+                      <Button onClick={() => setMenuVisible(false)} flex>
+                        Done
+                      </Button>
+                    </CategoryMenuList>
+                  </>
+                )}
+              </CategoryMenu>
+              <Error class='field-error'>{meta.error}</Error>
+            </InputWrapper>
+          </>
+        ) : null}
+      </Wrapper>
+      <CategoryList>
+        {postCategories.length === 0 && (
+          <EmptyList>There's no allCategories</EmptyList>
         )}
-      </Droppable>
+        {postCategories.map((categoryID, index) => {
+          const categoryForList = allCategories.filter(
+            (newCategory) => newCategory.id === categoryID
+          );
+
+          return (
+            <CategoryListItem
+              key='key'
+              category={categoryForList}
+              form={form}
+              field={field}
+              index={index}
+            ></CategoryListItem>
+          );
+        })}
+      </CategoryList>
     </>
   );
 };
@@ -84,38 +181,31 @@ const CategoryListItem = ({ category, form, field, index }) => {
   }, [form, field, index]);
 
   return (
-    <Draggable
-      key={index}
-      type={field.name}
-      draggableId={`${field.name}.${index}`}
-      index={index}
-    >
-      {(provider, snapshot) => (
-        <ListItem
-          ref={provider.innerRef}
-          isDragging={snapshot.isDragging}
-          {...provider.draggableProps}
-          {...provider.dragHandleProps}
-        >
-          <DragHandle />
-          <ItemLabel>
-            {category && category.name ? (
-              category.name
-            ) : (
-              <Placeholder>Unknown Category</Placeholder>
-            )}
-          </ItemLabel>
-          <DeleteButton onClick={removeCategory}>
-            <TrashIcon />
-          </DeleteButton>
-        </ListItem>
-      )}
-    </Draggable>
+    <ListItem>
+      <ItemLabel>
+        {category[0] && category[0].name ? (
+          category[0].name
+        ) : (
+          <Placeholder>Unknown Category</Placeholder>
+        )}
+      </ItemLabel>
+      <DeleteButton onClick={removeCategory}>
+        <TrashIcon />
+      </DeleteButton>
+    </ListItem>
   );
 };
 
-const CategoryList = styled.div`
-  margin-bottom: 1.5rem;
+const Button = styled.button`
+  font-size: 14px;
+  display: block;
+  cursor: pointer;
+  background: #94e536;
+  color: white;
+  border-radius: 50px;
+  margin-left: auto;
+  border: none;
+  width: ${(props) => (props.flex ? '100%' : 'fit-content')};
 `;
 
 const Placeholder = styled.span`
@@ -123,9 +213,17 @@ const Placeholder = styled.span`
   text-transform: italic;
 `;
 
+const CategoryList = styled.div`
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -6px;
+  margin-bottom: 16px;
+`;
+
 const ItemLabel = styled.label`
   margin: 0;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   flex: 1 1 auto;
   white-space: nowrap;
@@ -145,140 +243,50 @@ const ItemLabel = styled.label`
     `};
 `;
 
-const DragHandle = styled(function DragHandle({ ...styleProps }) {
-  return (
-    <div {...styleProps}>
-      <DragIcon />
-      <ReorderIcon />
-    </div>
-  );
-})`
-  margin: 0;
-  flex: 0 0 auto;
-  width: 2rem;
-  position: relative;
-  fill: inherit;
-  padding: 0.75rem 0;
-  transition: all 85ms ease-out;
-  svg {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 1.25rem;
-    height: 1.25rem;
-    transform: translate3d(-50%, -50%, 0);
-    transition: all 85ms ease-out;
-  }
-  svg:last-child {
-    opacity: 0;
-  }
-`;
-
 const DeleteButton = styled.button`
+  svg {
+    position: relative;
+    top: 2px;
+    font-size: 12px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    fill: tomato;
+  }
+  background: white;
+  cursor: pointer;
   text-align: center;
   flex: 0 0 auto;
   border: 0;
-  background: transparent;
-  cursor: pointer;
-  padding: 0.75rem 0.5rem;
-  margin: 0;
+  border-radius: 50px;
+  margin: 4px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
   transition: all 85ms ease-out;
-  &:hover {
-    background-color: #f7f7f7;
+  :hover {
+    background: tomato;
+    svg {
+      fill: white;
+    }
   }
 `;
 
 const ListItem = styled.div`
   position: relative;
-  cursor: pointer;
+  margin: 6px;
+  width: fit-content;
+  padding: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  background-color: white;
-  border: 1px solid #f7f7f7;
-  margin: 0 0 -1px 0;
+  background: white;
+  flex: 1 1 0;
+  border: 1px solid #edecf3;
   overflow: visible;
-  line-height: 1.35;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
-
-  ${ItemLabel} {
-    color: #282828;
-    align-self: center;
-    max-width: 100%;
-  }
-
-  svg {
-    fill: #f7f7f7;
-    width: 1.25rem;
-    height: auto;
-    transition: fill 85ms ease-out;
-  }
-
-  &:hover {
-    background-color: #f6f6f9;
-    cursor: grab;
-
-    ${ItemLabel} {
-      color: #0084ff;
-    }
-    ${DeleteButton} {
-      svg {
-        fill: #f7f7f7;
-      }
-      &:hover {
-        svg {
-          fill: #f7f7f7;
-        }
-      }
-    }
-    ${DragHandle} {
-      svg {
-        fill: #f7f7f7;
-      }
-      svg:first-child {
-        opacity: 0;
-      }
-      svg:last-child {
-        opacity: 1;
-      }
-    }
-  }
-
-  &:first-child {
-    border-radius: 0.25rem 0.25rem 0 0;
-  }
-
-  &:nth-last-child(2) {
-    border-radius: 0 0 0.25rem 0.25rem;
-    &:first-child {
-      border-radius: 3px;
-    }
-  }
-
-  ${(p) =>
-    p.isDragging &&
-    css`
-      border-radius: 3px;
-      box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.12);
-
-      svg {
-        fill: #f7f7f7;
-      }
-      ${ItemLabel} {
-        color: #0084ff;
-      }
-
-      ${DragHandle} {
-        svg:first-child {
-          opacity: 0;
-        }
-        svg:last-child {
-          opacity: 1;
-        }
-      }
-    `};
 `;
 
 const EmptyList = styled.div`
@@ -319,17 +327,21 @@ const FieldLabel = styled.label`
     `};
 `;
 
+const InputWrapper = styled.div`
+  position: relative;
+`;
+
 const CategoryMenu = styled.div`
-  min-width: 12rem;
-  border-radius: 5px;
+  width: 100% !important;
+  height: 0px;
+  padding: 0;
+  border-radius: 0.3rem;
   border: 1px solid #efefef;
   display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate3d(0, 0, 0) scale3d(0.5, 0.5, 1);
+  position: relative;
+  z-index: -1;
   opacity: 0;
-  pointer-events: none;
+  display: none;
   transition: all 150ms ease-out;
   transform-origin: 100% 0;
   background-color: white;
@@ -338,33 +350,100 @@ const CategoryMenu = styled.div`
   ${(props) =>
     props.open &&
     css`
+      height: fit-content !important;
+      width: 100%;
+      display: block;
       opacity: 1;
-      pointer-events: all;
-      transform: translate3d(0, 2.25rem, 0) scale3d(1, 1, 1);
+      padding: 8px;
+      transition: all 0.25s;
     `};
 `;
 
 const CategoryMenuList = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: ${(props) => (props.flex ? '' : '-4px')};
+  p {
+    width: 100%;
+    margin: 0 0 8px 0;
+  }
 `;
 
 const CategoryOption = styled.button`
-  position: relative;
-  text-align: center;
-  font-size: 12px;
-  padding: 4px;
-  font-weight: 500;
+  margin: 4px;
+  background: #f7f7f7;
+  border: none;
+  font-size: 15px;
+  :hover {
+    background: orange;
+    cursor: pointer;
+    color: white;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: fit-content;
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  -webkit-letter-spacing: 0.01em;
+  -moz-letter-spacing: 0.01em;
+  -ms-letter-spacing: 0.01em;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: #433e52;
+  margin-bottom: 0.5rem;
+  text-overflow: ellipsis;
   width: 100%;
-  background: none;
-  cursor: pointer;
-  outline: none;
-  border: 0;
+  overflow: hidden;
+`;
+
+const Description = styled.div`
+  max-width: 100%;
+  white-space: normal;
+`;
+
+const Input = styled.input`
+  padding: 0.75rem;
+  border-radius: 0.3rem;
+  background: #ffffff;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  position: relative;
+  background-color: #ffffff;
+  -webkit-transition: all 85ms ease-out;
   transition: all 85ms ease-out;
-  &:hover {
-    background-color: #f6f6f9;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid #efefef;
-  }
+  border: 1px solid #edecf3;
+  width: 100%;
+  margin: 0;
+  outline: none;
+  box-shadow: 0 0 0 2px transparent;
+`;
+
+const Option = styled.option`
+  padding: 8px 0;
+  width: fit-content;
+  margin-left: auto;
+`;
+
+const Error = styled.div`
+  display: block;
+  text-align: right;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  -webkit-letter-spacing: 0.01em;
+  -moz-letter-spacing: 0.01em;
+  -ms-letter-spacing: 0.01em;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  color: tomato;
+  margin-bottom: 0.5rem;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 6px;
 `;

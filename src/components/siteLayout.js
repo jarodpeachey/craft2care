@@ -59,7 +59,7 @@ const MasterLayout = ({ children }) => {
 };
 
 const SiteWrapper = styled.div`
-  background: #f7f7f7;
+  background: #fff;
   display: flex;
   justify-content: space-between;
   flex-direction: column;

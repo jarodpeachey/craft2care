@@ -8,7 +8,9 @@ import { SEO } from './seo';
 import { ThemeContext , ThemeForm } from './theme';
 // import { Hero } from "./hero"
 import { removeNull } from './helpers';
-import { NavForm } from './nav';
+import { NavForm } from './NavBar';
+import { AuthorsForm } from './authors';
+import { CategoriesForm } from './categories';
 import { Hero } from './hero';
 import { AppContext } from './AppProvider';
 import LoginModal from './account/LoginModal';
@@ -31,6 +33,22 @@ export const PageLayout = ({ page, children, isPost }) => {
         fileRelativePath: { eq: "/content/settings/theme.json" }
       ) {
         ...globalTheme
+
+        rawJson
+        fileRelativePath
+      }
+      categories: settingsJson(
+        fileRelativePath: { eq: "/content/settings/categories.json" }
+      ) {
+        ...categories
+
+        rawJson
+        fileRelativePath
+      }
+      authors: settingsJson(
+        fileRelativePath: { eq: "/content/settings/authors.json" }
+      ) {
+        ...authors
 
         rawJson
         fileRelativePath
@@ -59,6 +77,8 @@ export const PageLayout = ({ page, children, isPost }) => {
   const [nav] = useLocalJsonForm(data.nav, NavForm);
   const [globalTheme] = useLocalJsonForm(data.theme, ThemeForm);
   const [site] = useGlobalJsonForm(data.site, SiteForm);
+  const [categories] = useLocalJsonForm(data.categories, CategoriesForm);
+  const [authors] = useLocalJsonForm(data.authors, AuthorsForm);
 
   const themeContext = React.useContext(ThemeContext);
   const {theme} = themeContext;

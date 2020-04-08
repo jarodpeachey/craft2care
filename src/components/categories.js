@@ -28,12 +28,6 @@ export const CategoriesForm = {
         key: item.id,
         label: item.name,
       }),
-      defaultItem: () => ({
-        name: 'New Category',
-        id: Math.random().toString(36).substr(2, 9),
-        email: '',
-        link: '',
-      }),
       fields: [
         {
           label: 'Name',
