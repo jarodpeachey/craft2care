@@ -143,7 +143,7 @@ const Wrapper = styled.div`
 const Content = styled.div`
   text-align: ${props => (props.center ? 'center' : null)};
   display: block;
-  padding-top: ${props => props.headerHeight}px;
+  padding: 36px 0;
 `;
 
 const Background = styled(BackgroundImage)`

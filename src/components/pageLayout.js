@@ -8,7 +8,7 @@ import { SEO } from './seo';
 import { ThemeContext , ThemeForm } from './theme';
 // import { Hero } from "./hero"
 import { removeNull } from './helpers';
-import { NavForm } from './NavBar';
+import { NavForm } from './nav';
 import { AuthorsForm } from './authors';
 import { CategoriesForm } from './categories';
 import { Hero } from './hero';

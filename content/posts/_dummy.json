@@ -2,10 +2,7 @@
   "title": "Dummy",
   "path": "/blog/dummy",
   "date": "",
-  "categories": [
-    "projects",
-    "charity"
-  ],
+  "categories": ["projects", "charity"],
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -24,6 +21,7 @@
       "recipient": "dummy",
       "itemsToShow": 0,
       "maxNumberOfColumns": 0,
+      "categories": ["test"],
       "demo": false,
       "columnSpacing": 0,
       "widthOne": 0,
@@ -36,6 +34,7 @@
           "title": "dummy",
           "itemsToShow": 0,
           "maxNumberOfColumns": 0,
+          "categories": ["test"],
           "demo": false,
           "columnSpacing": 0,
           "widthOne": 0,
@@ -68,6 +67,7 @@
               "title": "dummy",
               "itemsToShow": 0,
               "maxNumberOfColumns": 0,
+              "categories": ["test"],
               "demo": false,
               "columnSpacing": 0,
               "widthOne": 0,

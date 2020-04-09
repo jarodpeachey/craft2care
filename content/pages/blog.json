@@ -3,7 +3,7 @@
   "path": "/blog",
   "blocks": [
     {
-      "background": "f7f7f7",
+      "background": "",
       "_template": "ContainerBlock",
       "containerBlocks": [
         {

@@ -32,7 +32,7 @@ export default function ({ data, ...props }) {
   const blocks = post.blocks ? post.blocks : [];
 
   const authors = ListAuthors(data.post.authors);
-  const categories = ListAuthors(data.post.categories);
+  const categories = ListCategories(data.post.categories);
 
   console.log(post);
 
@@ -278,6 +278,8 @@ const PostIcon = styled.span`
 `;
 
 const PostForm = (authors, categories, post) => {
+  console.log(categories);
+
   return {
     // actions: [DeleteAction],
     label: 'Post',
@@ -293,12 +295,7 @@ const PostForm = (authors, categories, post) => {
         component: 'authors',
         authors,
       },
-      {
-        label: 'Add Categories',
-        name: 'rawJson.categories',
-        component: 'categories',
-        categories,
-      },
+ 
       {
         label: 'Hero',
         name: 'rawJson.hero',
@@ -408,6 +405,7 @@ export const postQuery = graphql`
         recipient
         itemsToShow
         maxNumberOfColumns
+        categories
         demo
         columnSpacing
         widthOne
@@ -423,6 +421,7 @@ export const postQuery = graphql`
           recipient
           itemsToShow
           maxNumberOfColumns
+          categories
           demo
           columnSpacing
           widthOne
@@ -445,6 +444,7 @@ export const postQuery = graphql`
             recipient
             itemsToShow
             maxNumberOfColumns
+            categories
             demo
             columnSpacing
             widthOne

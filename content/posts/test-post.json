@@ -2,9 +2,7 @@
   "title": "Test Post",
   "path": "/blog/test-post",
   "date": "03/17/2020",
-  "categories": [
-    "shoeboxes"
-  ],
+  "categories": ["projects"],
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -21,7 +19,5 @@
     "showHero": true
   },
   "draft": false,
-  "authors": [
-    "8o6wb3xse"
-  ]
+  "authors": ["8o6wb3xse"]
 }
