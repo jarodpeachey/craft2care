@@ -1,7 +1,7 @@
 {
   "path": "/blog/test",
   "draft": false,
-  "categories": ["projects", "charity"],
+  "categories": ["charity"],
   "blocks": [
     {
       "content": "At GJCommerce, we're building the next-generation of ecommerce stores. With our platform, you'll be able to edit your content real-time, directly from your site!",

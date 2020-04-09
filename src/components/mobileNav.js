@@ -36,7 +36,7 @@ const MobileNav = ({ classes, backgroundColor }) => {
           <>
             {menu.menuItems.map((item) => (
               <StyledMenuItem
-                key={`mobileStyledMenuItem-${item.label.toLowerCase()}`}
+                key={`mobileStyledMenuItem-${item.label}`}
                 onClick={() => toggleNavOpen()}
               >
                 <Link to={item.link}>{item.label}</Link>
@@ -103,58 +103,27 @@ const MenuToggle = styled.div`
 `;
 
 const StyledMenuItem = styled.div`
-  ${(props) =>
-    props.theme.header.transparent &&
-    css`
-      color: white;
-      transition-duration: 0.3s;
-      font-size: 18px;
-      font-weight: 500;
-      a {
-        width: 100%;
-        height: 100%;
-        display: block;
-        text-decoration: none;
-        color: inherit !important;
-        padding: 8px 16px;
-      }
-      &:hover {
-        transition-duration: 0.3s;
-        a {
-          color: ${props.theme.color.primary};
-        }
-      }
-    `};
-  ${(props) =>
-    !props.theme.header.transparent &&
-    css`
-      color: ${props.theme.header.transparent
-        ? 'white'
-        : bestContrast(
-            hexRegex.test(props.backgroundColor)
-              ? props.backgroundColor
-              : props.theme.color.primary,
-            props.theme.color.white,
-            props.theme.color.black
-          )};
-      transition-duration: 0.3s;
-      font-size: 18px;
-      font-weight: 500;
-      a {
-        width: 100%;
-        height: 100%;
-        display: block;
-        text-decoration: none;
-        color: inherit;
-        padding: 8px 16px;
-      }
-      &:hover {
-        transition-duration: 0.3s;
-        a {
-          color: ${props.theme.color.primary} !important;
-        }
-      }
-    `};
+  text-align: center;
+  a {
+    width: 100%;
+    color: ${(props) => props.theme.color.black};
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    padding: 16px 0;
+    transition: background 0.3s;
+    &:hover {
+      transition: background 0.3s;
+      background: ${props => props.theme.color.primary}20;
+      color: ${(props) => props.theme.color.primary};
+    }
+  }
 `;
 
 const MenuDisplay = styled.div`
@@ -179,58 +148,11 @@ const MenuDisplay = styled.div`
     `};
 `;
 
-const MenuOverlay = styled.div`
-  // width: 200vw;
-  // margin: 0;
-  // padding: 0;
-  // background: rgba(0, 0, 0, 0.3);
-  // position: absolute;
-  // width: 100%;
-  // top: 0;
-  // right: 0;
-  // transform-origin: 0 0;
-  // opacity: ${(props) => (props.open ? 1 : 0)};
-  // z-index: ${(props) => (props.open ? '-1' : '-1')};
-  // visibility: ${(props) => (props.open ? 'visible' : 'hidden')};
-  // transition: all 0.275s 0.1s;
-`;
-
 const MenuWrapper = styled.div`
   height: 100%;
   width: 100%;
   background: white;
-  padding: 24px 0;
-`;
-
-const MenuItem = styled.div`
-  width: 100%;
-  background: white;
-  border-top: 1px solid #ddd;
-  transition-duration: 0.3s;
-  font-size: 18px;
-  font-weight: 500;
-  &:last-child {
-    border-bottom: 1px solid #ddd;
-  }
-  a {
-    width: 100%;
-    display: block;
-    text-decoration: none;
-    color: inherit !important;
-    padding: 16px 32px;
-  }
-  &:hover {
-    background: #f7f7f7;
-    transition-duration: 0.3s;
-  }
-`;
-
-const Message = styled.div`
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
-  width: 100%;
-  margin: 0 auto;
+  padding: 0;
 `;
 
 export default withStyles(styles)(MobileNav);

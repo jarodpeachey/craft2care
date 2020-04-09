@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { AddIcon, DragIcon, ReorderIcon, TrashIcon } from '@tinacms/icons';
@@ -12,13 +12,25 @@ import {
   shadow,
 } from '@tinacms/styles';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
+import { useStaticQuery } from 'gatsby';
 
 export const CategoriesField = (props) => {
   const { input, field, form, meta } = props;
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [formVisible, setFormVisible] = React.useState(false);
   const [customCategory, setCustomCategory] = React.useState(false);
-  const allCategories = field.categories;
+  const { allCategories } = useStaticQuery(graphql`
+    query {
+      allCategories: settingsJson(
+        fileRelativePath: { eq: "/content/settings/categories.json" }
+      ) {
+        categories {
+          name
+          id
+        }
+      }
+    }
+  `);
   const postCategories = input.value || [];
 
   const addCategory = React.useCallback(
@@ -28,12 +40,14 @@ export const CategoriesField = (props) => {
     [field.name, form.mutators]
   );
 
-  const addGlobalCategory = (category) => {
-    field.categories.push({
-      name: category,
-      id: category.toLowerCase(),
-    });
-  };
+  console.log('All categories: ', allCategories.categories);
+  console.log('Post categories: ', postCategories);
+
+  useEffect(() => {
+    // allCategories = field.categories;
+    // postCategories = input.value || [];
+    // console.log(allCategories, postCategories);
+  }, []);
 
   // const isPostCategory = (category) => {
   //   console.log(postCategories);
@@ -49,22 +63,12 @@ export const CategoriesField = (props) => {
   //   }
   // };
 
-  const unusedCategories = allCategories.filter(
+  const unusedCategories = allCategories.categories.filter(
     (category) => !postCategories.includes(category.id)
   );
 
-  if (unusedCategories.length === 0) {
-    setCustomCategory(true);
-  }
-
   const keyUpFunction = (e) => {
-    if (e.target.keycode === 13) {
-      if (e.target.value !== '') {
-        addGlobalCategory(e.target.value);
-      }
-    } else {
-      searchArray(e.target.value);
-    }
+    searchArray(e.target.value);
   };
 
   const searchArray = (value) => {
@@ -133,7 +137,9 @@ export const CategoriesField = (props) => {
                         </CategoryOption>
                       ))}
                     </CategoryMenuList>
-                    <Button>Done</Button>
+                    <Button onClick={() => setMenuVisible(false)}>
+                      Done
+                    </Button>
                   </>
                 ) : (
                   <>
@@ -153,10 +159,10 @@ export const CategoriesField = (props) => {
       </Wrapper>
       <CategoryList>
         {postCategories.length === 0 && (
-          <EmptyList>There's no allCategories</EmptyList>
+          <EmptyList>There's no categories</EmptyList>
         )}
         {postCategories.map((categoryID, index) => {
-          const categoryForList = allCategories.filter(
+          const categoryForList = allCategories.categories.filter(
             (newCategory) => newCategory.id === categoryID
           );
 
@@ -363,7 +369,7 @@ const CategoryMenuList = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: ${(props) => (props.flex ? '' : '-4px')};
+  margin: ${(props) => (props.flex ? '' : '-4px -4px 12px -4px')};
   p {
     width: 100%;
     margin: 0 0 8px 0;

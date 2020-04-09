@@ -22,8 +22,8 @@ exports.setFieldsOnGraphQLNodeType = ({ type }) => {
           i.e. if draft = true : published = false
           */
           return !frontmatter.draft;
-        }
-      }
+        },
+      },
     };
   }
   return {};
@@ -34,7 +34,7 @@ exports.onCreateNode = ({
   actions,
   createNodeId,
   createContentDigest,
-  getNode
+  getNode,
 }) => {
   const { createNode, createNodeField, createParentChildLink } = actions;
 
@@ -249,6 +249,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
         }
       }
+      categories: settingsJson(
+        fileRelativePath: { eq: "/content/settings/categories.json" }
+      ) {
+        categories {
+          name
+          id
+        }
+      }
     }
   `);
 
@@ -261,7 +269,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.path,
       component: path.resolve('src/templates/page.js'),
-      context: {}
+      context: {},
     });
   });
 
@@ -269,7 +277,18 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.path,
       component: path.resolve('src/templates/post.js'),
-      context: {}
+      context: {},
+    });
+  });
+
+  result.data.categories.categories.forEach((category) => {
+    console.log(category);
+    createPage({
+      path: `/category/${category.id}`,
+      component: path.resolve('src/templates/category.js'),
+      context: {
+        category: category.id,
+      },
     });
   });
 

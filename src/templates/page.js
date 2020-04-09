@@ -527,6 +527,7 @@ export const pageQuery = graphql`
         recipient
         itemsToShow
         maxNumberOfColumns
+        categories
         demo
         columnSpacing
         containerBlocks {
@@ -540,6 +541,8 @@ export const pageQuery = graphql`
           recipient
           itemsToShow
           maxNumberOfColumns
+          categories
+          categories
           demo
           columnSpacing
           columns {
@@ -553,6 +556,7 @@ export const pageQuery = graphql`
             recipient
             itemsToShow
             maxNumberOfColumns
+            categories
             demo
             columnSpacing
             widthOne
@@ -575,6 +579,7 @@ export const pageQuery = graphql`
               recipient
               itemsToShow
               maxNumberOfColumns
+              categories
               demo
               columnSpacing
               widthOne
@@ -614,6 +619,7 @@ export const pageQuery = graphql`
           recipient
           itemsToShow
           maxNumberOfColumns
+          categories
           demo
           widthOne
           widthTwo
@@ -636,6 +642,7 @@ export const pageQuery = graphql`
             recipient
             itemsToShow
             maxNumberOfColumns
+            categories
             demo
             widthOne
             widthTwo
