@@ -1,6 +1,9 @@
 {
   "categories": [
     {
+      "name": "All"
+    },
+    {
       "name": "Charity",
       "id": "charity"
     },
