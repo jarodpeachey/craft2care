@@ -1,0 +1,19 @@
+{
+  "title": "Test Post One",
+  "path": "/blog/test-post-one",
+  "date": "04/10/2020",
+  "blocks": [
+    {
+      "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
+      "center": false,
+      "_template": "ContentBlock"
+    }
+  ],
+  "draft": false,
+  "authors": [
+    "diane-boykas"
+  ],
+  "categories": [
+    "all"
+  ]
+}
