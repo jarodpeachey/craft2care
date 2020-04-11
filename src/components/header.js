@@ -4,11 +4,10 @@ import { Link } from 'gatsby';
 import AppBar from '@material-ui/core/AppBar';
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
+import { withStyles } from '@material-ui/core/styles';
 import { Nav } from './nav';
 import { ThemeContext } from './theme';
-import AccountMenu from './AccountMenu';
-import MobileNav from './MobileNav';
-import { withStyles } from '@material-ui/core/styles';
+import MobileMenu from './MobileMenu';
 import { bestContrast } from './style';
 
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
@@ -90,7 +89,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   flex-shrink: 0;
   flex-direction: column;
-    padding: 24px 0 0;
+  padding: 24px 0 0;
 `;
 
 const Flex = styled.div`

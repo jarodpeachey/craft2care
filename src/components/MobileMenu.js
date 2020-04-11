@@ -9,7 +9,7 @@ import { bestContrast } from './style';
 
 const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 
-const MobileNav = ({ classes, backgroundColor }) => {
+const MobileMenu = ({ classes, backgroundColor }) => {
   const data = useStaticQuery(graphql`
     query mobileNavQuery {
       settingsJson(fileRelativePath: { eq: "/content/settings/menu.json" }) {
@@ -120,7 +120,7 @@ const StyledMenuItem = styled.div`
     transition: background 0.3s;
     &:hover {
       transition: background 0.3s;
-      background: ${props => props.theme.color.primary}20;
+      background: ${(props) => props.theme.color.primary}20;
       color: ${(props) => props.theme.color.primary};
     }
   }
@@ -155,7 +155,7 @@ const MenuWrapper = styled.div`
   padding: 0;
 `;
 
-export default withStyles(styles)(MobileNav);
+export default MobileMenu;
 
 export const navFragment = graphql`
   fragment mobileNav on SettingsJson {
