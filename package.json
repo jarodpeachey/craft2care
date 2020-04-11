@@ -84,10 +84,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "postinstall": "netlify-lambda install",
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "build:functions": "netlify-lambda build src/functions",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
