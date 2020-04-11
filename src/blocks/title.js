@@ -3,23 +3,129 @@ import styled, { css } from 'styled-components';
 
 export function Title({ page, data }) {
   const centered = data.center ? data.center : false;
-  return (
-    <>
-      <StyledTitle center={centered}>
-        {data && data.title ? data.title : page.title ? page.title : ''}
-      </StyledTitle>
-      {data && data.underline && <Hr center={centered} />}
-    </>
-  );
+  if (data.type === 'h1') {
+    return (
+      <>
+        <H1 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H1>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  } else if (data.type === 'h2') {
+    return (
+      <>
+        <H2 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H2>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  } else if (data.type === 'h3') {
+    return (
+      <>
+        <H3 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H3>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  } else if (data.type === 'h4') {
+    return (
+      <>
+        <H4 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H4>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  } else if (data.type === 'h5') {
+    return (
+      <>
+        <H5 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H5>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  } else if (data.type === 'h6') {
+    return (
+      <>
+        <H6 center={centered}>
+          {data && data.title ? data.title : page.title ? page.title : ''}
+        </H6>
+        {data && data.underline && <Hr center={centered} />}
+      </>
+    );
+  }
 }
 
-const StyledTitle = styled.h2`
-  font-size: 2.2em;
+const H1 = styled.h1`
   line-height: 1.2;
   word-spacing: 1px;
   font-weight: 700;
 
-  ${props =>
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const H2 = styled.h2`
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const H3 = styled.h3`
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const H4 = styled.h4`
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const H5 = styled.h5`
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
+    props.center &&
+    css`
+      text-align: center;
+    `};
+`;
+
+const H6 = styled.h6`
+  line-height: 1.2;
+  word-spacing: 1px;
+  font-weight: 700;
+
+  ${(props) =>
     props.center &&
     css`
       text-align: center;
@@ -29,7 +135,7 @@ const StyledTitle = styled.h2`
 const Hr = styled.hr`
   margin: 2.2rem 0;
 
-  ${props =>
+  ${(props) =>
     props.center &&
     css`
       margin-left: auto;
@@ -43,7 +149,7 @@ export const TitleBlock = {
   defaultItem: {
     title: '',
     center: false,
-    underline: true
+    underline: true,
   },
   fields: [
     // {
@@ -108,18 +214,24 @@ export const TitleBlock = {
     //     }
     //   ]
     // },
+    {
+      name: 'type',
+      label: 'Type',
+      component: 'select',
+      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    },
     { name: 'title', label: 'Title', component: 'text', defaultValue: 'Title' },
     {
       name: 'center',
       label: 'Center',
       component: 'toggle',
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: 'underline',
       label: 'Underline',
       component: 'toggle',
-      defaultValue: true
-    }
-  ]
+      defaultValue: true,
+    },
+  ],
 };

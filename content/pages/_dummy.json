@@ -14,11 +14,245 @@
     "overlay": true,
     "overlayColor": "#fff",
     "image": "../images/cafe-2.jpg",
+    "rounded": false,
     "ctas": [
       {
         "label": "Read The Blog",
         "link": "/blog",
         "backgroundColor": "primary"
+      }
+    ]
+  },
+  "sidebar": {
+    "showSidebar": true,
+    "blocks": [
+      {
+        "_template": "ContentBlock",
+        "content": "## Thanks DJ\n\nThis is awesome"
+      },
+      {
+        "_template": "ButtonBlock",
+        "buttonText": "Test",
+        "height": 0,
+        "style": "dummy",
+        "buttonLink": "/",
+        "center": true,
+        "left": false,
+        "right": false,
+        "buttonColor": "primary"
+      },
+      {
+        "_template": "ContentBlock",
+        "content": "## block content",
+        "name": "dummy",
+        "title": "dummy",
+        "type": "h1",
+        "itemsToShow": 0,
+        "maxNumberOfColumns": 0,
+        "categories": ["test"],
+        "demo": false,
+        "columnSpacing": 0,
+        "widthOne": 0,
+        "widthTwo": 0,
+        "containerBlocks": [
+          {
+            "_template": "ColumnBlock",
+            "content": "## block content",
+            "name": "dummy",
+            "title": "dummy",
+            "type": "h1",
+            "itemsToShow": 0,
+            "maxNumberOfColumns": 0,
+            "categories": ["test"],
+            "demo": false,
+            "columnSpacing": 0,
+            "widthOne": 0,
+            "widthTwo": 0,
+            "center": false,
+            "left": false,
+            "right": false,
+            "buttonText": "Test",
+            "height": 0,
+            "style": "dummy",
+            "buttonLink": "/",
+            "buttonColor": "primary",
+            "underline": true,
+            "recipient": "dummy",
+            "image": "../images/dummy.jpg",
+            "rounded": false,
+            "background": "#f7f7f7",
+            "columns": [
+              {
+                "_template": "ContentBlock",
+                "content": "## block content",
+                "name": "dummy",
+                "title": "dummy",
+                "type": "h1",
+                "itemsToShow": 0,
+                "maxNumberOfColumns": 0,
+                "categories": ["test"],
+                "demo": false,
+                "columnSpacing": 0,
+                "widthOne": 0,
+                "widthTwo": 0,
+                "center": false,
+                "left": false,
+                "right": false,
+                "buttonText": "Test",
+                "height": 0,
+                "style": "dummy",
+                "buttonLink": "/",
+                "buttonColor": "primary",
+                "underline": true,
+                "recipient": "dummy",
+                "image": "../images/dummy.jpg",
+                "rounded": false,
+                "background": "#f7f7f7",
+                "fields": [
+                  {
+                    "_template": "dummy",
+                    "label": "dummy",
+                    "inputType": "dummy",
+                    "autocomplete": "dummy"
+                  }
+                ],
+                "columnBlocks": [
+                  {
+                    "_template": "ContentBlock",
+                    "content": "## block content",
+                    "name": "dummy",
+                    "title": "dummy",
+                    "type": "h1",
+                    "itemsToShow": 0,
+                    "maxNumberOfColumns": 0,
+                    "categories": ["test"],
+                    "demo": false,
+                    "columnSpacing": 0,
+                    "widthOne": 0,
+                    "widthTwo": 0,
+                    "center": false,
+                    "left": false,
+                    "right": false,
+                    "buttonText": "Test",
+                    "height": 0,
+                    "style": "dummy",
+                    "buttonLink": "/",
+                    "buttonColor": "primary",
+                    "underline": true,
+                    "recipient": "dummy",
+                    "image": "../images/dummy.jpg",
+                    "rounded": false,
+                    "background": "#f7f7f7",
+                    "fields": [
+                      {
+                        "_template": "dummy",
+                        "label": "dummy",
+                        "inputType": "dummy",
+                        "autocomplete": "dummy"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "fields": [
+              {
+                "_template": "dummy",
+                "label": "dummy",
+                "inputType": "dummy",
+                "autocomplete": "dummy"
+              }
+            ]
+          }
+        ],
+        "columns": [
+          {
+            "_template": "ColumnBlock",
+            "content": "## block content",
+            "name": "dummy",
+            "title": "dummy",
+            "type": "h1",
+            "itemsToShow": 0,
+            "maxNumberOfColumns": 0,
+            "categories": ["test"],
+            "demo": false,
+            "columnSpacing": 0,
+            "widthOne": 0,
+            "widthTwo": 0,
+            "center": false,
+            "left": false,
+            "right": false,
+            "buttonText": "Test",
+            "height": 0,
+            "style": "dummy",
+            "buttonLink": "/",
+            "buttonColor": "primary",
+            "underline": true,
+            "recipient": "dummy",
+            "image": "../images/dummy.jpg",
+            "rounded": false,
+            "background": "#f7f7f7",
+            "fields": [
+              {
+                "_template": "dummy",
+                "label": "dummy",
+                "inputType": "dummy",
+                "autocomplete": "dummy"
+              }
+            ],
+            "columnBlocks": [
+              {
+                "_template": "ContentBlock",
+                "content": "## block content",
+                "name": "dummy",
+                "title": "dummy",
+                "type": "h1",
+                "itemsToShow": 0,
+                "maxNumberOfColumns": 0,
+                "categories": ["test"],
+                "demo": false,
+                "columnSpacing": 0,
+                "widthOne": 0,
+                "widthTwo": 0,
+                "center": false,
+                "left": false,
+                "right": false,
+                "buttonText": "Test",
+                "height": 0,
+                "style": "dummy",
+                "buttonLink": "/",
+                "buttonColor": "primary",
+                "underline": true,
+                "recipient": "dummy",
+                "image": "../images/dummy.jpg",
+                "rounded": false,
+                "background": "#f7f7f7",
+                "fields": [
+                  {
+                    "_template": "dummy",
+                    "label": "dummy",
+                    "inputType": "dummy",
+                    "autocomplete": "dummy"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "center": false,
+        "underline": true,
+        "recipient": "dummy",
+        "image": "../images/dummy.jpg",
+        "rounded": false,
+        "background": "#f7f7f7",
+        "fields": [
+          {
+            "_template": "dummy",
+            "label": "dummy",
+            "inputType": "dummy",
+            "autocomplete": "dummy"
+          }
+        ]
       }
     ]
   },
@@ -43,6 +277,7 @@
       "content": "## block content",
       "name": "dummy",
       "title": "dummy",
+      "type": "h1",
       "itemsToShow": 0,
       "maxNumberOfColumns": 0,
       "categories": ["test"],
@@ -56,6 +291,7 @@
           "content": "## block content",
           "name": "dummy",
           "title": "dummy",
+          "type": "h1",
           "itemsToShow": 0,
           "maxNumberOfColumns": 0,
           "categories": ["test"],
@@ -74,6 +310,7 @@
           "underline": true,
           "recipient": "dummy",
           "image": "../images/dummy.jpg",
+          "rounded": false,
           "background": "#f7f7f7",
           "columns": [
             {
@@ -81,6 +318,7 @@
               "content": "## block content",
               "name": "dummy",
               "title": "dummy",
+              "type": "h1",
               "itemsToShow": 0,
               "maxNumberOfColumns": 0,
               "categories": ["test"],
@@ -99,6 +337,7 @@
               "underline": true,
               "recipient": "dummy",
               "image": "../images/dummy.jpg",
+              "rounded": false,
               "background": "#f7f7f7",
               "fields": [
                 {
@@ -114,6 +353,7 @@
                   "content": "## block content",
                   "name": "dummy",
                   "title": "dummy",
+                  "type": "h1",
                   "itemsToShow": 0,
                   "maxNumberOfColumns": 0,
                   "categories": ["test"],
@@ -132,6 +372,7 @@
                   "underline": true,
                   "recipient": "dummy",
                   "image": "../images/dummy.jpg",
+                  "rounded": false,
                   "background": "#f7f7f7",
                   "fields": [
                     {
@@ -161,6 +402,7 @@
           "content": "## block content",
           "name": "dummy",
           "title": "dummy",
+          "type": "h1",
           "itemsToShow": 0,
           "maxNumberOfColumns": 0,
           "categories": ["test"],
@@ -179,6 +421,7 @@
           "underline": true,
           "recipient": "dummy",
           "image": "../images/dummy.jpg",
+          "rounded": false,
           "background": "#f7f7f7",
           "fields": [
             {
@@ -194,6 +437,7 @@
               "content": "## block content",
               "name": "dummy",
               "title": "dummy",
+              "type": "h1",
               "itemsToShow": 0,
               "maxNumberOfColumns": 0,
               "categories": ["test"],
@@ -212,6 +456,7 @@
               "underline": true,
               "recipient": "dummy",
               "image": "../images/dummy.jpg",
+              "rounded": false,
               "background": "#f7f7f7",
               "fields": [
                 {
@@ -229,6 +474,7 @@
       "underline": true,
       "recipient": "dummy",
       "image": "../images/dummy.jpg",
+      "rounded": false,
       "background": "#f7f7f7",
       "fields": [
         {

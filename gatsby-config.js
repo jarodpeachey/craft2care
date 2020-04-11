@@ -8,10 +8,37 @@ require('dotenv').config({
 
 module.exports = {
   plugins: [
-    'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    'gatsby-tinacms-json',
+    'gatsby-transformer-sharp',
     'gatsby-transformer-json',
+    'gatsby-tinacms-json',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/content/images`,
+        name: 'images',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'content',
+        path: `${__dirname}/content`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'settings',
+        path: `${__dirname}/content/settings`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-layout',
+      options: {
+        component: require.resolve('./src/components/siteLayout.js'),
+      },
+    },
     {
       resolve: 'gatsby-plugin-tinacms',
       options: {
@@ -36,33 +63,6 @@ module.exports = {
           },
           'gatsby-tinacms-remark',
         ],
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/content/images`,
-        name: 'images',
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'content',
-        path: `${__dirname}/content`,
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'settings',
-        path: `${__dirname}/content/settings`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-layout`,
-      options: {
-        component: require.resolve(`./src/components/siteLayout.js`),
       },
     },
     'gatsby-plugin-react-helmet',

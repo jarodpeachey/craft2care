@@ -10,7 +10,7 @@ export function Grid({ page, data }) {
   const rowProps = {
     maxColumnSize: 12 / data.maxNumberOfColumns,
     breakpoints: [769, 960],
-    spacing: 12
+    spacing: [12],
   };
 
   const demo = data.demo || false; // Demo mode shows the breakpoints and widths for each column so you can see what's going on!
@@ -21,7 +21,7 @@ export function Grid({ page, data }) {
   let makeFill = false;
 
   if (itemsToShow > 0) {
-    data.columns.map(block => {
+    data.columns.map((block) => {
       if (block.widthOne > 0 || block.widthTwo > 0) {
         makeFill = true;
 
@@ -74,7 +74,7 @@ export function Grid({ page, data }) {
                   } else if (itemsToShow >= 6) {
                     widths = [
                       block.widthOne,
-                      makeFill ? 'auto' : 12 / data.maxNumberOfColumns
+                      makeFill ? 'auto' : 12 / data.maxNumberOfColumns,
                     ];
                   }
                 } else {
@@ -98,8 +98,8 @@ export function Grid({ page, data }) {
 }
 
 const Wrapper = styled.div`
-  margin: ${props => props.margin}px !important;
-  padding: ${props => props.padding}px !important;
+  margin: ${(props) => props.margin}px !important;
+  padding: ${(props) => props.padding}px !important;
 `;
 
 export const GridBlock = {
@@ -175,7 +175,7 @@ export const GridBlock = {
       component: 'rangeNumber',
       max: 4,
       min: 2,
-      defaultValue: 4
+      defaultValue: 4,
     },
     {
       name: 'columnSpacing',
@@ -184,15 +184,15 @@ export const GridBlock = {
       description: 'The distance between each column in pixels',
       max: 48,
       min: 1,
-      defaultValue: 12
+      defaultValue: 12,
     },
     {
       label: 'Columns',
       name: 'columns',
       component: 'blocks',
       templates: {
-        ColumnBlock
-      }
-    }
-  ]
+        ColumnBlock,
+      },
+    },
+  ],
 };

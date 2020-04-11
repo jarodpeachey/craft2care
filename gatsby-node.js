@@ -2,221 +2,80 @@ const path = require('path');
 const slug = require('slug');
 const { createFilePath } = require('gatsby-source-filesystem');
 const { GraphQLBoolean } = require('gatsby/graphql');
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+const fetch = require('node-fetch');
 
-exports.setFieldsOnGraphQLNodeType = ({ type }) => {
-  // if the node is a markdown file, add the `published` field
-  if (type.name === 'MarkdownRemark') {
-    return {
-      published: {
-        type: GraphQLBoolean,
-        resolve: ({ frontmatter }) => {
-          /*
-          `published` is always true in development
-              so both drafts and finished posts are built
-          */
-          if (process.env.NODE_ENV !== 'production') {
-            return true;
-          }
-          /*
-          return the opposite of the `draft` value,
-          i.e. if draft = true : published = false
-          */
-          return !frontmatter.draft;
-        },
-      },
-    };
-  }
-  return {};
-};
-
-exports.onCreateNode = ({
-  node,
+exports.sourceNodes = async ({
   actions,
   createNodeId,
   createContentDigest,
-  getNode,
+  reporter,
 }) => {
-  const { createNode, createNodeField, createParentChildLink } = actions;
+  const { createNode } = actions;
 
-  // // Check for the correct type to only affect this
-  // if (node.internal.type === `PagesJson`) {
-  //   // transform markdown in blocks[i].content
-  //   if (node.blocks) {
-  //     const markdownHost = {
-  //       id: createNodeId(`${node.id} markdown host`),
-  //       parent: node.id,
-  //       internal: {
-  //         contentDigest: createContentDigest(JSON.stringify(node.blocks)),
-  //         type: `${node.internal.type}MarkdownData`
-  //       }
-  //     };
+  const apiKey = process.env.NETLIFY_TOKEN;
 
-  //     createNode(markdownHost);
+  if (!apiKey) {
+    reporter.panicOnBuild('Please define a Netlify access token');
+  }
 
-  //     createNodeField({
-  //       node,
-  //       name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
-  //       value: markdownHost.id // Connects both nodes
-  //     });
+  // const client = new NetlifyAPI(apiKey, opts);
 
-  //     node.blocks.forEach((block, i) => {
-  //       if (!block.content) {
-  //         block.content = "";
-  //       }
-  //       const blockNode = {
-  //         id: `${node.id} block ${i} markdown`,
-  //         parent: markdownHost.id,
-  //         internal: {
-  //           content: block.content,
-  //           contentDigest: createContentDigest(block.content),
-  //           type: `${node.internal.type}BlockMarkdown`,
-  //           mediaType: "text/markdown"
-  //         }
-  //       };
+  const nodeHelper = (input, name) => {
+    // input.netlify_id = input.id;
+    // input.id = createNodeId(`gatsby-source-netlify-${input.netlify_id}`);
+    // console.log(input);
 
-  //       createNode(blockNode);
+    const nodeMeta = {
+      id: input.id,
+      parent: null,
+      children: [],
+      internal: {
+        type: `Netlify${name}`,
+      },
+    };
+    nodeMeta.internal.content = JSON.stringify(nodeMeta);
+    nodeMeta.internal.contentDigest = createContentDigest(nodeMeta);
 
-  //       createParentChildLink({ parent: node, child: blockNode });
+    console.log(nodeMeta);
 
-  //       if (block.containerBlocks) {
-  //         const childMarkdownHost = {
-  //           id: createNodeId(`${node.id} child markdown host`),
-  //           parent: markdownHost.id,
-  //           internal: {
-  //             contentDigest: createContentDigest(
-  //               JSON.stringify(block.containerBlocks)
-  //             ),
-  //             type: `${node.internal.type}ChildMarkdownData`
-  //           }
-  //         };
+    createNode(Object.assign({}, input, nodeMeta));
+  };
 
-  //         createNode(childMarkdownHost);
+  try {
+    await fetch(
+      `https://api.netlify.com/api/v1/sites/b6b13974-f786-41c8-841f-38ba49c28710/submissions/?access_token=${apiKey}`
+    ).then((res) => {
+      res.json().then((json) => {
+        console.log(typeof json);
+        console.log(json);
 
-  //         createNodeField({
-  //           node,
-  //           name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
-  //           value: childMarkdownHost.id // Connects both nodes
-  //         });
-
-  //         block.containerBlocks &&
-  //           block.containerBlocks.forEach((childBlock, j) => {
-  //             if (!childBlock.content) {
-  //               childBlock.content = "";
-  //             }
-  //             const childBlockNode = {
-  //               id: `${blockNode.id} child block ${j} markdown`,
-  //               parent: childMarkdownHost.id,
-  //               internal: {
-  //                 content: childBlock.content,
-  //                 contentDigest: createContentDigest(childBlock.content),
-  //                 type: `${node.internal.type}ChildBlockMarkdown`,
-  //                 mediaType: "text/markdown"
-  //               }
-  //             };
-
-  //             createNode(childBlockNode);
-
-  //             createParentChildLink({
-  //               parent: blockNode,
-  //               child: childBlockNode
-  //             });
-  //           });
-  //       }
-  //     });
-  //   }
-
-  //   // transform markdown in node.content
-  //   if (node.content) {
-  //     const textNode = {
-  //       id: createNodeId(`${node.id} markdown field`),
-  //       children: [],
-  //       parent: node.id,
-  //       internal: {
-  //         content: node.content,
-  //         mediaType: `text/markdown`, // Important!
-  //         contentDigest: createContentDigest(node.content),
-  //         type: `${node.internal.type}Markdown`
-  //       }
-  //     };
-
-  //     createNode(textNode);
-
-  //     // Add link to the new node
-  //     createNodeField({
-  //       node,
-  //       name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
-  //       value: textNode.id // Connects both nodes
-  //     });
-  //   }
-  // }
-
-  // // Check for the correct type to only affect this
-  // if (node.internal.type === `PostsJson`) {
-  //   // transform markdown in blocks[i].content
-  //   if (node.blocks) {
-  //     const markdownHost = {
-  //       id: createNodeId(`${node.id} markdown host`),
-  //       parent: node.id,
-  //       internal: {
-  //         contentDigest: createContentDigest(JSON.stringify(node.blocks)),
-  //         type: `${node.internal.type}MarkdownData`
-  //       }
-  //     };
-
-  //     createNode(markdownHost);
-
-  //     createNodeField({
-  //       node,
-  //       name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
-  //       value: markdownHost.id // Connects both nodes
-  //     });
-
-  //     node.blocks.forEach((block, i) => {
-  //       if (!block.content) {
-  //         block.content = "";
-  //       }
-  //       const blockNode = {
-  //         id: `${node.id} block ${i} markdown`,
-  //         parent: markdownHost.id,
-  //         internal: {
-  //           content: block.content,
-  //           contentDigest: createContentDigest(block.content),
-  //           type: `${node.internal.type}BlockMarkdown`,
-  //           mediaType: "text/markdown"
-  //         }
-  //       };
-
-  //       createNode(blockNode);
-
-  //       createParentChildLink({ parent: node, child: blockNode });
-  //     });
-  //   }
-
-  //   // transform markdown in node.content
-  //   if (node.content) {
-  //     const textNode = {
-  //       id: createNodeId(`${node.id} markdown field`),
-  //       children: [],
-  //       parent: node.id,
-  //       internal: {
-  //         content: node.content,
-  //         mediaType: `text/markdown`, // Important!
-  //         contentDigest: createContentDigest(node.content),
-  //         type: `${node.internal.type}Markdown`
-  //       }
-  //     };
-
-  //     createNode(textNode);
-
-  //     // Add link to the new node
-  //     createNodeField({
-  //       node,
-  //       name: `markdownContent___NODE`, // Before the ___NODE: Name of the new fields
-  //       value: textNode.id // Connects both nodes
-  //     });
-  //   }
-  // }
+        Object.values(json).forEach((submission) => {
+          nodeHelper(submission, 'Submissions');
+        });
+      });
+    });
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 };
+
+// exports.onCreatePage = ({ page, actions }) => {
+//   console.log(page);
+//   const { createPage, deletePage } = actions;
+//   deletePage(page);
+//   createPage({
+//     ...page,
+//     post: page,
+//     context: {
+//       ...page.context,
+//       pathname: page.path,
+//     },
+//   });
+// };
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
@@ -269,7 +128,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.path,
       component: path.resolve('src/templates/page.js'),
-      context: {},
+      context: {
+        pathname: node.path,
+      },
     });
   });
 
@@ -277,7 +138,9 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     createPage({
       path: node.path,
       component: path.resolve('src/templates/post.js'),
-      context: {},
+      context: {
+        pathname: node.path,
+      },
     });
   });
 
@@ -296,7 +159,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   //   const listPageTemplate = path.resolve(`src/templates/list.js`);
   //   const listType = node.listType;
   //   const allPosts = result.data.posts.edges;
-  //   const posts = allPosts.filter((post) => post.type === listType);
+  //   const posts = allPosts.filter((post) => page.type === listType);
   //   const postsPerPage = 5;
   //   const numPages = Math.max(Math.ceil(posts.length / postsPerPage), 1);
   //   const slug = node.path;
@@ -320,13 +183,4 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   //     });
   //   });
   // });
-};
-
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage } = actions;
-
-  if (page.path.match(/signup/) || page.path.match(/login/)) {
-    page.context.layout = 'noLayout';
-    createPage(page);
-  }
 };

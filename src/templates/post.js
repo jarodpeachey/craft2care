@@ -1,250 +1,307 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useContext } from 'react';
 import { graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Img from 'gatsby-image';
 import Form, { FormBlock } from '../blocks/form';
 import { Title, TitleBlock } from '../blocks/title';
 import { Image, ImageBlock } from '../blocks/image';
 import { Content, ContentBlock } from '../blocks/content';
-import { Container, ContainerBlock } from '../blocks/container';
 import { Button, ButtonBlock } from '../blocks/button';
+import { Posts, PostsBlock } from '../blocks/posts';
+import { Container, ContainerBlock } from '../blocks/container';
+import { Sidebar, SidebarBlock } from '../blocks/sidebar';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
-import { PageLayout } from '../components/pageLayout';
-import { ListAuthors } from '../components/authors';
+import { PostLayout } from '../components/postLayout';
 import { ListCategories } from '../components/categories';
 import { formatDate } from '../utils/formatDate';
-// import { useAuthors } from '../components/useAuthors';
+import Row from '../components/grid/row';
+import { ThemeContext } from '../components/theme';
+import { Grid, GridBlock } from '../blocks/grid';
+import Comments from '../components/Comments';
 
 export default function ({ data, ...props }) {
+  console.log(data);
+
+  const { theme } = useContext(ThemeContext);
   const newDate = data.post.date;
 
   const [post] = useLocalJsonForm(
     data.post,
-    PostForm(data.authors.authors, data.categories.categories, newDate)
+    PostForm(data.categories.categories, newDate)
   );
 
   // console.log(post);
 
   const blocks = post.blocks ? post.blocks : [];
+  console.log(post);
+  const sections =
+    post.sidebar && post.sidebar.sidebarSections
+      ? post.sidebar.sidebarSections
+      : [];
 
-  const authors = ListAuthors(data.post.authors);
   const categories = ListCategories(data.post.categories);
 
-  console.log(post);
+  const author = data.settingsJson;
 
   return (
-    <PageLayout page={post}>
-      {!post.hero.showHero && <Spacer height={58} />}{' '}
-      <div className='container top p-relative'>
-        <PostHeader>
-          <PostTitle>{post.title}</PostTitle>
-          <PostLink to='/blog'>
-            <PostIcon>
-              <FontAwesomeIcon icon='arrow-left' />
-            </PostIcon>{' '}
-            Back to Blog
-          </PostLink>
-        </PostHeader>
-        <Meta>
-          <MetaSpan>{formatDate(post.date)}</MetaSpan>
-          {authors && authors.length > 0 && (
-            <MetaSpan>
-              <em>By</em>&nbsp;
-              {authors.map((author) => (
-                <span>{author.name}</span>
-              ))}
-            </MetaSpan>
-          )}
-          {categories && categories.length > 0 && (
-            <MetaSpan>
-              <em>By</em>&nbsp;
-              {categories.map((category) => (
-                <span>{category.name}</span>
-              ))}
-            </MetaSpan>
-          )}
-        </Meta>
-      </div>
-      {blocks &&
-        blocks.map(({ _template, ...block }, index) => {
-          switch (_template) {
-            case 'ParamBlock':
-              return <Param />;
-            case 'TitleBlock':
-              return (
-                <div
-                  key={`post-${post.title}-${_template}-block-${index}`}
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                >
-                  <Title post={post} data={block} />
-                </div>
-              );
-            case 'ButtonBlock':
-              return (
-                <div
-                  key={`post-${post.title}-${_template}-block-${index}`}
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                >
-                  <Button data={block} />
-                </div>
-              );
-            case 'ImageBlock':
-              return (
-                <div
-                  key={`post-${post.title}-${_template}-block-${index}`}
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                >
-                  <Image data={block} />
-                </div>
-              );
-            case 'FormBlock':
-              return (
-                <div
-                  key={`post-${post.title}-${_template}-block-${index}`}
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                >
-                  <Form form={block} />
-                </div>
-              );
-            case 'ContentBlock':
-              if (block.content)
-                return (
-                  <div
-                    key={`post-${post.title}-container-${_template}-block-${index}`}
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                  >
-                    <Content
-                      key={`post-${post.title}-${_template}-block-${index}`}
-                      data={block}
+    <PostLayout post={post}>
+      {post.sidebar &&
+      post.sidebar.showSidebar &&
+      post.sidebar.sidebarSections.length > 0 ? (
+        <div className='container top bototm'>
+          <Row spacing={[28, 12]} breakpoints={[769]}>
+            <div widths={[8]}>
+              <Row spacing={[0, 28]} breakpoints={[769]}>
+                <div widths={[12]}>
+                  <Card>
+                    <PostImage
+                      fluid={
+                        post.image
+                          ? post.image.childImageSharp.fluid
+                          : theme.hero.image.childImageSharp.fluid // WORK TO DO
+                      }
                     />
-                  </div>
-                );
-              break;
-            case 'ContainerBlock':
-              return (
-                <Container
-                  key={`post-${post.title}-${_template}-block-${index}`}
-                  id={index}
-                  post={post}
-                  data={block}
-                />
-              );
-            case 'SpacerBlock':
-              return <Spacer data={block} />;
-            default:
-              return true;
-          }
-        })}
-    </PageLayout>
+                    <PostHeader>
+                      <PostTitle>{post.title}</PostTitle>
+                      <PostLink to='/blog'>
+                        <PostIcon>
+                          <FontAwesomeIcon icon='arrow-left' />
+                        </PostIcon>{' '}
+                        Back to Blog
+                      </PostLink>
+                    </PostHeader>
+                    <PostDate>{newDate}</PostDate>
+                    {theme && theme.length > 0 && (
+                      <PostAuthor>
+                        {' - '}
+                        <em>By</em>&nbsp;
+                        <span>{author.name}</span>
+                      </PostAuthor>
+                    )}
+                    {categories && categories.length > 0 && (
+                      <PostCategories>
+                        {categories.map((category) => {
+                          return <PostCategory>{category.name}</PostCategory>;
+                        })}
+                      </PostCategories>
+                    )}
+                    <Spacer height={48} />
+                    {blocks &&
+                      blocks.map(({ _template, ...block }, index) => {
+                        switch (_template) {
+                          case 'TitleBlock':
+                            return (
+                              <div
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                              >
+                                <Title page={post} data={block} />
+                              </div>
+                            );
+                          case 'ButtonBlock':
+                            return (
+                              <div
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                              >
+                                <Button data={block} />
+                              </div>
+                            );
+                          case 'ImageBlock':
+                            return (
+                              <div
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                              >
+                                <Image data={block} />
+                              </div>
+                            );
+                          case 'FormBlock':
+                            return (
+                              <div
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                              >
+                                <Form form={block} />
+                              </div>
+                            );
+                          case 'GridBlock':
+                            return (
+                              <div
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                              >
+                                <Grid page={post} data={block} />
+                              </div>
+                            );
+                          case 'ContentBlock':
+                            if (block.content)
+                              return (
+                                <div
+                                  key={`post-${post.title}-container-${_template}-block-${index}`}
+                                >
+                                  <Content
+                                    key={`post-${post.title}-${_template}-block-${index}`}
+                                    data={block}
+                                  />
+                                </div>
+                              );
+                            break;
+                          case 'ContainerBlock':
+                            return (
+                              <Container
+                                key={`post-${post.title}-${_template}-block-${index}`}
+                                id={index}
+                                page={post}
+                                data={block}
+                              />
+                            );
+                          case 'SpacerBlock':
+                            return <Spacer data={block} />;
+                          default:
+                            return true;
+                        }
+                      })}
+                  </Card>
+                </div>
+                <div widths={[12]}>
+                  <Comments comments={data.allNetlifySubmissions.edges} />
+                </div>
+              </Row>
+            </div>
+            <div widths={[4]}>
+              <Sidebar page={post} sections={sections} />
+            </div>
+          </Row>
+        </div>
+      ) : (
+        <div className='container top bottom'>
+          <Card>
+            <PostImage
+              fluid={
+                post.image
+                  ? post.image.childImageSharp.fluid
+                  : theme.hero.image.childImageSharp.fluid // WORK TO DO
+              }
+            />
+            <PostHeader>
+              <PostTitle>{post.title}</PostTitle>
+              <PostLink to='/blog'>
+                <PostIcon>
+                  <FontAwesomeIcon icon='arrow-left' />
+                </PostIcon>{' '}
+                Back to Blog
+              </PostLink>
+            </PostHeader>
+            <PostDate>{formatDate(post.date)}</PostDate>
+            <PostAuthor>
+              {' - '}
+              <em>By</em>&nbsp;
+              <span>{author.name}</span>
+            </PostAuthor>
+            {categories && categories.length > 0 && (
+              <PostCategories>
+                {categories.map((category) => {
+                  return <PostCategory>{category.name}</PostCategory>;
+                })}
+              </PostCategories>
+            )}
+            <Spacer height={48} />
+            {blocks &&
+              blocks.map(({ _template, ...block }, index) => {
+                switch (_template) {
+                  case 'TitleBlock':
+                    return (
+                      <div
+                        key={`post-${post.title}-${_template}-block-${index}`}
+                      >
+                        <Title page={post} data={block} />
+                      </div>
+                    );
+                  case 'ButtonBlock':
+                    return (
+                      <div
+                        key={`post-${post.title}-${_template}-block-${index}`}
+                      >
+                        <Button data={block} />
+                      </div>
+                    );
+                  case 'ImageBlock':
+                    return (
+                      <div
+                        key={`post-${post.title}-${_template}-block-${index}`}
+                      >
+                        <Image data={block} />
+                      </div>
+                    );
+                  case 'FormBlock':
+                    return (
+                      <div
+                        key={`post-${post.title}-${_template}-block-${index}`}
+                      >
+                        <Form form={block} />
+                      </div>
+                    );
+                  case 'GridBlock':
+                    return (
+                      <div
+                        key={`post-${post.title}-${_template}-block-${index}`}
+                      >
+                        <Grid page={post} data={block} />
+                      </div>
+                    );
+                  case 'ContentBlock':
+                    if (block.content)
+                      return (
+                        <div
+                          key={`post-${post.title}-container-${_template}-block-${index}`}
+                        >
+                          <Content
+                            key={`post-${post.title}-${_template}-block-${index}`}
+                            data={block}
+                          />
+                        </div>
+                      );
+                    break;
+                  case 'SpacerBlock':
+                    return <Spacer data={block} />;
+                  default:
+                    return true;
+                }
+              })}
+          </Card>
+        </div>
+      )}
+    </PostLayout>
   );
 }
 
-const Wrapper = styled.div`
-  // padding-top: ${(props) => props.padding.paddingTop}px !important;
-  // padding-bottom: ${(props) => props.padding.paddingBottom}px !important;
-  // padding-right: ${(props) => props.padding.paddingRight}px !important;
-  // padding-left: ${(props) => props.padding.paddingLeft}px !important;
-  // margin-top: ${(props) => props.margin.marginTop}px !important;
-  // margin-bottom: ${(props) => props.margin.marginBottom}px !important;
-  // margin-right: ${(props) => props.margin.marginRight}px !important;
-  // margin-left: ${(props) => props.margin.marginLeft}px !important;
+const Column = styled.div`
+  padding: 0 12px 40px 12px;
+  width: calc(100% + 24px);
+  margin-left: -12px;
+  padding-top: ${(props) => (props.marginTop ? '40px' : '0')};
 `;
 
-const Meta = styled.div`
-  display: flex;
+const Card = styled.div`
+  background: white;
+  border-radius: 2px;
+  box-shadow: 2px 3px 5px 0px #e8e8e8;
+  padding: 24px;
+`;
+
+const SidebarTitle = styled.h3`
   width: 100%;
-  justify-content: flex-start;
-  a:not(:hover) {
-    text-decoration: none;
-  }
-  &:not(:last-child) {
-    margin-bottom: 2rem;
-  }
+  padding-bottom: 24px;
+  border-bottom: 2px solid ${(props) => props.theme.color.primary};
 `;
 
-const MetaActions = styled.span`
-  opacity: 1;
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: flex-end;
+const PostDate = styled.span`
+  color: ${(props) => props.theme.color.black}50;
 `;
 
-const MetaSpan = styled.span`
-  justify-self: flex-start;
-  opacity: 0.5;
-  position: relative;
-  em {
-    font-style: normal;
-    opacity: 0.5;
-  }
-  svg {
-    opacity: 0.5;
-    width: 1.4em;
-    margin-top: -0.2em;
-    &:not(:last-child) {
-      margin-right: 1em;
-    }
-  }
-  &:not(:last-child) {
-    margin-right: 1em;
-  }
-  &:not(:first-child) {
-    padding-left: 1rem;
-    &:before {
-      content: '—';
-      position: absolute;
-      opacity: 0.5;
-      left: 0;
-      transform: translate3d(-50%, 0, 0);
-    }
-  }
-  &:last-child {
-    flex: 1 0 auto;
-  }
+const PostAuthor = styled.span`
+  color: ${(props) => props.theme.color.black}50;
 `;
 
 const PostHeader = styled.div`
@@ -252,6 +309,7 @@ const PostHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+  margin-top: 24px;
 `;
 
 const PostTitle = styled.h1`
@@ -277,7 +335,29 @@ const PostIcon = styled.span`
   margin-right: 8px;
 `;
 
-const PostForm = (authors, categories, post) => {
+const PostImage = styled(Img)``;
+
+const PostCategories = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 8px -4px 0;
+`;
+
+const PostCategory = styled.div`
+  // background: ${(props) => props.theme.color.primary}20;
+  color: ${(props) => props.theme.color.black};
+  padding: 0 4px;
+  margin: 4px;
+  width: fit-content;
+  font-size: 13px;
+  border-radius: 4px;
+  background: #f7f7f7;
+  border: 1px solid #e8e8e8;
+`;
+
+const PostForm = (categories, post) => {
   console.log(categories);
 
   return {
@@ -289,52 +369,47 @@ const PostForm = (authors, categories, post) => {
         name: 'rawJson.title',
         component: 'text',
       },
+      // {
+      //   label: 'Author',
+      //   name: 'author',
+      //   component: 'authors',
+      //   authors,
+      // },
       {
-        label: 'Authors',
-        name: 'rawJson.authors',
-        component: 'authors',
-        authors,
+        label: 'Categories',
+        name: 'rawJson.categories',
+        component: 'categories',
+        categories,
       },
- 
       {
-        label: 'Hero',
-        name: 'rawJson.hero',
+        label: 'Feature Image',
+        name: 'image',
+        component: 'image',
+        parse: (filename) => `../images/${filename}`,
+        uploadDir: () => '/content/images/',
+        previewSrc: (formValues) => {
+          if (!formValues.jsonNode || !formValues.jsonNode.image) return '';
+          return formValues.jsonNode.image.childImageSharp.fluid.src;
+        },
+      },
+      {
+        label: 'Sidebar',
+        name: 'rawJson.sidebar',
         component: 'group',
         fields: [
           {
-            label: 'Show Hero',
-            name: 'showHero',
+            label: 'Show Sidebar',
+            name: 'showSidebar',
             component: 'toggle',
             defaultValue: true,
           },
           {
-            label: 'Height',
-            name: 'height',
-            component: 'rangeNumber',
-            defaultValue: 250,
-          },
-          {
-            label: 'Image',
-            name: 'image',
-            component: 'image',
-            parse: (filename) => `../images/${filename}`,
-            uploadDir: () => '/content/images/',
-            previewSrc: (formValues) => {
-              if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image)
-                return '';
-              return formValues.jsonNode.hero.image.childImageSharp.fluid.src;
+            label: 'Sections',
+            name: 'sections',
+            component: 'blocks',
+            templates: {
+              SidebarBlock,
             },
-          },
-          {
-            label: 'Overlay',
-            description: 'Show overlay on hero',
-            name: 'overlay',
-            component: 'toggle',
-          },
-          {
-            label: 'Overlay Color',
-            name: 'overlayColor',
-            component: 'color',
           },
         ],
       },
@@ -361,6 +436,7 @@ const PostForm = (authors, categories, post) => {
           ContainerBlock,
           ButtonBlock,
           SpacerBlock,
+          GridBlock,
         },
       },
     ],
@@ -371,20 +447,149 @@ export const postQuery = graphql`
   query($path: String!) {
     post: postsJson(draft: { eq: false }, path: { eq: $path }) {
       title
-      authors
-      categories
       date
-      hero {
-        showHero
-        height
-        overlayColor
-        overlay
-        center
-        image {
-          childImageSharp {
-            fluid(quality: 70, maxWidth: 1920) {
-              ...GatsbyImageSharpFluid_withWebp
+      categories
+      image {
+        childImageSharp {
+          fluid(quality: 70, maxWidth: 1920) {
+            ...GatsbyImageSharpFluid_withWebp
+          }
+        }
+      }
+      sidebar {
+        showSidebar
+        sidebarSections {
+          _template
+          content
+          name
+          title
+          sectionTitle
+          type
+          buttonText
+          height
+          style
+          left
+          right
+          buttonLink
+          buttonColor
+          underline
+          center
+          recipient
+          itemsToShow
+          style
+          maxNumberOfColumns
+          rounded
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
             }
+          }
+
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          sidebarBlocks {
+            _template
+            content
+            background
+            name
+            title
+            sectionTitle
+            type
+            underline
+            center
+            recipient
+            itemsToShow
+            style
+            maxNumberOfColumns
+            rounded
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columns {
+              _template
+              content
+              background
+              name
+              title
+              sectionTitle
+              type
+              underline
+              center
+              recipient
+              itemsToShow
+              style
+              maxNumberOfColumns
+              rounded
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              buttonText
+              height
+              style
+              left
+              right
+              buttonLink
+              buttonColor
+              columnBlocks {
+                _template
+                content
+                background
+                name
+                title
+                sectionTitle
+                type
+                underline
+                center
+                recipient
+                itemsToShow
+                style
+                maxNumberOfColumns
+                rounded
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+                buttonText
+                height
+                style
+                left
+                right
+                buttonLink
+                buttonColor
+              }
+            }
+            buttonText
+            height
+            style
+            left
+            right
+            buttonLink
+            buttonColor
           }
         }
       }
@@ -393,6 +598,8 @@ export const postQuery = graphql`
         content
         name
         title
+        sectionTitle
+        type
         buttonText
         height
         style
@@ -404,7 +611,17 @@ export const postQuery = graphql`
         center
         recipient
         itemsToShow
+        style
         maxNumberOfColumns
+        rounded
+        image {
+          childImageSharp {
+            fluid(quality: 70, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+
         categories
         demo
         columnSpacing
@@ -416,11 +633,23 @@ export const postQuery = graphql`
           background
           name
           title
+          sectionTitle
+          type
           underline
           center
           recipient
           itemsToShow
+          style
           maxNumberOfColumns
+          rounded
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+
           categories
           demo
           columnSpacing
@@ -439,11 +668,23 @@ export const postQuery = graphql`
             background
             name
             title
+            sectionTitle
+            type
             underline
             center
             recipient
             itemsToShow
+            style
             maxNumberOfColumns
+            rounded
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+
             categories
             demo
             columnSpacing
@@ -482,22 +723,31 @@ export const postQuery = graphql`
       rawJson
       fileRelativePath
     }
-    authors: settingsJson(
-      fileRelativePath: { eq: "/content/settings/authors.json" }
-    ) {
-      authors {
-        email
-        name
-        id
-        link
-      }
-    }
     categories: settingsJson(
       fileRelativePath: { eq: "/content/settings/categories.json" }
     ) {
       categories {
         name
         id
+      }
+    }
+    settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
+      name
+      email
+    }
+    allNetlifySubmissions(filter: { data: { path: { eq: $path } } }) {
+      edges {
+        node {
+          number
+          data {
+            comment
+            email
+            name
+            path
+            parentCommentNumber
+          }
+          created_at(formatString: "M/D/YYYY")
+        }
       }
     }
   }

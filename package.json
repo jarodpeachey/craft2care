@@ -52,6 +52,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
+    "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.3",
     "polished": "^3.4.1",
     "prismjs": "^1.17.1",

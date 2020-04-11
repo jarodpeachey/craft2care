@@ -8,7 +8,9 @@
       "containerBlocks": [
         {
           "itemsToShow": 3,
-          "_template": "PostsBlock"
+          "_template": "PostsBlock",
+          "maxNumberOfColumns": 4,
+          "style": "Grid"
         }
       ]
     }
