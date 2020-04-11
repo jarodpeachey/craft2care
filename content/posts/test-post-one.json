@@ -51,8 +51,8 @@
               },
               {
                 "_template": "ColumnBlock",
-                "widthOne": 0,
-                "widthTwo": 0,
+                "widthOne": 12,
+                "widthTwo": 12,
                 "columnBlocks": [
                   {
                     "_template": "ContentBlock",
