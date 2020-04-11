@@ -33,7 +33,7 @@
                 "columnBlocks": [
                   {
                     "_template": "ContentBlock",
-                    "content": "",
+                    "content": "Sweet! Some content about me!",
                     "center": false
                   }
                 ]
