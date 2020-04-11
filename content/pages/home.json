@@ -9,7 +9,8 @@
           "title": "Charity",
           "center": true,
           "underline": true,
-          "_template": "TitleBlock"
+          "_template": "TitleBlock",
+          "type": "h1"
         },
         {
           "itemsToShow": 3,
