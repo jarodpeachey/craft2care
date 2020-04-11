@@ -16,8 +16,9 @@ exports.sourceNodes = async ({
   const { createNode } = actions;
 
   const apiKey = process.env.NETLIFY_TOKEN;
+  const siteID = process.env.SITE_ID;
 
-  if (!apiKey) {
+  if (!apiKey || !siteID) {
     reporter.panicOnBuild('Please define a Netlify access token');
   }
 
@@ -46,15 +47,31 @@ exports.sourceNodes = async ({
 
   try {
     await fetch(
-      `https://api.netlify.com/api/v1/sites/b6b13974-f786-41c8-841f-38ba49c28710/submissions/?access_token=${apiKey}`
+      `https://api.netlify.com/api/v1/sites/${siteID}/submissions/?access_token=${apiKey}`
     ).then((res) => {
       res.json().then((json) => {
         console.log(typeof json);
         console.log(json);
 
-        Object.values(json).forEach((submission) => {
+        if (Object.values(json).length > 0) {
+          Object.values(json).forEach((submission) => {
+            nodeHelper(submission, 'Submissions');
+          });
+        } else {
+          const submission = {
+            number: 1,
+            id: toString(Math.random() * 100),
+            created_at: new Date(),
+            data: {
+              comment: 'Test',
+              email: 'test@mail.com',
+              name: 'Diane Boykas',
+              path: '/',
+              parentCommentNumber: 12,
+            },
+          };
           nodeHelper(submission, 'Submissions');
-        });
+        }
       });
     });
   } catch (e) {

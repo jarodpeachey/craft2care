@@ -7,70 +7,74 @@ import Row from '../components/grid/row';
 import { withStyles } from '@material-ui/styles';
 
 function Form({ form, classes }) {
-  return (
-    <StyledForm
-      name='contact'
-      action='/.netlify/functions/handleForm'
-      method='POST'
-    >
-      <Row spacing={[18]} breakpoints={[769]}>
-        {form.fields.map(field => {
-          if (field.inputType === 'textarea') {
-            return (
-              <div widths={[12]}>
-                <TextField
-                  className={form.style === 'dark' ? classes.input : null}
-                  fullWidth
-                  rows={8}
-                  variant='outlined'
-                  label={field.label}
-                  multiline
-                  name={slugify(field.label)}
-                  id={slugify(field.label)}
-                ></TextField>
-              </div>
-            );
-          } else {
-            return (
-              <div widths={[6]}>
-                {' '}
-                <TextField
-                  className={form.style === 'dark' ? classes.input : null}
-                  label={field.label}
-                  fullWidth
-                  variant='outlined'
-                  id={slugify(field.label)}
-                  name={slugify(field.label)}
-                  type={field.inputType}
-                  autoCorrect='off'
-                  autoComplete={field.autocomplete || ''}
-                />
-              </div>
-            );
-          }
-        })}
-        <ButtonWrapper widths={[12]}>
-          <Button
-            variant='contained'
-            color='primary'
-            type='submit'
-            value='Submit'
-          >
-            Submit
-          </Button>
-        </ButtonWrapper>
-      </Row>
-    </StyledForm>
-  );
+  if (form && form.fields && form.fields.length > 0) {
+    return (
+      <StyledForm
+        name='contact'
+        action='/.netlify/functions/handleForm'
+        method='POST'
+      >
+        <Row spacing={[18]} breakpoints={[769]}>
+          {form.fields.map((field) => {
+            if (field.inputType === 'textarea') {
+              return (
+                <div widths={[12]}>
+                  <TextField
+                    className={form.style === 'dark' ? classes.input : null}
+                    fullWidth
+                    rows={8}
+                    variant='outlined'
+                    label={field.label}
+                    multiline
+                    name={slugify(field.label)}
+                    id={slugify(field.label)}
+                  ></TextField>
+                </div>
+              );
+            } else {
+              return (
+                <div widths={[6]}>
+                  {' '}
+                  <TextField
+                    className={form.style === 'dark' ? classes.input : null}
+                    label={field.label}
+                    fullWidth
+                    variant='outlined'
+                    id={slugify(field.label)}
+                    name={slugify(field.label)}
+                    type={field.inputType}
+                    autoCorrect='off'
+                    autoComplete={field.autocomplete || ''}
+                  />
+                </div>
+              );
+            }
+          })}
+          <ButtonWrapper widths={[12]}>
+            <Button
+              variant='contained'
+              color='primary'
+              type='submit'
+              value='Submit'
+            >
+              Submit
+            </Button>
+          </ButtonWrapper>
+        </Row>
+      </StyledForm>
+    );
+  }
+
+  return null;
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   input: {
-    background: '#f7f7f7 !important'
+    background: '#f7f7f7 !important',
   },
   button: {
-    marginLeft: 'auto'
-  }
+    marginLeft: 'auto',
+  },
 });
 
 const base = {
@@ -142,13 +146,13 @@ const base = {
     // },
     { name: 'label', label: 'Label', component: 'text' },
     { name: 'inputType', label: 'Input Type', component: 'text' },
-    { name: 'autocomplete', label: 'Autocomplete', component: 'text' }
-  ]
+    { name: 'autocomplete', label: 'Autocomplete', component: 'text' },
+  ],
 };
 
 export const customInputBlock = {
   label: 'Custom Input',
-  ...base
+  ...base,
 };
 
 export const nameInputBlock = {
@@ -156,9 +160,9 @@ export const nameInputBlock = {
   defaultItem: {
     label: 'Name',
     inputType: 'text',
-    autocomplete: 'name'
+    autocomplete: 'name',
   },
-  ...base
+  ...base,
 };
 
 export const emailInputBlock = {
@@ -166,9 +170,9 @@ export const emailInputBlock = {
   defaultItem: {
     label: 'Email',
     inputType: 'text',
-    autocomplete: 'email'
+    autocomplete: 'email',
   },
-  ...base
+  ...base,
 };
 
 export const phoneInputBlock = {
@@ -176,9 +180,9 @@ export const phoneInputBlock = {
   defaultItem: {
     label: 'Phone',
     inputType: 'text',
-    autocomplete: 'tel'
+    autocomplete: 'tel',
   },
-  ...base
+  ...base,
 };
 
 export const companyInputBlock = {
@@ -186,9 +190,9 @@ export const companyInputBlock = {
   defaultItem: {
     label: 'Company',
     inputType: 'text',
-    autocomplete: 'organization'
+    autocomplete: 'organization',
   },
-  ...base
+  ...base,
 };
 
 export const messageInputBlock = {
@@ -196,9 +200,9 @@ export const messageInputBlock = {
   defaultItem: {
     label: 'Message',
     inputType: 'textarea',
-    autocomplete: ''
+    autocomplete: '',
   },
-  ...base
+  ...base,
 };
 
 export const FormBlock = {
@@ -209,7 +213,7 @@ export const FormBlock = {
   defaultItem: {
     name: 'Form',
     recipient: '',
-    fields: []
+    fields: [],
   },
   fields: [
     { name: 'name', label: 'Name', component: 'text', defaultValue: 'Form' },
@@ -217,7 +221,7 @@ export const FormBlock = {
       name: 'recipient',
       label: 'Recipient',
       description: 'Form is sent to custom backend',
-      component: 'text'
+      component: 'text',
     },
     {
       label: 'Style',
@@ -226,14 +230,14 @@ export const FormBlock = {
       options: [
         {
           label: 'Dark',
-          value: 'dark'
+          value: 'dark',
         },
         {
           label: 'Light',
-          value: 'light'
-        }
+          value: 'light',
+        },
       ],
-      defaultValue: 'dark'
+      defaultValue: 'dark',
     },
     {
       label: 'Fields',
@@ -245,10 +249,10 @@ export const FormBlock = {
         emailInputBlock,
         phoneInputBlock,
         companyInputBlock,
-        messageInputBlock
-      }
-    }
-  ]
+        messageInputBlock,
+      },
+    },
+  ],
 };
 
 export const StyledForm = styled.form`
@@ -265,13 +269,13 @@ export const FormField = styled.div`
     border-radius: 3px;
     border: none;
     width: 100%;
-    color: ${props => props.theme.color.foreground};
-    background-color: ${props =>
+    color: ${(props) => props.theme.color.foreground};
+    background-color: ${(props) =>
       mix(0.95, props.theme.color.background, props.theme.color.foreground)};
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 3px ${props => props.theme.color.secondary};
+      box-shadow: 0 0 0 3px ${(props) => props.theme.color.secondary};
     }
   }
 
@@ -286,10 +290,10 @@ export const FormField = styled.div`
     margin-bottom: 0.25rem;
   }
 
-  ${p =>
+  ${(p) =>
     p.wide &&
     css`
-      @media (min-width: ${props => props.theme.breakpoints.medium}px) {
+      @media (min-width: ${(props) => props.theme.breakpoints.medium}px) {
         grid-column-start: 1;
         grid-column-end: 3;
       }

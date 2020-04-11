@@ -735,5 +735,20 @@ export const postQuery = graphql`
       name
       email
     }
+    allNetlifySubmissions(filter: { data: { path: { eq: $path } } }) {
+      edges {
+        node {
+          number
+          data {
+            comment
+            email
+            name
+            path
+            parentCommentNumber
+          }
+          created_at(formatString: "M/D/YYYY")
+        }
+      }
+    }
   }
 `;

@@ -123,111 +123,115 @@ export function Posts({ page, data }) {
   //   (category) => !postCategories.includes(category.id)
   // );
 
-  return (
-    <>
-      {data.style === 'Grid' ? (
-        <Row {...rowProps}>
-          {postsToDisplay.map((post, index) => {
-            let excerpt = '';
-            post.blocks.map((block) => {
-              if (block._template === 'ContentBlock') {
-                excerpt = shortenText(block.content, 100);
+  if (data && postsToDisplay && postsToDisplay.length > 0) {
+    return (
+      <>
+        {data.style === 'Grid' ? (
+          <Row {...rowProps}>
+            {postsToDisplay.map((post, index) => {
+              let excerpt = '';
+              post.blocks.map((block) => {
+                if (block._template === 'ContentBlock') {
+                  excerpt = shortenText(block.content, 100);
+                }
+              });
+              // const authors = ListAuthors(post.authors);
+              const categories = ListCategories(post.categories);
+              if (index < data.itemsToShow) {
+                console.log(post.image);
+                console.log(theme.hero);
+                return (
+                  <div
+                    className='full-height'
+                    key={`product-${index}`}
+                    widths={widths}
+                  >
+                    <Card key={post.id}>
+                      <PostImage
+                        fluid={
+                          post.image
+                            ? post.image.childImageSharp.fluid
+                            : theme.hero.image.childImageSharp.fluid // WORK TO DO
+                        }
+                      />
+                      {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}
+                      <CardContent>
+                        <PostTitle>
+                          <Link to={post.path}>{post.title}</Link>
+                        </PostTitle>
+                        {/* <p>{post.excerpt}</p> */}
+                        <PostMeta>
+                          <PostDate>{post.date}</PostDate>
+                          <PostAuthor>
+                            by <span>Test</span>
+                          </PostAuthor>
+                          {categories && categories.length > 0 && (
+                            <PostCategories>
+                              {categories.map((category) => {
+                                return (
+                                  <PostCategory>
+                                    <Link
+                                      className='no-underline'
+                                      to={`/category/${category.id}`}
+                                    >
+                                      {category.name}
+                                    </Link>
+                                  </PostCategory>
+                                );
+                              })}
+                            </PostCategories>
+                          )}
+                          <PostExcerpt>{excerpt}</PostExcerpt>
+                          <PostLink>
+                            <Link className='no-underline' to={post.path}>
+                              Read More
+                              <PostIcon>
+                                <FontAwesomeIcon icon='arrow-right' />
+                              </PostIcon>
+                            </Link>
+                          </PostLink>
+                        </PostMeta>
+                      </CardContent>
+                    </Card>
+                  </div>
+                );
+              } else {
+                return null;
               }
-            });
-            // const authors = ListAuthors(post.authors);
-            const categories = ListCategories(post.categories);
-            if (index < data.itemsToShow) {
-              console.log(post.image);
-              console.log(theme.hero);
-              return (
-                <div
-                  className='full-height'
-                  key={`product-${index}`}
-                  widths={widths}
-                >
-                  <Card key={post.id}>
-                    <PostImage
-                      fluid={
-                        post.image
-                          ? post.image.childImageSharp.fluid
-                          : theme.hero.image.childImageSharp.fluid // WORK TO DO
-                      }
-                    />
+            })}
+          </Row>
+        ) : (
+          <div>
+            {postsToDisplay.map((post, index) => {
+              let excerpt = '';
+              post.blocks.map((block) => {
+                if (block._template === 'ContentBlock') {
+                  excerpt = shortenText(block.content, 100);
+                }
+              });
+              if (index < data.itemsToShow) {
+                console.log(post.image);
+                console.log(theme.hero);
+                return (
+                  <Link className='no-underline' to={post.path}>
                     {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}
-                    <CardContent>
-                      <PostTitle>
-                        <Link to={post.path}>{post.title}</Link>
-                      </PostTitle>
-                      {/* <p>{post.excerpt}</p> */}
-                      <PostMeta>
-                        <PostDate>{post.date}</PostDate>
-                        <PostAuthor>
-                          by <span>Test</span>
-                        </PostAuthor>
-                        {categories && categories.length > 0 && (
-                          <PostCategories>
-                            {categories.map((category) => {
-                              return (
-                                <PostCategory>
-                                  <Link
-                                    className='no-underline'
-                                    to={`/category/${category.id}`}
-                                  >
-                                    {category.name}
-                                  </Link>
-                                </PostCategory>
-                              );
-                            })}
-                          </PostCategories>
-                        )}
-                        <PostExcerpt>{excerpt}</PostExcerpt>
-                        <PostLink>
-                          <Link className='no-underline' to={post.path}>
-                            Read More
-                            <PostIcon>
-                              <FontAwesomeIcon icon='arrow-right' />
-                            </PostIcon>
-                          </Link>
-                        </PostLink>
-                      </PostMeta>
-                    </CardContent>
-                  </Card>
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </Row>
-      ) : (
-        <div>
-          {postsToDisplay.map((post, index) => {
-            let excerpt = '';
-            post.blocks.map((block) => {
-              if (block._template === 'ContentBlock') {
-                excerpt = shortenText(block.content, 100);
+                    <ListTitle>{post.title}</ListTitle>
+                    <ListExcerpt>{excerpt}</ListExcerpt>
+                    {index < data.itemsToShow - 1 ||
+                      (index < postsToDisplay.length - 1 && <ListSeperator />)}
+                  </Link>
+                );
+              } else {
+                return null;
               }
-            });
-            if (index < data.itemsToShow) {
-              console.log(post.image);
-              console.log(theme.hero);
-              return (
-                <Link className='no-underline' to={post.path}>
-                  {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}
-                  <ListTitle>{post.title}</ListTitle>
-                  <ListExcerpt>{excerpt}</ListExcerpt>
-                  {index < data.itemsToShow - 1 ||
-                    (index < postsToDisplay.length - 1 && <ListSeperator />)}
-                </Link>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-      )}
-    </>
-  );
+            })}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return null;
 }
 
 const Card = styled.div`

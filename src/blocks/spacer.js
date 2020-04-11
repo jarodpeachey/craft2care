@@ -4,14 +4,20 @@ import styled from 'styled-components';
 import MaterialButton from '@material-ui/core/Button';
 import { Link } from 'gatsby';
 
-export function Spacer({ page, data, height }) {
-  return <Wrapper height={height ? height : data.height ? data.height : 24} />;
+export function Spacer ({ page, data, height }) {
+  if (data && data.height || height) {
+    return (
+      <Wrapper height={height || (data.height ? data.height : 24)} />
+    );
+  }
+
+  return null;
 }
 
 const Wrapper = styled.div`
   width: 100%;
   background: transparent;
-  height: ${props => props.height}px !important;
+  height: ${(props) => props.height}px !important;
   content: '';
 `;
 
@@ -19,7 +25,7 @@ export const SpacerBlock = {
   label: 'Spacer',
   name: 'Spacer',
   defaultItem: {
-    height: 24
+    height: 24,
   },
   fields: [
     // {
@@ -84,6 +90,6 @@ export const SpacerBlock = {
     //     }
     //   ]
     // },
-    { name: 'height', label: 'Spacer Height', component: 'rangeNumber' }
-  ]
+    { name: 'height', label: 'Spacer Height', component: 'rangeNumber' },
+  ],
 };

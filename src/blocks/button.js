@@ -8,23 +8,30 @@ export function Button({ page, data }) {
   const centered = data.center ? data.center : false;
   const left = data.left ? data.left : false;
   const right = data.right ? data.right : false;
-  return (
-    <Link className='no-underline' to={data.buttonLink ? data.buttonLink : '/'}>
-      <StyledButton
-        variant='contained'
-        color={data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'}
-        center={centered}
-        left={left}
-        right={right}
+  if (data.buttonText) {
+    return (
+      <Link
+        className='no-underline'
+        to={data.buttonLink ? data.buttonLink : '/'}
       >
-        {data && data.buttonText ? data.buttonText : ''}
-      </StyledButton>
-    </Link>
-  );
+        <StyledButton
+          variant='contained'
+          color={data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'}
+          center={centered}
+          left={left}
+          right={right}
+        >
+          {data && data.buttonText ? data.buttonText : ''}
+        </StyledButton>
+      </Link>
+    );
+  }
+
+  return null;
 }
 
 const StyledButton = styled(MaterialButton)`
-  margin: ${props =>
+  margin: ${(props) =>
     props.right
       ? '0 0 0 auto'
       : props.left
@@ -45,7 +52,7 @@ export const ButtonBlock = {
     left: false,
     right: false,
     buttonLink: '/',
-    buttonColor: 'primary'
+    buttonColor: 'primary',
   },
   fields: [
     // {
@@ -114,38 +121,38 @@ export const ButtonBlock = {
       name: 'buttonText',
       label: 'Text',
       component: 'text',
-      defaultValue: 'Click Me'
+      defaultValue: 'Click Me',
     },
     {
       name: 'center',
       label: 'Center',
       component: 'toggle',
-      defaultValue: true
+      defaultValue: true,
     },
     {
       name: 'left',
       label: 'Left',
       component: 'toggle',
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: 'right',
       label: 'Right',
       component: 'toggle',
-      defaultValue: false
+      defaultValue: false,
     },
     {
       name: 'buttonLink',
       label: 'Link',
       component: 'text',
-      defaultValue: '/'
+      defaultValue: '/',
     },
     {
       name: 'buttonColor',
       label: 'Button Color',
       component: 'select',
       options: ['Primary', 'Secondary'],
-      defaultValue: 'Primary'
-    }
-  ]
+      defaultValue: 'Primary',
+    },
+  ],
 };

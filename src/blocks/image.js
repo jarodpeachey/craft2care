@@ -5,15 +5,10 @@ import get from 'lodash.get';
 
 export function Image({ data }) {
   console.log(data);
-  return (
-    <>
-      {data.image && data.image.childImageSharp && (
-        // <ImageWrapper rounded={data.rounded}>
-        <Img fluid={data.image.childImageSharp.fluid} />
-        // </ImageWrapper>
-      )}
-    </>
-  );
+  if (data.image && data.image.childImageSharp) {
+    return <Img fluid={data.image.childImageSharp.fluid} />;
+  }
+  return null;
 }
 
 const ImageWrapper = styled.div`
