@@ -3,11 +3,14 @@ import React from 'react';
 import styled from 'styled-components';
 import MaterialButton from '@material-ui/core/Button';
 import { Link } from 'gatsby';
+import { bestContrast } from '../components/style';
 
 export function Button({ page, data }) {
   const centered = data.center ? data.center : false;
   const left = data.left ? data.left : false;
   const right = data.right ? data.right : false;
+  const type = data.type ? data.type : 'button';
+
   if (data.buttonText) {
     return (
       <Link
@@ -15,24 +18,22 @@ export function Button({ page, data }) {
         to={data.buttonLink ? data.buttonLink : '/'}
       >
         <StyledButton
-          variant='contained'
           color={data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'}
           center={centered}
           left={left}
           right={right}
+          type={type}
         >
           {data && data.buttonText ? data.buttonText : ''}
         </StyledButton>
       </Link>
     );
-  }
-
-  else {
+  } else {
     return null;
-}
+  }
 }
 
-const StyledButton = styled(MaterialButton)`
+const StyledButton = styled.button`
   margin: ${(props) =>
     props.right
       ? '0 0 0 auto'
@@ -41,8 +42,30 @@ const StyledButton = styled(MaterialButton)`
       : props.center
       ? '0 auto'
       : '0'} !important;
+  background: ${(props) =>
+    props.color === 'secondary'
+      ? props.theme.color.secondary
+      : props.theme.color.primary};
+  color: white;
+  }};
   display: block !important;
   width: fit-content !important;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 16px;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  transition-duration: .4s;
+  :hover {
+    background: ${(props) =>
+      props.color === 'secondary'
+        ? props.theme.color.secondary
+        : props.theme.color.primary}d9;
+    transition-duration: .4s;
+    box-shadow: 4px 5px 20px 0px ${(props) => props.theme.color.black}10;
+    transform: scale(1.04);
+  }
 `;
 
 export const ButtonBlock = {

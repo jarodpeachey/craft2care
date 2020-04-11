@@ -15,13 +15,15 @@ import { DraftBadge } from '../components/style';
 import { ThemeContext } from '../components/theme';
 import { ListCategories } from '../components/categories';
 import { shortenText } from '../utils/shortenText';
+import { Button } from './button';
+import { Spacer } from './spacer';
 
 let globalCategories = [];
 
 export function Posts({ page, data }) {
   const { theme } = useContext(ThemeContext);
 
-  const { posts, settingsJson } = useStaticQuery(graphql`
+  const { posts, categories, author } = useStaticQuery(graphql`
     query postsQuery {
       posts: allPostsJson(
         sort: { fields: id, order: DESC }
@@ -48,7 +50,7 @@ export function Posts({ page, data }) {
           }
         }
       }
-      settingsJson(
+      categories: settingsJson(
         fileRelativePath: { eq: "/content/settings/categories.json" }
       ) {
         categories {
@@ -56,10 +58,13 @@ export function Posts({ page, data }) {
           id
         }
       }
+      author: settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
+        name
+      }
     }
   `);
 
-  globalCategories = settingsJson.categories;
+  globalCategories = categories.categories;
 
   const rowProps = {
     maxColumnSize: 3,
@@ -156,7 +161,7 @@ export function Posts({ page, data }) {
                         <PostMeta>
                           <PostDate>{post.date}</PostDate>
                           <PostAuthor>
-                            by <span>Test</span>
+                            by <span>{author.name}</span>
                           </PostAuthor>
                           {categories && categories.length > 0 && (
                             <PostCategories>
@@ -175,14 +180,17 @@ export function Posts({ page, data }) {
                             </PostCategories>
                           )}
                           <PostExcerpt>{excerpt}</PostExcerpt>
-                          <PostLink>
-                            <Link className='no-underline' to={post.path}>
-                              Read More
-                              <PostIcon>
-                                <FontAwesomeIcon icon='arrow-right' />
-                              </PostIcon>
-                            </Link>
-                          </PostLink>
+                          <Spacer height={24} />
+                          <Button
+                            data={{
+                              center: true,
+                              buttonText: 'Read More',
+                              type: 'button',
+                              buttonColor: 'primary',
+                              buttonLink: post.path,
+                            }}
+                          />
+                          <Spacer height={24} />
                         </PostMeta>
                       </CardContent>
                     </Card>
@@ -226,10 +234,12 @@ export function Posts({ page, data }) {
 }
 
 const Card = styled.div`
+  background: white;
+  box-shadow: 4px 6px 16px 1px #eee;
+  border: 1px solid #ddd;
   display: block;
   margin: 0 auto;
   background: white;
-  border: 1px solid #ddd;
   border-radius: 3px;
   height: fit;
   color: black;

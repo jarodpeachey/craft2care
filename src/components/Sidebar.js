@@ -167,8 +167,10 @@
 
 // const Card = styled.div`
 //   background: white;
-//   border-radius: 2px;
-//   box-shadow: 2px 3px 5px 0px #e8e8e8;
+//   box-shadow: 4px 6px 16px 1px #eee;
+//   border: 1px solid #ddd;
+//   background: white;
+// 
 //   padding: 24px;
 // `;
 

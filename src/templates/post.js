@@ -43,13 +43,13 @@ export default function ({ data, ...props }) {
 
   const categories = ListCategories(data.post.categories);
 
-  const author = data.settingsJson;
+  const author = data.author;
 
   return (
     <PostLayout post={post}>
       {post.sidebar && post.sidebar.showSidebar && sections.length > 0 ? (
         <div className='container top bototm'>
-          <Row spacing={[28, 0]} breakpoints={[769]}>
+          <Row spacing={[20, 0]} breakpoints={[769]}>
             <div widths={[8]}>
               <Column>
                 <Card>
@@ -62,19 +62,12 @@ export default function ({ data, ...props }) {
                   />
                   <PostHeader>
                     <PostTitle>{post.title}</PostTitle>
-                    <PostLink to='/blog'>
-                      <PostIcon>
-                        <FontAwesomeIcon icon='arrow-left' />
-                      </PostIcon>{' '}
-                      Back to Blog
-                    </PostLink>
                   </PostHeader>
                   <PostDate>{newDate}</PostDate>
-                  {theme && theme.length > 0 && (
+                  {author && author.name && (
                     <PostAuthor>
                       {' - '}
-                      <em>By</em>&nbsp;
-                      <span>{author.name}</span>
+                      by <span>{author.name}</span>
                     </PostAuthor>
                   )}
                   {categories && categories.length > 0 && (
@@ -177,11 +170,12 @@ export default function ({ data, ...props }) {
               </PostLink>
             </PostHeader>
             <PostDate>{formatDate(post.date)}</PostDate>
-            <PostAuthor>
-              {' - '}
-              <em>By</em>&nbsp;
-              <span>{author.name}</span>
-            </PostAuthor>
+            {author && author.name && (
+              <PostAuthor>
+                {' - '}
+                by <span>{author.name}</span>
+              </PostAuthor>
+            )}
             {categories && categories.length > 0 && (
               <PostCategories>
                 {categories.map((category) => {
@@ -252,13 +246,14 @@ export default function ({ data, ...props }) {
 }
 
 const Column = styled.div`
-  padding: 32px 0;
+  padding: 20px 0;
 `;
 
 const Card = styled.div`
   background: white;
-  border-radius: 2px;
-  box-shadow: 2px 3px 5px 0px #e8e8e8;
+  box-shadow: 4px 6px 16px 1px #eee;
+  border: 1px solid #ddd;
+  background: white;
   padding: 24px;
 `;
 
@@ -307,7 +302,11 @@ const PostIcon = styled.span`
   margin-right: 8px;
 `;
 
-const PostImage = styled(Img)``;
+const PostImage = styled(Img)`
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  margin-top: -24px;
+`;
 
 const PostCategories = styled.div`
   display: flex;
@@ -844,7 +843,9 @@ export const postQuery = graphql`
       name
       id
     }
-    settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
+    author: settingsJson(
+      fileRelativePath: { eq: "/content/settings/author.json" }
+    ) {
       name
       email
     }

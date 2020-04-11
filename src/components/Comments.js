@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createRef } from 'react';
 import { formatDate } from '../utils/formatDate';
-import Button from '@material-ui/core/Button';
+import { Button } from '../blocks/button';
 import { Title } from '../blocks/title';
+import Row from './grid/row';
 
 function encode(data) {
   return Object.keys(data)
@@ -16,7 +17,6 @@ const Comments = ({ comments }) => {
   const [state, setState] = React.useState({});
   const [parentCommentNumber, setParentCommentNumber] = React.useState(0);
   const [stateComments, setStateComments] = React.useState(comments);
-
 
   const apiKey = process.env.NETLIFY_TOKEN;
   const siteID = process.env.SITE_ID;
@@ -54,7 +54,6 @@ const Comments = ({ comments }) => {
       setState({ path: window.location.pathname });
     }
   }, []);
-
 
   // console.log(
   //   'First level comments: ',
@@ -207,7 +206,7 @@ const Comments = ({ comments }) => {
           }}
         />
         <Card>
-          <form
+          <Form
             name='Comments Awaiting Approval'
             method='post'
             id='form'
@@ -220,8 +219,9 @@ const Comments = ({ comments }) => {
               name='form-name'
               value='Comments Awaiting Approval'
             />
-            <div className='row'>
-              <div className='col col-6'>
+            <Row breakpoints={[576]} spacing={[8]}>
+              <div noGrid>
+                {' '}
                 <HiddenLabel for='path'>Path</HiddenLabel>
                 <HiddenInput
                   name='path'
@@ -244,6 +244,9 @@ const Comments = ({ comments }) => {
                   type='text'
                   value={state.parentCommentNumber}
                 />
+              </div>
+              <div widths={[6]}>
+                {' '}
                 <Label for='name'>Name</Label>
                 <Input
                   onChange={handleChange}
@@ -252,7 +255,8 @@ const Comments = ({ comments }) => {
                   id='name'
                 />
               </div>
-              <div className='col col-6'>
+              <div widths={[6]}>
+                {' '}
                 <Label for='email'>Email</Label>
                 <Input
                   onChange={handleChange}
@@ -261,7 +265,8 @@ const Comments = ({ comments }) => {
                   id='email'
                 />
               </div>
-              <div className='col col-12'>
+              <div widths={[12]}>
+                {' '}
                 <Label for='comment'>Comment</Label>
                 <TextArea
                   onChange={handleChange}
@@ -269,162 +274,169 @@ const Comments = ({ comments }) => {
                   id='comment'
                 ></TextArea>
               </div>
-              <div className='col col-12'>
-                <Button variant='contained' color='primary' type='submit'>
-                  Post your comment
-                </Button>
+              <div widths={[12]}>
+                {' '}
+                <Button
+                  data={{
+                    buttonColor: 'primary',
+                    type: 'submit',
+                    center: false,
+                    right: true,
+                    left: false,
+                    buttonText: 'Post Comment',
+                  }}
+                />
               </div>
-            </div>
-          </form>
+            </Row>
+          </Form>
         </Card>
       </Column>
       <Column>
-      <Title
-        data={{
-          title: 'Comments',
-          underline: false,
-          center: false,
-          type: 'h3',
-        }}
-      />
-      <Card>
-        {stateComments
-          .filter((comment) =>
-            comment.node
-              ? comment.node.data.parentCommentNumber == 'undefined'
-              : comment.data.parentCommentNumber == 'undefined'
-          )
-          .sort((a, b) =>
-            a.node ? a.node.number - b.node.number : a.number - b.number
-          ) && (
-          <>
-            <CommentsSection>
-              {/* {typeof comments === 'array' ? ( */}
-              {stateComments
-                .filter((comment) =>
-                  comment.node
-                    ? comment.node.data.parentCommentNumber == 'undefined'
-                    : comment.data.parentCommentNumber == 'undefined'
-                )
-                .sort((a, b) =>
-                  a.node ? a.node.number - b.node.number : a.number - b.number
-                )
-                .map((parentComment) => {
-                  if (
-                    parentComment.node
-                      ? parentComment.node.data.name !== 'placeholder'
-                      : parentComment.data.name
-                  ) {
-                    return (
-                      <Comment
-                        key={
-                          parentComment.node
-                            ? parentComment.node.data.name
-                            : parentComment.data.name
-                        }
-                      >
-                        <CommentName>
-                          {parentComment.node
-                            ? parentComment.node.data.name
-                            : parentComment.data.name}
-                        </CommentName>
-                        <CommentDate>
-                          on{' '}
-                          {parentComment.node
-                            ? parentComment.node.created_at
-                            : formatDate(parentComment.created_at)}
-                        </CommentDate>
-                        <p>
-                          {parentComment.node
-                            ? parentComment.node.data.comment
-                            : parentComment.data.comment}
-                        </p>
-                        <CommentFooter>
-                          <span
-                            number={
-                              parentComment.node
-                                ? parentComment.node.number
-                                : parentComment.number
-                            }
-                            name={`comment${
-                              parentComment.node
-                                ? parentComment.node.data.name
-                                : parentComment.data.name
-                            }`}
-                            onClick={handleReplyOpen}
-                          >
-                            Reply
-                          </span>
-                        </CommentFooter>
-                        {stateComments
-                          .filter((comment) =>
-                            comment.node
-                              ? comment.node.data.parentCommentNumber !==
-                                'undefined'
-                              : comment.data.parentCommentNumber !== 'undefined'
-                          )
-                          .sort((a, b) =>
-                            a.node
-                              ? a.node.number - b.node.number
-                              : a.number - b.number
-                          )
-                          .map((reply) => {
-                            if (
-                              reply.node
-                                ? reply.node.data.parentCommentNumber ==
-                                  parentComment.node.number
-                                : reply.data.parentCommentNumber ==
-                                  parentComment.number
-                            ) {
-                              return (
-                                <GrayComment>
-                                  <CommentName>
-                                    {reply.node
-                                      ? reply.node.data.name
-                                      : reply.data.name}
-                                  </CommentName>
-                                  <CommentDate>
-                                    on{' '}
-                                    {reply.node
-                                      ? reply.node.created_at
-                                      : formatDate(reply.created_at)}
-                                  </CommentDate>
-                                  <p>
-                                    {reply.node
-                                      ? reply.node.data.comment
-                                      : reply.data.comment}
-                                  </p>
-                                  <CommentFooter>
-                                    <span
-                                      number={
-                                        parentComment.node
-                                          ? parentComment.node.number
-                                          : parentComment.number
-                                      }
-                                      name={`reply${
-                                        reply.node
-                                          ? reply.node.data.name
-                                          : reply.data.name
-                                      }`}
-                                      onClick={handleReplyOpen}
-                                    >
-                                      Reply
-                                    </span>
-                                  </CommentFooter>
-                                </GrayComment>
-                              );
-                            }
-
-                            else {
-    return null;
-}
-                          })}
-                      </Comment>
-                    );
-                  }
-                })}
-              {/* ) : ( */}
-              {/* <>
+        <Title
+          data={{
+            title: 'Comments',
+            underline: false,
+            center: false,
+            type: 'h3',
+          }}
+        />
+        <Card>
+          {stateComments
+            .filter((comment) =>
+              comment.node
+                ? comment.node.data.parentCommentNumber == 'undefined'
+                : comment.data.parentCommentNumber == 'undefined'
+            )
+            .sort((a, b) =>
+              a.node ? a.node.number - b.node.number : a.number - b.number
+            ) && (
+            <>
+              <CommentsSection>
+                {/* {typeof comments === 'array' ? ( */}
+                {stateComments
+                  .filter((comment) =>
+                    comment.node
+                      ? comment.node.data.parentCommentNumber == 'undefined'
+                      : comment.data.parentCommentNumber == 'undefined'
+                  )
+                  .sort((a, b) =>
+                    a.node ? a.node.number - b.node.number : a.number - b.number
+                  )
+                  .map((parentComment) => {
+                    if (
+                      parentComment.node
+                        ? parentComment.node.data.name !== 'placeholder'
+                        : parentComment.data.name
+                    ) {
+                      return (
+                        <Comment
+                          key={
+                            parentComment.node
+                              ? parentComment.node.data.name
+                              : parentComment.data.name
+                          }
+                        >
+                          <CommentName>
+                            {parentComment.node
+                              ? parentComment.node.data.name
+                              : parentComment.data.name}
+                          </CommentName>
+                          <CommentDate>
+                            on{' '}
+                            {parentComment.node
+                              ? parentComment.node.created_at
+                              : formatDate(parentComment.created_at)}
+                          </CommentDate>
+                          <p>
+                            {parentComment.node
+                              ? parentComment.node.data.comment
+                              : parentComment.data.comment}
+                          </p>
+                          <CommentFooter>
+                            <span
+                              number={
+                                parentComment.node
+                                  ? parentComment.node.number
+                                  : parentComment.number
+                              }
+                              name={`comment${
+                                parentComment.node
+                                  ? parentComment.node.data.name
+                                  : parentComment.data.name
+                              }`}
+                              onClick={handleReplyOpen}
+                            >
+                              Reply
+                            </span>
+                          </CommentFooter>
+                          {stateComments
+                            .filter((comment) =>
+                              comment.node
+                                ? comment.node.data.parentCommentNumber !==
+                                  'undefined'
+                                : comment.data.parentCommentNumber !==
+                                  'undefined'
+                            )
+                            .sort((a, b) =>
+                              a.node
+                                ? a.node.number - b.node.number
+                                : a.number - b.number
+                            )
+                            .map((reply) => {
+                              if (
+                                reply.node
+                                  ? reply.node.data.parentCommentNumber ==
+                                    parentComment.node.number
+                                  : reply.data.parentCommentNumber ==
+                                    parentComment.number
+                              ) {
+                                return (
+                                  <GrayComment>
+                                    <CommentName>
+                                      {reply.node
+                                        ? reply.node.data.name
+                                        : reply.data.name}
+                                    </CommentName>
+                                    <CommentDate>
+                                      on{' '}
+                                      {reply.node
+                                        ? reply.node.created_at
+                                        : formatDate(reply.created_at)}
+                                    </CommentDate>
+                                    <p>
+                                      {reply.node
+                                        ? reply.node.data.comment
+                                        : reply.data.comment}
+                                    </p>
+                                    <CommentFooter>
+                                      <span
+                                        number={
+                                          parentComment.node
+                                            ? parentComment.node.number
+                                            : parentComment.number
+                                        }
+                                        name={`reply${
+                                          reply.node
+                                            ? reply.node.data.name
+                                            : reply.data.name
+                                        }`}
+                                        onClick={handleReplyOpen}
+                                      >
+                                        Reply
+                                      </span>
+                                    </CommentFooter>
+                                  </GrayComment>
+                                );
+                              } else {
+                                return null;
+                              }
+                            })}
+                        </Comment>
+                      );
+                    }
+                  })}
+                {/* ) : ( */}
+                {/* <>
               {comments.data.name !== 'placeholder' ? (
                 <Comment key={comments.data.name}>
                   <CommentName>{comments.data.name}</CommentName>
@@ -442,37 +454,38 @@ const Comments = ({ comments }) => {
                 </Comment>
               ) : null}
             </> */}
-              {/* )} */}
-            </CommentsSection>
-          </>
-        )}
-      </Card>
+                {/* )} */}
+              </CommentsSection>
+            </>
+          )}
+        </Card>
       </Column>
     </>
   );
 };
 
 const Column = styled.div`
-  padding: 32px 0;
+  padding: 20px 0;
 `;
 
 const Card = styled.div`
   background: white;
-  border-radius: 2px;
-  box-shadow: 2px 3px 5px 0px #e8e8e8;
+  box-shadow: 4px 6px 16px 1px #eee;
+  border: 1px solid #ddd;
+  background: white;
+
   padding: 24px;
 `;
 
-const GrayForm = styled.form`
-  background: #f7f7f7;
-  padding: 16px;
-  margin-top: 12px;
+const Form = styled.form`
+  margin: 0;
 `;
 
 const Label = styled.label`
   margin-bottom: 8px;
   display: block;
   font-weight: 500;
+  font-size: 16px;
 `;
 
 const Error = styled.small`
