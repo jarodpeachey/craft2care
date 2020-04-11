@@ -115,7 +115,7 @@ export const Hero = ({ title, theme, hero, headerHeight }) => {
       </Background> */}
         </Wrapper>
       ) : (
-        <h1>Test</h1>
+        null
       )}
     </>
   );

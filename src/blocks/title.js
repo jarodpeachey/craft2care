@@ -3,61 +3,75 @@ import styled, { css } from 'styled-components';
 
 export function Title({ page, data }) {
   const centered = data.center ? data.center : false;
-  if (data.type === 'h1') {
-    return (
-      <>
-        <H1 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H1>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
-  } else if (data.type === 'h2') {
-    return (
-      <>
-        <H2 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H2>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
-  } else if (data.type === 'h3') {
-    return (
-      <>
-        <H3 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H3>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
-  } else if (data.type === 'h4') {
-    return (
-      <>
-        <H4 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H4>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
-  } else if (data.type === 'h5') {
-    return (
-      <>
-        <H5 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H5>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
-  } else if (data.type === 'h6') {
-    return (
-      <>
-        <H6 center={centered}>
-          {data && data.title ? data.title : page.title ? page.title : ''}
-        </H6>
-        {data && data.underline && <Hr center={centered} />}
-      </>
-    );
+
+  if (data.title) {
+    if (data.type === 'h1') {
+      return (
+        <>
+          <H1 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H1>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else if (data.type === 'h2') {
+      return (
+        <>
+          <H2 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H2>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else if (data.type === 'h3') {
+      return (
+        <>
+          <H3 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H3>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else if (data.type === 'h4') {
+      return (
+        <>
+          <H4 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H4>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else if (data.type === 'h5') {
+      return (
+        <>
+          <H5 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H5>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else if (data.type === 'h6') {
+      return (
+        <>
+          <H6 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H6>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <H3 center={centered}>
+            {data && data.title ? data.title : page.title ? page.title : ''}
+          </H3>
+          {data && data.underline && <Hr center={centered} />}
+        </>
+      );
+    }
   }
+
+  return null;
 }
 
 const H1 = styled.h1`

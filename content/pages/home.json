@@ -32,7 +32,7 @@
         "backgroundColor": "primary"
       }
     ],
-    "image": "../images/",
+    "image": "../image/cafe-2.jpg",
     "center": false,
     "textline": "Welcome to our website.",
     "headlineColor": "#fff",

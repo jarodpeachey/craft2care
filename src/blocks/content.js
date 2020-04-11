@@ -5,15 +5,19 @@ import ReactMarkdown from 'react-markdown';
 export function Content({ data }) {
   const centered = data.center ? data.center : false;
 
-  return (
-    <StyledContent center={centered}>
-      <ReactMarkdown source={data.content} />
-    </StyledContent>
-  );
+  if (data && data.content) {
+    return (
+      <StyledContent center={centered}>
+        <ReactMarkdown source={data.content} />
+      </StyledContent>
+    );
+  }
+
+  return null;
 }
 
 const StyledContent = styled.div`
-  ${props =>
+  ${(props) =>
     props.center &&
     css`
       p {
@@ -97,13 +101,13 @@ export const ContentBlock = {
       name: 'content',
       label: 'Content',
       component: 'markdown',
-      defaultValue: ''
+      defaultValue: '',
     },
     {
       name: 'center',
       label: 'Center',
       component: 'toggle',
-      defaultValue: false
-    }
-  ]
+      defaultValue: false,
+    },
+  ],
 };

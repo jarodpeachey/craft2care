@@ -17,11 +17,14 @@ const Comments = ({ comments }) => {
   const [parentCommentNumber, setParentCommentNumber] = React.useState(0);
   const [stateComments, setStateComments] = React.useState(comments);
 
+  console.log('Comments: ', comments);
+
   const apiKey = process.env.NETLIFY_TOKEN;
+  const siteID = process.env.SITE_ID;
 
   const fetchNewComments = async () => {
     const newComments = await fetch(
-      `https://api.netlify.com/api/v1/sites/b6b13974-f786-41c8-841f-38ba49c28710/submissions/?access_token=${apiKey}`
+      `https://api.netlify.com/api/v1/sites/${siteID}/submissions/?access_token=${apiKey}`
     );
 
     return newComments;

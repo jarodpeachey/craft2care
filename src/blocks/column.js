@@ -10,46 +10,30 @@ import { Spacer, SpacerBlock } from './spacer';
 // import Row from '../components/grid/row';
 
 export function Column({ page, data, demo }) {
-  return (
-    <>
-      {data.columnBlocks
-        ? data.columnBlocks.map(({ _template, ...block }, index) => {
-            switch (_template) {
-              case 'ButtonBlock':
-                return (
-                  <>
-                    <Wrapper
-                      demo={demo}
-                      key={`page-${page.title}-grid-column-${_template}-${index}`}
-                      // padding={
-                      //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                      // }
-                      // margin={
-                      //   block.blockMargin ? block.blockMargin.marginTop : 0
-                      // }
-                    >
-                      <Button data={block} />
-                    </Wrapper>
-                  </>
-                );
-              case 'ImageBlock':
-                return (
-                  <>
-                    <Wrapper
-                      key={`page-${page.title}-grid-column-${_template}-${index}`}
-                      // padding={
-                      //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                      // }
-                      // margin={
-                      //   block.blockMargin ? block.blockMargin.marginTop : 0
-                      // }
-                    >
-                      <Image data={block} />
-                    </Wrapper>
-                  </>
-                );
-              case 'ContentBlock':
-                if (block.content)
+  if (data.columnBlocks && data.columnBlocks.length > 0) {
+    return (
+      <>
+        {data.columnBlocks
+          ? data.columnBlocks.map(({ _template, ...block }, index) => {
+              switch (_template) {
+                case 'ButtonBlock':
+                  return (
+                    <>
+                      <Wrapper
+                        demo={demo}
+                        key={`page-${page.title}-grid-column-${_template}-${index}`}
+                        // padding={
+                        //   block.blockPadding ? block.blockPadding.paddingTop : 0
+                        // }
+                        // margin={
+                        //   block.blockMargin ? block.blockMargin.marginTop : 0
+                        // }
+                      >
+                        <Button data={block} />
+                      </Wrapper>
+                    </>
+                  );
+                case 'ImageBlock':
                   return (
                     <>
                       <Wrapper
@@ -61,52 +45,72 @@ export function Column({ page, data, demo }) {
                         //   block.blockMargin ? block.blockMargin.marginTop : 0
                         // }
                       >
-                        <Content data={block} />
+                        <Image data={block} />
                       </Wrapper>
                     </>
                   );
-                break;
-              case 'SpacerBlock':
-                return (
-                  <Wrapper
-                    className='container'
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Spacer data={block} />
-                  </Wrapper>
-                );
-              default:
-                return true;
-            }
-          })
-        : null}
-    </>
-  );
+                case 'ContentBlock':
+                  if (block.content)
+                    return (
+                      <>
+                        <Wrapper
+                          key={`page-${page.title}-grid-column-${_template}-${index}`}
+                          // padding={
+                          //   block.blockPadding ? block.blockPadding.paddingTop : 0
+                          // }
+                          // margin={
+                          //   block.blockMargin ? block.blockMargin.marginTop : 0
+                          // }
+                        >
+                          <Content data={block} />
+                        </Wrapper>
+                      </>
+                    );
+                  break;
+                case 'SpacerBlock':
+                  return (
+                    <Wrapper
+                      className='container'
+                      key={`page-${page.title}-container-${_template}-block-${index}`}
+                      // padding={
+                      //   block.blockPadding
+                      //     ? block.blockPadding
+                      //     : {
+                      //         paddingTop: 0,
+                      //         paddingBottom: 0,
+                      //         paddingLeft: 0,
+                      //         paddingRight: 0
+                      //       }
+                      // }
+                      // margin={
+                      //   block.blockMargin
+                      //     ? block.blockMargin
+                      //     : {
+                      //         marginTop: 0,
+                      //         marginBottom: 0,
+                      //         marginLeft: 0,
+                      //         marginRight: 0
+                      //       }
+                      // }
+                    >
+                      <Spacer data={block} />
+                    </Wrapper>
+                  );
+                default:
+                  return true;
+              }
+            })
+          : null}
+      </>
+    );
+  }
+
+  return null;
 }
 
 const Wrapper = styled.div`
-  margin: ${props => props.margin}px !important;
-  padding: ${props => props.padding}px !important;
+  margin: ${(props) => props.margin}px !important;
+  padding: ${(props) => props.padding}px !important;
 `;
 
 export const ColumnBlock = {
@@ -120,58 +124,58 @@ export const ColumnBlock = {
       options: [
         {
           value: 0,
-          label: 'Auto (Fill available space)'
+          label: 'Auto (Fill available space)',
         },
         {
           value: 1,
-          label: '1/12'
+          label: '1/12',
         },
         {
           value: 2,
-          label: '2/12'
+          label: '2/12',
         },
         {
           value: 3,
-          label: '3/12'
+          label: '3/12',
         },
         {
           value: 4,
-          label: '4/12'
+          label: '4/12',
         },
         {
           value: 5,
-          label: '5/12'
+          label: '5/12',
         },
         {
           value: 6,
-          label: '6/12'
+          label: '6/12',
         },
         {
           value: 7,
-          label: '7/12'
+          label: '7/12',
         },
         {
           value: 8,
-          label: '8/12'
+          label: '8/12',
         },
         {
           value: 9,
-          label: '9/12'
+          label: '9/12',
         },
         {
           value: 10,
-          label: '10/12'
+          label: '10/12',
         },
         {
           value: 11,
-          label: '11/12'
+          label: '11/12',
         },
         {
           value: 12,
-          label: '12/12'
-        }
+          label: '12/12',
+        },
       ],
-      defaultValue: 0
+      defaultValue: 0,
     },
     {
       label: 'Width Two (desktop)',
@@ -180,58 +184,58 @@ export const ColumnBlock = {
       options: [
         {
           value: 0,
-          label: 'Auto (Fill available space)'
+          label: 'Auto (Fill available space)',
         },
         {
           value: 1,
-          label: '1/12'
+          label: '1/12',
         },
         {
           value: 2,
-          label: '2/12'
+          label: '2/12',
         },
         {
           value: 3,
-          label: '3/12'
+          label: '3/12',
         },
         {
           value: 4,
-          label: '4/12'
+          label: '4/12',
         },
         {
           value: 5,
-          label: '5/12'
+          label: '5/12',
         },
         {
           value: 6,
-          label: '6/12'
+          label: '6/12',
         },
         {
           value: 7,
-          label: '7/12'
+          label: '7/12',
         },
         {
           value: 8,
-          label: '8/12'
+          label: '8/12',
         },
         {
           value: 9,
-          label: '9/12'
+          label: '9/12',
         },
         {
           value: 10,
-          label: '10/12'
+          label: '10/12',
         },
         {
           value: 11,
-          label: '11/12'
+          label: '11/12',
         },
         {
           value: 12,
-          label: '12/12'
-        }
+          label: '12/12',
+        },
       ],
-      defaultValue: 0
+      defaultValue: 0,
     },
     {
       label: 'Column Items',
@@ -241,8 +245,8 @@ export const ColumnBlock = {
         ImageBlock,
         ContentBlock,
         ButtonBlock,
-        SpacerBlock
-      }
-    }
-  ]
+        SpacerBlock,
+      },
+    },
+  ],
 };

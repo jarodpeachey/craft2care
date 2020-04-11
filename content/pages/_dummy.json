@@ -78,7 +78,7 @@
             "buttonColor": "primary",
             "underline": true,
             "recipient": "dummy",
-            "image": "../images/dummy.jpg",
+            "image": "../images/cafe-2.jpg",
             "rounded": false,
             "background": "#f7f7f7",
             "columns": [
@@ -105,7 +105,7 @@
                 "buttonColor": "primary",
                 "underline": true,
                 "recipient": "dummy",
-                "image": "../images/dummy.jpg",
+                "image": "../images/cafe-2.jpg",
                 "rounded": false,
                 "background": "#f7f7f7",
                 "fields": [
@@ -140,7 +140,7 @@
                     "buttonColor": "primary",
                     "underline": true,
                     "recipient": "dummy",
-                    "image": "../images/dummy.jpg",
+                    "image": "../images/cafe-2.jpg",
                     "rounded": false,
                     "background": "#f7f7f7",
                     "fields": [
@@ -189,7 +189,7 @@
             "buttonColor": "primary",
             "underline": true,
             "recipient": "dummy",
-            "image": "../images/dummy.jpg",
+            "image": "../images/cafe-2.jpg",
             "rounded": false,
             "background": "#f7f7f7",
             "fields": [
@@ -224,7 +224,7 @@
                 "buttonColor": "primary",
                 "underline": true,
                 "recipient": "dummy",
-                "image": "../images/dummy.jpg",
+                "image": "../images/cafe-2.jpg",
                 "rounded": false,
                 "background": "#f7f7f7",
                 "fields": [
@@ -242,7 +242,7 @@
         "center": false,
         "underline": true,
         "recipient": "dummy",
-        "image": "../images/dummy.jpg",
+        "image": "../images/cafe-2.jpg",
         "rounded": false,
         "background": "#f7f7f7",
         "fields": [
@@ -309,7 +309,7 @@
           "buttonColor": "primary",
           "underline": true,
           "recipient": "dummy",
-          "image": "../images/dummy.jpg",
+          "image": "../images/cafe-2.jpg",
           "rounded": false,
           "background": "#f7f7f7",
           "columns": [
@@ -336,7 +336,7 @@
               "buttonColor": "primary",
               "underline": true,
               "recipient": "dummy",
-              "image": "../images/dummy.jpg",
+              "image": "../images/cafe-2.jpg",
               "rounded": false,
               "background": "#f7f7f7",
               "fields": [
@@ -371,7 +371,7 @@
                   "buttonColor": "primary",
                   "underline": true,
                   "recipient": "dummy",
-                  "image": "../images/dummy.jpg",
+                  "image": "../images/cafe-2.jpg",
                   "rounded": false,
                   "background": "#f7f7f7",
                   "fields": [
@@ -420,7 +420,7 @@
           "buttonColor": "primary",
           "underline": true,
           "recipient": "dummy",
-          "image": "../images/dummy.jpg",
+          "image": "../images/cafe-2.jpg",
           "rounded": false,
           "background": "#f7f7f7",
           "fields": [
@@ -455,7 +455,7 @@
               "buttonColor": "primary",
               "underline": true,
               "recipient": "dummy",
-              "image": "../images/dummy.jpg",
+              "image": "../images/cafe-2.jpg",
               "rounded": false,
               "background": "#f7f7f7",
               "fields": [
@@ -473,7 +473,7 @@
       "center": false,
       "underline": true,
       "recipient": "dummy",
-      "image": "../images/dummy.jpg",
+      "image": "../images/cafe-2.jpg",
       "rounded": false,
       "background": "#f7f7f7",
       "fields": [
