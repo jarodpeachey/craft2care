@@ -165,7 +165,7 @@ export default function ({ data, ...props }) {
                   </Card>
                 </div>
                 <div widths={[12]}>
-                  <Comments comments={data.allNetlifySubmissions.edges} />
+                  <Comments comments={[]} />
                 </div>
               </Row>
             </div>
@@ -734,21 +734,6 @@ export const postQuery = graphql`
     settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
       name
       email
-    }
-    allNetlifySubmissions(filter: { data: { path: { eq: $path } } }) {
-      edges {
-        node {
-          number
-          data {
-            comment
-            email
-            name
-            path
-            parentCommentNumber
-          }
-          created_at(formatString: "M/D/YYYY")
-        }
-      }
     }
   }
 `;
