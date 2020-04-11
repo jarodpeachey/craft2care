@@ -71,7 +71,9 @@ export function Title({ page, data }) {
     }
   }
 
-  return null;
+  else {
+    return null;
+}
 }
 
 const H1 = styled.h1`

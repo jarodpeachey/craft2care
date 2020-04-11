@@ -4,11 +4,12 @@ import Img from 'gatsby-image';
 import get from 'lodash.get';
 
 export function Image({ data }) {
-  console.log(data);
   if (data.image && data.image.childImageSharp) {
     return <Img fluid={data.image.childImageSharp.fluid} />;
   }
-  return null;
+  else {
+    return null;
+}
 }
 
 const ImageWrapper = styled.div`

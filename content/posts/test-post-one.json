@@ -19,18 +19,7 @@
     "sidebarSections": [
       {
         "_template": "SidebarBlock",
-        "sectionTitle": "Related",
-        "sidebarBlocks": [
-          {
-            "itemsToShow": 3,
-            "_template": "PostsBlock",
-            "maxNumberOfColumns": 4
-          }
-        ]
-      },
-      {
-        "_template": "SidebarBlock",
-        "sectionTitle": "About Me",
+        "sectionTitle": "Test",
         "sidebarBlocks": [
           {
             "_template": "GridBlock",
@@ -43,25 +32,24 @@
                 "widthTwo": 0,
                 "columnBlocks": [
                   {
-                    "image": "../images/DONE.jpg",
-                    "_template": "ImageBlock",
-                    "rounded": true
-                  }
-                ]
-              },
-              {
-                "_template": "ColumnBlock",
-                "widthOne": 12,
-                "widthTwo": 12,
-                "columnBlocks": [
-                  {
                     "_template": "ContentBlock",
-                    "content": "This is so cool. A blog with a sidebar!! Go find me on social media!",
+                    "content": "",
                     "center": false
                   }
                 ]
               }
             ]
+          }
+        ]
+      },
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "Related",
+        "sidebarBlocks": [
+          {
+            "itemsToShow": 3,
+            "_template": "PostsBlock",
+            "maxNumberOfColumns": 4
           }
         ]
       }

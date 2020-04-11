@@ -3,7 +3,6 @@
 /* eslint-disable react/no-array-index-key */
 import styled from 'styled-components';
 import React from 'react';
-import Form, { FormBlock } from './form';
 import { Image, ImageBlock } from './image';
 import { Content, ContentBlock } from './content';
 import { Button, ButtonBlock } from './button';
@@ -106,22 +105,6 @@ export function Sidebar({ page, sections }) {
                                 </Card>
                               </Column>
                             );
-                          case 'FormBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
-                                  <Form form={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
                           case 'ContentBlock':
                             if (sidebarBlock.content)
                               return (
@@ -166,9 +149,10 @@ export function Sidebar({ page, sections }) {
           })}
       </>
     );
+  } else {
+    console.log("Returning null");
+    return null;
   }
-
-  return null;
 }
 
 const Column = styled.div`

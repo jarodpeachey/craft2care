@@ -2,7 +2,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
-import Form, { FormBlock } from './form';
 import { Title, TitleBlock } from './title';
 import { Button, ButtonBlock } from './button';
 import { Image, ImageBlock } from './image';
@@ -65,20 +64,6 @@ export function Container({ page, data, id }) {
                         // }
                       >
                         <Image data={block} />
-                      </Wrapper>
-                    );
-                  case 'FormBlock':
-                    return (
-                      <Wrapper
-                        key={`page-${page.title}-container-${_template}-block-${index}`}
-                        // padding={
-                        //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                        // }
-                        // margin={
-                        //   block.blockMargin ? block.blockMargin.marginTop : 0
-                        // }
-                      >
-                        <Form form={block} />
                       </Wrapper>
                     );
                   case 'ContentBlock':
@@ -145,16 +130,16 @@ export function Container({ page, data, id }) {
                   default:
                     return true;
                 }
-
                 return null;
               })}
           </div>
         </StyledContainer>
       </>
     );
+  } else {
+    console.log("Returning null");
+    return null;
   }
-
-  return null;
 }
 
 const Wrapper = styled.div`
@@ -254,7 +239,6 @@ export const ContainerBlock = {
       templates: {
         TitleBlock,
         ImageBlock,
-        FormBlock,
         ContentBlock,
         PostsBlock,
         ButtonBlock,

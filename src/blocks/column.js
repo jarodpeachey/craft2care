@@ -19,83 +19,25 @@ export function Column({ page, data, demo }) {
                 case 'ButtonBlock':
                   return (
                     <>
-                      <Wrapper
-                        demo={demo}
-                        key={`page-${page.title}-grid-column-${_template}-${index}`}
-                        // padding={
-                        //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                        // }
-                        // margin={
-                        //   block.blockMargin ? block.blockMargin.marginTop : 0
-                        // }
-                      >
-                        <Button data={block} />
-                      </Wrapper>
+                      <Button data={block} />
                     </>
                   );
                 case 'ImageBlock':
                   return (
                     <>
-                      <Wrapper
-                        key={`page-${page.title}-grid-column-${_template}-${index}`}
-                        // padding={
-                        //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                        // }
-                        // margin={
-                        //   block.blockMargin ? block.blockMargin.marginTop : 0
-                        // }
-                      >
-                        <Image data={block} />
-                      </Wrapper>
+                      <Image data={block} />
                     </>
                   );
                 case 'ContentBlock':
                   if (block.content)
                     return (
                       <>
-                        <Wrapper
-                          key={`page-${page.title}-grid-column-${_template}-${index}`}
-                          // padding={
-                          //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                          // }
-                          // margin={
-                          //   block.blockMargin ? block.blockMargin.marginTop : 0
-                          // }
-                        >
-                          <Content data={block} />
-                        </Wrapper>
+                        <Content data={block} />
                       </>
                     );
                   break;
                 case 'SpacerBlock':
-                  return (
-                    <Wrapper
-                      className='container'
-                      key={`page-${page.title}-container-${_template}-block-${index}`}
-                      // padding={
-                      //   block.blockPadding
-                      //     ? block.blockPadding
-                      //     : {
-                      //         paddingTop: 0,
-                      //         paddingBottom: 0,
-                      //         paddingLeft: 0,
-                      //         paddingRight: 0
-                      //       }
-                      // }
-                      // margin={
-                      //   block.blockMargin
-                      //     ? block.blockMargin
-                      //     : {
-                      //         marginTop: 0,
-                      //         marginBottom: 0,
-                      //         marginLeft: 0,
-                      //         marginRight: 0
-                      //       }
-                      // }
-                    >
-                      <Spacer data={block} />
-                    </Wrapper>
-                  );
+                  return <Spacer data={block} />;
                 default:
                   return true;
               }
@@ -103,9 +45,10 @@ export function Column({ page, data, demo }) {
           : null}
       </>
     );
+  } else {
+    console.log('Returning null');
+    return null;
   }
-
-  return null;
 }
 
 const Wrapper = styled.div`

@@ -21,8 +21,6 @@ const Header = ({
 }) => {
   const [headerScrolled, setHeaderState] = useState(false);
 
-  console.log(isSignedIn);
-
   useEffect(() => {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 78) {

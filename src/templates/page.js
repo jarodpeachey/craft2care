@@ -4,7 +4,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
-import Form, { FormBlock } from '../blocks/form';
 import { Title, TitleBlock } from '../blocks/title';
 import { Image, ImageBlock } from '../blocks/image';
 import { Content, ContentBlock } from '../blocks/content';
@@ -23,223 +22,37 @@ export default function Page({ data }) {
   return (
     <PageLayout page={page}>
       {/* {!page.hero.showHero && <Spacer height={58} />} */}
-      {blocks &&
-        blocks.map(({ _template, ...block }, index) => {
-          // console.log('BLOCK: ', block);
-          switch (_template) {
-            case 'ContainerBlock':
-              return (
-                <Wrapper
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //       }
-                  // }
-                >
-                  <Container id={index} page={page} data={block} />
-                </Wrapper>
-              );
-            case 'TitleBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Title page={page} data={block} />
-                </Wrapper>
-              );
-            case 'SpacerBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Spacer data={block} />
-                </Wrapper>
-              );
-            case 'ButtonBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Button data={block} />
-                </Wrapper>
-              );
-            case 'ImageBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Image data={block} />
-                </Wrapper>
-              );
-            case 'FormBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Form form={block} />
-                </Wrapper>
-              );
-            case 'ContentBlock':
-              if (block.content)
+      {blocks
+        ? blocks.map(({ _template, ...block }, index) => {
+            // console.log('BLOCK: ', block);
+            switch (_template) {
+              case 'ContainerBlock':
+                return (
+                  <Wrapper
+                    key={`page-${page.title}-container-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //       }
+                    // }
+                  >
+                    <Container id={index} page={page} data={block} />
+                  </Wrapper>
+                );
+              case 'TitleBlock':
                 return (
                   <Wrapper
                     className={
@@ -253,97 +66,245 @@ export default function Page({ data }) {
                     }
                     key={`page-${page.title}-container-${_template}-block-${index}`}
                     // padding={
-                    //   block.blockPadding ? block.blockPadding.paddingTop : 0
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
                     // }
-                    // margin={block.blockMargin ? block.blockMargin.marginTop : 0}
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
                   >
-                    <Content
-                      key={`page-${page.title}-${_template}-block-${index}`}
-                      data={block}
-                    />
+                    <Title page={page} data={block} />
                   </Wrapper>
                 );
-              break;
-            case 'PostsBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Posts data={block} />
-                </Wrapper>
-              );
-            case 'GridBlock':
-              return (
-                <Wrapper
-                  className={
-                    index === 0 && index === blocks.length - 1
-                      ? 'container section'
-                      : index === 0
-                      ? 'container top'
-                      : index === blocks.length - 1
-                      ? 'container bottom'
-                      : 'container'
-                  }
-                  key={`page-${page.title}-grid-${_template}-block-${index}`}
-                  // padding={
-                  //   block.blockPadding
-                  //     ? block.blockPadding
-                  //     : {
-                  //         paddingTop: 0,
-                  //         paddingBottom: 0,
-                  //         paddingLeft: 0,
-                  //         paddingRight: 0
-                  //       }
-                  // }
-                  // margin={
-                  //   block.blockMargin
-                  //     ? block.blockMargin
-                  //     : {
-                  //         marginTop: 0,
-                  //         marginBottom: 0,
-                  //         marginLeft: 0,
-                  //         marginRight: 0
-                  //       }
-                  // }
-                >
-                  <Grid page={page} data={block} />
-                </Wrapper>
-              );
-            default:
-              return true;
-          }
-
-          return null;
-        })}
+              case 'SpacerBlock':
+                return (
+                  <Wrapper
+                    className={
+                      index === 0 && index === blocks.length - 1
+                        ? 'container section'
+                        : index === 0
+                        ? 'container top'
+                        : index === blocks.length - 1
+                        ? 'container bottom'
+                        : 'container'
+                    }
+                    key={`page-${page.title}-container-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
+                  >
+                    <Spacer data={block} />
+                  </Wrapper>
+                );
+              case 'ButtonBlock':
+                return (
+                  <Wrapper
+                    className={
+                      index === 0 && index === blocks.length - 1
+                        ? 'container section'
+                        : index === 0
+                        ? 'container top'
+                        : index === blocks.length - 1
+                        ? 'container bottom'
+                        : 'container'
+                    }
+                    key={`page-${page.title}-container-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
+                  >
+                    <Button data={block} />
+                  </Wrapper>
+                );
+              case 'ImageBlock':
+                return (
+                  <Wrapper
+                    className={
+                      index === 0 && index === blocks.length - 1
+                        ? 'container section'
+                        : index === 0
+                        ? 'container top'
+                        : index === blocks.length - 1
+                        ? 'container bottom'
+                        : 'container'
+                    }
+                    key={`page-${page.title}-container-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
+                  >
+                    <Image data={block} />
+                  </Wrapper>
+                );
+              case 'ContentBlock':
+                if (block.content)
+                  return (
+                    <Wrapper
+                      className={
+                        index === 0 && index === blocks.length - 1
+                          ? 'container section'
+                          : index === 0
+                          ? 'container top'
+                          : index === blocks.length - 1
+                          ? 'container bottom'
+                          : 'container'
+                      }
+                      key={`page-${page.title}-container-${_template}-block-${index}`}
+                      // padding={
+                      //   block.blockPadding ? block.blockPadding.paddingTop : 0
+                      // }
+                      // margin={block.blockMargin ? block.blockMargin.marginTop : 0}
+                    >
+                      <Content
+                        key={`page-${page.title}-${_template}-block-${index}`}
+                        data={block}
+                      />
+                    </Wrapper>
+                  );
+                break;
+              case 'PostsBlock':
+                return (
+                  <Wrapper
+                    className={
+                      index === 0 && index === blocks.length - 1
+                        ? 'container section'
+                        : index === 0
+                        ? 'container top'
+                        : index === blocks.length - 1
+                        ? 'container bottom'
+                        : 'container'
+                    }
+                    key={`page-${page.title}-container-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
+                  >
+                    <Posts data={block} />
+                  </Wrapper>
+                );
+              case 'GridBlock':
+                return (
+                  <Wrapper
+                    className={
+                      index === 0 && index === blocks.length - 1
+                        ? 'container section'
+                        : index === 0
+                        ? 'container top'
+                        : index === blocks.length - 1
+                        ? 'container bottom'
+                        : 'container'
+                    }
+                    key={`page-${page.title}-grid-${_template}-block-${index}`}
+                    // padding={
+                    //   block.blockPadding
+                    //     ? block.blockPadding
+                    //     : {
+                    //         paddingTop: 0,
+                    //         paddingBottom: 0,
+                    //         paddingLeft: 0,
+                    //         paddingRight: 0
+                    //       }
+                    // }
+                    // margin={
+                    //   block.blockMargin
+                    //     ? block.blockMargin
+                    //     : {
+                    //         marginTop: 0,
+                    //         marginBottom: 0,
+                    //         marginLeft: 0,
+                    //         marginRight: 0
+                    //       }
+                    // }
+                  >
+                    <Grid page={page} data={block} />
+                  </Wrapper>
+                );
+              default:
+                return true;
+            }
+          })
+        : null}
     </PageLayout>
   );
 }
@@ -385,7 +346,6 @@ const PageForm = {
           templates: {
             TitleBlock,
             ImageBlock,
-            FormBlock,
             ContentBlock,
             ContainerBlock,
             ButtonBlock,
@@ -499,7 +459,6 @@ const PageForm = {
       templates: {
         TitleBlock,
         ImageBlock,
-        FormBlock,
         ContentBlock,
         ContainerBlock,
         ButtonBlock,
@@ -712,11 +671,6 @@ export const pageQuery = graphql`
               }
             }
           }
-          fields {
-            label
-            inputType
-            autocomplete
-          }
           image {
             childImageSharp {
               fluid(quality: 70, maxWidth: 1920) {
@@ -896,11 +850,6 @@ export const pageQuery = graphql`
               }
             }
           }
-        }
-        fields {
-          label
-          inputType
-          autocomplete
         }
         image {
           childImageSharp {

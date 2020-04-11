@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Img from 'gatsby-image';
-import Form, { FormBlock } from '../blocks/form';
 import { Title, TitleBlock } from '../blocks/title';
 import { Image, ImageBlock } from '../blocks/image';
 import { Content, ContentBlock } from '../blocks/content';
@@ -25,8 +24,6 @@ import { Grid, GridBlock } from '../blocks/grid';
 import Comments from '../components/Comments';
 
 export default function ({ data, ...props }) {
-  console.log(data);
-
   const { theme } = useContext(ThemeContext);
   const newDate = data.post.date;
 
@@ -38,7 +35,7 @@ export default function ({ data, ...props }) {
   // console.log(post);
 
   const blocks = post.blocks ? post.blocks : [];
-  console.log(post);
+  console.log('ALL BLOCKS: ', blocks);
   const sections =
     post.sidebar && post.sidebar.sidebarSections
       ? post.sidebar.sidebarSections
@@ -50,9 +47,7 @@ export default function ({ data, ...props }) {
 
   return (
     <PostLayout post={post}>
-      {post.sidebar &&
-      post.sidebar.showSidebar &&
-      post.sidebar.sidebarSections.length > 0 ? (
+      {post.sidebar && post.sidebar.showSidebar && sections.length > 0 ? (
         <div className='container top bototm'>
           <Row spacing={[28, 0]} breakpoints={[769]}>
             <div widths={[8]}>
@@ -115,14 +110,6 @@ export default function ({ data, ...props }) {
                               key={`post-${post.title}-${_template}-block-${index}`}
                             >
                               <Image data={block} />
-                            </div>
-                          );
-                        case 'FormBlock':
-                          return (
-                            <div
-                              key={`post-${post.title}-${_template}-block-${index}`}
-                            >
-                              <Form form={block} />
                             </div>
                           );
                         case 'GridBlock':
@@ -228,14 +215,6 @@ export default function ({ data, ...props }) {
                         key={`post-${post.title}-${_template}-block-${index}`}
                       >
                         <Image data={block} />
-                      </div>
-                    );
-                  case 'FormBlock':
-                    return (
-                      <div
-                        key={`post-${post.title}-${_template}-block-${index}`}
-                      >
-                        <Form form={block} />
                       </div>
                     );
                   case 'GridBlock':
@@ -424,7 +403,6 @@ const PostForm = (categories, post) => {
         templates: {
           TitleBlock,
           ImageBlock,
-          FormBlock,
           ContentBlock,
           ContainerBlock,
           ButtonBlock,
@@ -440,181 +418,46 @@ export const postQuery = graphql`
   query($path: String!) {
     post: postsJson(draft: { eq: false }, path: { eq: $path }) {
       title
+      path
       date
       categories
       image {
         childImageSharp {
           fluid(quality: 70, maxWidth: 1920) {
-            ...GatsbyImageSharpFluid_withWebp
+            src
           }
         }
       }
-      sidebar {
-        showSidebar
-        sidebarSections {
-          _template
-          content
-          name
-          title
-          sectionTitle
-          type
-          buttonText
-          height
-          style
-          left
-          right
-          buttonLink
-          buttonColor
-          underline
-          center
-          recipient
-          itemsToShow
-          style
-          maxNumberOfColumns
-          rounded
-          image {
-            childImageSharp {
-              fluid(quality: 70, maxWidth: 1920) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
-
-          categories
-          demo
-          columnSpacing
-          widthOne
-          widthTwo
-          sidebarBlocks {
-            _template
-            content
-            background
-            name
-            title
-            sectionTitle
-            type
-            underline
-            center
-            recipient
-            itemsToShow
-            style
-            maxNumberOfColumns
-            rounded
-            image {
-              childImageSharp {
-                fluid(quality: 70, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
-              }
-            }
-
-            categories
-            demo
-            columnSpacing
-            widthOne
-            widthTwo
-            columns {
-              _template
-              content
-              background
-              name
-              title
-              sectionTitle
-              type
-              underline
-              center
-              recipient
-              itemsToShow
-              style
-              maxNumberOfColumns
-              rounded
-              image {
-                childImageSharp {
-                  fluid(quality: 70, maxWidth: 1920) {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-              categories
-              demo
-              columnSpacing
-              widthOne
-              widthTwo
-              buttonText
-              height
-              style
-              left
-              right
-              buttonLink
-              buttonColor
-              columnBlocks {
-                _template
-                content
-                background
-                name
-                title
-                sectionTitle
-                type
-                underline
-                center
-                recipient
-                itemsToShow
-                style
-                maxNumberOfColumns
-                rounded
-                categories
-                demo
-                columnSpacing
-                widthOne
-                widthTwo
-                buttonText
-                height
-                style
-                left
-                right
-                buttonLink
-                buttonColor
-              }
-            }
-            buttonText
-            height
-            style
-            left
-            right
-            buttonLink
-            buttonColor
-          }
-        }
-      }
+      rounded
+      draft
       blocks {
         _template
-        content
+        background
         name
         title
-        sectionTitle
         type
+        content
+        sectionTitle
         buttonText
         height
         style
         left
-        right
-        buttonLink
-        buttonColor
-        underline
-        center
-        recipient
-        itemsToShow
-        style
-        maxNumberOfColumns
-        rounded
         image {
           childImageSharp {
             fluid(quality: 70, maxWidth: 1920) {
-              ...GatsbyImageSharpFluid_withWebp
+              src
             }
           }
         }
-
+        right
+        rounded
+        center
+        buttonLink
+        buttonColor
+        underline
+        recipient
+        itemsToShow
+        maxNumberOfColumns
         categories
         demo
         columnSpacing
@@ -622,92 +465,371 @@ export const postQuery = graphql`
         widthTwo
         columns {
           _template
-          content
           background
           name
           title
-          sectionTitle
           type
-          underline
-          center
-          recipient
-          itemsToShow
+          content
+          sectionTitle
+          buttonText
+          height
           style
-          maxNumberOfColumns
-          rounded
+          left
           image {
             childImageSharp {
               fluid(quality: 70, maxWidth: 1920) {
-                ...GatsbyImageSharpFluid_withWebp
+                src
               }
             }
           }
-
+          right
+          rounded
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
           categories
           demo
           columnSpacing
           widthOne
           widthTwo
-          buttonText
-          height
-          style
-          left
-          right
-          buttonLink
-          buttonColor
           columnBlocks {
             _template
-            content
             background
             name
             title
-            sectionTitle
             type
-            underline
-            center
-            recipient
-            itemsToShow
+            content
+            sectionTitle
+            buttonText
+            height
             style
-            maxNumberOfColumns
-            rounded
+            left
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
+                  src
                 }
               }
             }
-
+            right
+            rounded
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
             categories
             demo
             columnSpacing
             widthOne
             widthTwo
+          }
+        }
+      }
+      sidebar {
+        showSidebar
+        _template
+        background
+        name
+        title
+        type
+        content
+        sectionTitle
+        buttonText
+        height
+        style
+        left
+        image {
+          childImageSharp {
+            fluid(quality: 70, maxWidth: 1920) {
+              src
+            }
+          }
+        }
+        right
+        rounded
+        center
+        buttonLink
+        buttonColor
+        underline
+        recipient
+        itemsToShow
+        maxNumberOfColumns
+        categories
+        demo
+        columnSpacing
+        widthOne
+        widthTwo
+        columns {
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                src
+              }
+            }
+          }
+          right
+          rounded
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columnBlocks {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
             buttonText
             height
             style
             left
-            right
-            buttonLink
-            buttonColor
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
+                  src
                 }
               }
             }
+            right
+            rounded
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
           }
         }
-        fields {
-          label
-          inputType
-          autocomplete
-        }
-        image {
-          childImageSharp {
-            fluid(quality: 70, maxWidth: 1920) {
-              ...GatsbyImageSharpFluid_withWebp
+        sidebarSections {
+          showSidebar
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                src
+              }
+            }
+          }
+          right
+          rounded
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columns {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  src
+                }
+              }
+            }
+            right
+            rounded
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columnBlocks {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    src
+                  }
+                }
+              }
+              right
+              rounded
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+            }
+          }
+          sidebarBlocks {
+            showSidebar
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  src
+                }
+              }
+            }
+            right
+            rounded
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columns {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    src
+                  }
+                }
+              }
+              right
+              rounded
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              columnBlocks {
+                _template
+                background
+                name
+                title
+                type
+                content
+                sectionTitle
+                buttonText
+                height
+                style
+                left
+                right
+                rounded
+                center
+                buttonLink
+                buttonColor
+                underline
+                recipient
+                itemsToShow
+                maxNumberOfColumns
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+              }
             }
           }
         }
@@ -719,10 +841,8 @@ export const postQuery = graphql`
     categories: settingsJson(
       fileRelativePath: { eq: "/content/settings/categories.json" }
     ) {
-      categories {
-        name
-        id
-      }
+      name
+      id
     }
     settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
       name
