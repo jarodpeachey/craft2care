@@ -45,6 +45,7 @@ module.exports = {
       options: {
         sidebar: {
           position: 'displace',
+          hidden: process.env.NODE_ENV !== 'development',
           theme: {
             color: {
               primary: {
