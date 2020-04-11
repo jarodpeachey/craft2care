@@ -19,7 +19,7 @@ const Row = ({
       className={className || ''}
       breakpoint={breakpoints[0]}
       spacingX={spacing[0]}
-      spacingY={spacing[1] || spacing[0]}
+      spacingY={typeof spacing[1] === 'number' ? spacing[1] : spacing[0]}
       vertical={vertical}
     >
       {React.Children.toArray(children).map((item) => {
@@ -35,7 +35,9 @@ const Row = ({
                 key='column'
                 breakpoints={breakpoints}
                 spacingX={spacing[0]}
-                spacingY={spacing[1] || spacing[0]}
+                spacingY={
+                  typeof spacing[1] === 'number' ? spacing[1] : spacing[0]
+                }
                 widths={item.props.widths}
               >
                 {item}
