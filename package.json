@@ -85,7 +85,7 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "netlify-lambda install",
-    "build": "gatsby build && npm run build:functions",
+    "build": "gatsby build",
     "develop": "gatsby develop",
     "build:functions": "netlify-lambda build src/functions",
     "start": "npm run develop",
