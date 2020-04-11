@@ -39,8 +39,8 @@
             "columns": [
               {
                 "_template": "ColumnBlock",
-                "widthOne": 3,
-                "widthTwo": 12,
+                "widthOne": 0,
+                "widthTwo": 0,
                 "columnBlocks": [
                   {
                     "image": "../images/DONE.jpg",
@@ -51,12 +51,12 @@
               },
               {
                 "_template": "ColumnBlock",
-                "widthOne": 7,
-                "widthTwo": 12,
+                "widthOne": 0,
+                "widthTwo": 0,
                 "columnBlocks": [
                   {
                     "_template": "ContentBlock",
-                    "content": "This is so",
+                    "content": "This is so cool. A blog with a sidebar!! Go find me on so",
                     "center": false
                   }
                 ]
