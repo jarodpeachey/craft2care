@@ -22,11 +22,11 @@
 // const [authors] = useLocalJsonForm(data.authors, AuthorsForm);
 
 // // const [authors] = useLocalJsonForm(
-// //   data.post.authors,
+// //   data.page.authors,
 // //   AuthorForm(data.settingsJson.authors)
 // // );
 
-// // const authors = ListAuthors(data.post.authors);
+// // const authors = ListAuthors(data.page.authors);
 
 //   const { slug, limit, skip, numPages, currentPage } = pageContext;
 //   const isFirst = currentPage === 1;

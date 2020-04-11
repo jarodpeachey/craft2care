@@ -14,6 +14,7 @@ import { Container, ContainerBlock } from '../blocks/container';
 import { Grid, GridBlock } from '../blocks/grid';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
 import { PageLayout } from '../components/pageLayout';
+import Row from '../components/grid/row';
 
 export default function Page({ data }) {
   const [page] = useLocalJsonForm(data.page, PageForm);
@@ -348,14 +349,14 @@ export default function Page({ data }) {
 }
 
 const Wrapper = styled.div`
-  // padding-top: ${props => props.padding.paddingTop}px;
-  // padding-bottom: ${props => props.padding.paddingBottom}px;
-  // padding-right: ${props => props.padding.paddingRight}px;
-  // padding-left: ${props => props.padding.paddingLeft}px;
-  // margin-top: ${props => props.margin.marginTop}px;
-  // margin-bottom: ${props => props.margin.marginBottom}px;
-  // margin-right: ${props => props.margin.marginRight}px;
-  // margin-left: ${props => props.margin.marginLeft}px;
+  // padding-top: ${(props) => props.padding.paddingTop}px;
+  // padding-bottom: ${(props) => props.padding.paddingBottom}px;
+  // padding-right: ${(props) => props.padding.paddingRight}px;
+  // padding-left: ${(props) => props.padding.paddingLeft}px;
+  // margin-top: ${(props) => props.margin.marginTop}px;
+  // margin-bottom: ${(props) => props.margin.marginBottom}px;
+  // margin-right: ${(props) => props.margin.marginRight}px;
+  // margin-left: ${(props) => props.margin.marginLeft}px;
 `;
 
 const PageForm = {
@@ -364,7 +365,36 @@ const PageForm = {
     {
       label: 'Title',
       name: 'rawJson.title',
-      component: 'text'
+      component: 'text',
+    },
+    {
+      label: 'Sidebar',
+      name: 'rawJson.sidebar',
+      component: 'group',
+      fields: [
+        {
+          label: 'Show Sidebar',
+          name: 'showSidebar',
+          component: 'toggle',
+          defaultValue: true,
+        },
+        {
+          label: 'Sidebar Sections',
+          name: 'blocks',
+          component: 'blocks',
+          templates: {
+            TitleBlock,
+            ImageBlock,
+            FormBlock,
+            ContentBlock,
+            ContainerBlock,
+            ButtonBlock,
+            GridBlock,
+            SpacerBlock,
+            PostsBlock,
+          },
+        },
+      ],
     },
     {
       label: 'Hero',
@@ -375,92 +405,92 @@ const PageForm = {
           label: 'Show Hero',
           name: 'showHero',
           component: 'toggle',
-          defaultValue: true
+          defaultValue: true,
         },
         {
           label: 'Height',
           name: 'height',
           component: 'rangeNumber',
-          defaultValue: 250
+          defaultValue: 250,
         },
         {
           label: 'Headline',
           name: 'headline',
-          component: 'text'
+          component: 'text',
         },
         {
           label: 'Headline Color',
           name: 'headlineColor',
           component: 'text',
-          description: 'Primary, secondary or custom hex code (#555)'
+          description: 'Primary, secondary or custom hex code (#555)',
         },
         {
           label: 'Textline',
           name: 'textline',
-          component: 'text'
+          component: 'text',
         },
         {
           label: 'Textline Color',
           name: 'textlineColor',
           component: 'text',
-          description: 'Primary, secondary or custom hex code (#555)'
+          description: 'Primary, secondary or custom hex code (#555)',
         },
         {
           label: 'Image',
           name: 'image',
           component: 'image',
-          parse: filename => `../images/${filename}`,
+          parse: (filename) => `../images/${filename}`,
           uploadDir: () => '/content/images/',
-          previewSrc: formValues => {
+          previewSrc: (formValues) => {
             if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image)
               return '';
             return formValues.jsonNode.hero.image.childImageSharp.fluid.src;
-          }
+          },
         },
         {
           label: 'Overlay',
           description: 'Show overlay on hero',
           name: 'overlay',
-          component: 'toggle'
+          component: 'toggle',
         },
         {
           label: 'Overlay Color',
           name: 'overlayColor',
-          component: 'color'
+          component: 'color',
         },
         {
           label: 'Center',
           name: 'center',
-          component: 'toggle'
+          component: 'toggle',
         },
         {
           label: 'Actions',
           name: 'ctas',
           component: 'group-list',
-          itemProps: item => ({
+          itemProps: (item) => ({
             key: item.link,
-            label: item.label
+            label: item.label,
           }),
           fields: [
             {
               label: 'Label',
               name: 'label',
-              component: 'text'
+              component: 'text',
             },
             {
               label: 'Link',
               name: 'link',
-              component: 'text'
+              component: 'text',
             },
             {
               label: 'Background Color',
               name: 'backgroundColor',
               component: 'text',
-              description: 'Primary or Secondary'
-            }
-          ]
-        }
-      ]
+              description: 'Primary or Secondary',
+            },
+          ],
+        },
+      ],
     },
     {
       label: 'Page Sections',
@@ -475,10 +505,10 @@ const PageForm = {
         ButtonBlock,
         GridBlock,
         SpacerBlock,
-        PostsBlock
-      }
-    }
-  ]
+        PostsBlock,
+      },
+    },
+  ],
 };
 
 export const pageQuery = graphql`
@@ -509,6 +539,193 @@ export const pageQuery = graphql`
           backgroundColor
         }
       }
+      sidebar {
+        showSidebar
+        blocks {
+          _template
+          content
+          background
+          name
+          title
+          buttonText
+          height
+          style
+          left
+          right
+          buttonLink
+          buttonColor
+          underline
+          center
+          recipient
+          itemsToShow
+          style
+          maxNumberOfColumns
+          type
+          rounded
+          categories
+          demo
+          columnSpacing
+          containerBlocks {
+            _template
+            content
+            background
+            name
+            title
+            underline
+            center
+            recipient
+            itemsToShow
+            style
+            maxNumberOfColumns
+            type
+            rounded
+            categories
+            categories
+            demo
+            columnSpacing
+            columns {
+              _template
+              content
+              background
+              name
+              title
+              underline
+              center
+              recipient
+              itemsToShow
+              style
+              maxNumberOfColumns
+              type
+              rounded
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              buttonText
+              height
+              style
+              left
+              right
+              buttonLink
+              buttonColor
+              columnBlocks {
+                _template
+                content
+                background
+                name
+                title
+                underline
+                center
+                recipient
+                itemsToShow
+                style
+                maxNumberOfColumns
+                type
+                rounded
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+                buttonText
+                height
+                style
+                left
+                right
+                buttonLink
+                buttonColor
+                image {
+                  childImageSharp {
+                    fluid(quality: 70, maxWidth: 1920) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+              }
+            }
+            buttonText
+            height
+            style
+            left
+            right
+            buttonLink
+            buttonColor
+          }
+          columns {
+            _template
+            content
+            background
+            name
+            title
+            underline
+            center
+            recipient
+            itemsToShow
+            style
+            maxNumberOfColumns
+            type
+            rounded
+            categories
+            demo
+            widthOne
+            widthTwo
+            columnSpacing
+            buttonText
+            height
+            style
+            left
+            right
+            buttonLink
+            buttonColor
+            columnBlocks {
+              _template
+              content
+              background
+              name
+              title
+              underline
+              center
+              recipient
+              itemsToShow
+              style
+              maxNumberOfColumns
+              type
+              rounded
+              categories
+              demo
+              widthOne
+              widthTwo
+              buttonText
+              height
+              style
+              left
+              right
+              buttonLink
+              buttonColor
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
+          fields {
+            label
+            inputType
+            autocomplete
+          }
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+        }
+      }
       blocks {
         _template
         content
@@ -526,7 +743,10 @@ export const pageQuery = graphql`
         center
         recipient
         itemsToShow
+        style
         maxNumberOfColumns
+        type
+        rounded
         categories
         demo
         columnSpacing
@@ -540,7 +760,10 @@ export const pageQuery = graphql`
           center
           recipient
           itemsToShow
+          style
           maxNumberOfColumns
+          type
+          rounded
           categories
           categories
           demo
@@ -555,7 +778,10 @@ export const pageQuery = graphql`
             center
             recipient
             itemsToShow
+            style
             maxNumberOfColumns
+            type
+            rounded
             categories
             demo
             columnSpacing
@@ -578,7 +804,10 @@ export const pageQuery = graphql`
               center
               recipient
               itemsToShow
+              style
               maxNumberOfColumns
+              type
+              rounded
               categories
               demo
               columnSpacing
@@ -618,7 +847,10 @@ export const pageQuery = graphql`
           center
           recipient
           itemsToShow
+          style
           maxNumberOfColumns
+          type
+          rounded
           categories
           demo
           widthOne
@@ -641,7 +873,10 @@ export const pageQuery = graphql`
             center
             recipient
             itemsToShow
+            style
             maxNumberOfColumns
+            type
+            rounded
             categories
             demo
             widthOne

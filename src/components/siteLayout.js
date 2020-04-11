@@ -49,7 +49,10 @@ const MasterLayout = ({ children }) => {
       </Helmet>
       <Theme>
         <SiteWrapper>
-          <Header siteTitle={data.site.title} siteDescription={data.site.description} />
+          <Header
+            siteTitle={data.site.title}
+            siteDescription={data.site.description}
+          />
           {children}
           <Footer />
         </SiteWrapper>
@@ -59,7 +62,7 @@ const MasterLayout = ({ children }) => {
 };
 
 const SiteWrapper = styled.div`
-  background: #fff;
+  background: #f7f7f7;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -96,7 +99,6 @@ const CreatePageButton = new JsonCreatorPlugin({
         height: 120,
       },
       draft: false,
-      authors: [],
     };
   },
 });
@@ -122,7 +124,7 @@ const CreatePostButton = new JsonCreatorPlugin({
     return {
       title: form.title,
       path: `/blog/${replaceAll(form.title.toLowerCase(), ' ', '-')}`,
-      date: formatDate(new Date()),
+      date: formatDate(new Date().getTime()),
       blocks: [
         {
           content:
@@ -131,15 +133,8 @@ const CreatePostButton = new JsonCreatorPlugin({
           _template: 'ContentBlock',
         },
       ],
-      hero: {
-        headline: form.title,
-        center: true,
-        overlay: true,
-        overlayColor: '#867E7E',
-        height: 120,
-      },
       draft: false,
-      authors: [],
+      categories: ['all'],
     };
   },
 });

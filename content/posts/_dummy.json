@@ -3,6 +3,235 @@
   "path": "/blog/dummy",
   "date": "",
   "categories": ["projects", "charity"],
+  "image": "../images/cafe-2.jpg",
+  "rounded": true,
+  "sidebar": {
+    "showSidebar": true,
+    "sidebarSections": [
+      {
+        "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
+        "center": false,
+        "_template": "ContentBlock",
+        "sidebarBlocks": [
+          {
+            "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
+            "center": false,
+            "_template": "ContentBlock",
+            "name": "dummy",
+            "title": "dummy",
+            "type": "h1",
+            "sectionTitle": "dummy",
+            "buttonText": "Test",
+            "height": 0,
+            "style": "dummy",
+            "left": true,
+            "image": "../images/cafe-2.jpg",
+            "right": true,
+            "buttonLink": "dummy",
+            "buttonColor": "dummy",
+            "underline": true,
+            "recipient": "dummy",
+            "itemsToShow": 0,
+            "background": "#f7f7f7",
+            "maxNumberOfColumns": 0,
+            "categories": ["test"],
+            "demo": false,
+            "columnSpacing": 0,
+            "widthOne": 0,
+            "widthTwo": 0,
+            "columns": [
+              {
+                "_template": "ContentBlock",
+                "content": "## block content",
+                "name": "dummy",
+                "title": "dummy",
+                "type": "h1",
+                "sectionTitle": "dummy",
+                "itemsToShow": 0,
+                "maxNumberOfColumns": 0,
+                "categories": ["test"],
+                "demo": false,
+                "columnSpacing": 0,
+                "widthOne": 0,
+                "widthTwo": 0,
+                "center": false,
+                "left": false,
+                "right": false,
+                "buttonText": "Test",
+                "height": 0,
+                "style": "dummy",
+                "buttonLink": "/",
+                "buttonColor": "primary",
+                "underline": true,
+                "recipient": "dummy",
+                "image": "../images/cafe-2.jpg",
+                "rounded": true,
+                "background": "#f7f7f7",
+                "fields": [
+                  {
+                    "_template": "dummy",
+                    "label": "dummy",
+                    "inputType": "dummy",
+                    "autocomplete": "dummy",
+                    "image": "../images/cafe-2.jpg"
+                  }
+                ],
+                "columnBlocks": [
+                  {
+                    "_template": "ContentBlock",
+                    "content": "## block content",
+                    "name": "dummy",
+                    "title": "dummy",
+                    "type": "h1",
+                    "sectionTitle": "dummy",
+                    "itemsToShow": 0,
+                    "maxNumberOfColumns": 0,
+                    "categories": ["test"],
+                    "demo": false,
+                    "columnSpacing": 0,
+                    "widthOne": 0,
+                    "widthTwo": 0,
+                    "center": false,
+                    "left": false,
+                    "right": false,
+                    "buttonText": "Test",
+                    "height": 0,
+                    "style": "dummy",
+                    "buttonLink": "/",
+                    "buttonColor": "primary",
+                    "underline": true,
+                    "recipient": "dummy",
+                    "image": "../images/cafe-2.jpg",
+                    "rounded": true,
+                    "background": "#f7f7f7",
+                    "fields": [
+                      {
+                        "_template": "dummy",
+                        "label": "dummy",
+                        "inputType": "dummy",
+                        "autocomplete": "dummy"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "fields": {
+              "label": "dummy",
+              "inputType": "dummy",
+              "autocomplete": true
+            },
+            "rounded": true
+          }
+        ],
+        "name": "dummy",
+        "title": "dummy",
+        "type": "h1",
+        "sectionTitle": "dummy",
+        "buttonText": "Test",
+        "height": 0,
+        "style": "dummy",
+        "left": true,
+        "image": "../images/cafe-2.jpg",
+        "right": true,
+        "buttonLink": "dummy",
+        "buttonColor": "dummy",
+        "underline": true,
+        "recipient": "dummy",
+        "itemsToShow": 0,
+        "background": "#f7f7f7",
+        "maxNumberOfColumns": 0,
+        "categories": ["test"],
+        "demo": false,
+        "columnSpacing": 0,
+        "widthOne": 0,
+        "widthTwo": 0,
+        "columns": [
+          {
+            "_template": "ContentBlock",
+            "content": "## block content",
+            "name": "dummy",
+            "title": "dummy",
+            "type": "h1",
+            "sectionTitle": "dummy",
+            "itemsToShow": 0,
+            "maxNumberOfColumns": 0,
+            "categories": ["test"],
+            "demo": false,
+            "columnSpacing": 0,
+            "widthOne": 0,
+            "widthTwo": 0,
+            "center": false,
+            "left": false,
+            "right": false,
+            "buttonText": "Test",
+            "height": 0,
+            "style": "dummy",
+            "buttonLink": "/",
+            "buttonColor": "primary",
+            "underline": true,
+            "recipient": "dummy",
+            "image": "../images/cafe-2.jpg",
+            "rounded": true,
+            "background": "#f7f7f7",
+            "fields": [
+              {
+                "_template": "dummy",
+                "label": "dummy",
+                "inputType": "dummy",
+                "autocomplete": "dummy",
+                "image": "../images/cafe-2.jpg"
+              }
+            ],
+            "columnBlocks": [
+              {
+                "_template": "ContentBlock",
+                "content": "## block content",
+                "name": "dummy",
+                "title": "dummy",
+                "type": "h1",
+                "sectionTitle": "dummy",
+                "itemsToShow": 0,
+                "maxNumberOfColumns": 0,
+                "categories": ["test"],
+                "demo": false,
+                "columnSpacing": 0,
+                "widthOne": 0,
+                "widthTwo": 0,
+                "center": false,
+                "left": false,
+                "right": false,
+                "buttonText": "Test",
+                "height": 0,
+                "style": "dummy",
+                "buttonLink": "/",
+                "buttonColor": "primary",
+                "underline": true,
+                "recipient": "dummy",
+                "image": "../images/cafe-2.jpg",
+                "rounded": true,
+                "background": "#f7f7f7",
+                "fields": [
+                  {
+                    "_template": "dummy",
+                    "label": "dummy",
+                    "inputType": "dummy",
+                    "autocomplete": "dummy"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "fields": {
+          "label": "dummy",
+          "inputType": "dummy",
+          "autocomplete": true
+        },
+        "rounded": true
+      }
+    ]
+  },
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -10,16 +239,20 @@
       "_template": "ContentBlock",
       "name": "dummy",
       "title": "dummy",
+      "type": "h1",
+      "sectionTitle": "dummy",
       "buttonText": "Test",
       "height": 0,
       "style": "dummy",
       "left": true,
+      "image": "../images/cafe-2.jpg",
       "right": true,
       "buttonLink": "dummy",
       "buttonColor": "dummy",
       "underline": true,
       "recipient": "dummy",
       "itemsToShow": 0,
+      "background": "#f7f7f7",
       "maxNumberOfColumns": 0,
       "categories": ["test"],
       "demo": false,
@@ -32,6 +265,8 @@
           "content": "## block content",
           "name": "dummy",
           "title": "dummy",
+          "type": "h1",
+          "sectionTitle": "dummy",
           "itemsToShow": 0,
           "maxNumberOfColumns": 0,
           "categories": ["test"],
@@ -49,14 +284,16 @@
           "buttonColor": "primary",
           "underline": true,
           "recipient": "dummy",
-          "image": "../images/dummy.jpg",
+          "image": "../images/cafe-2.jpg",
+          "rounded": true,
           "background": "#f7f7f7",
           "fields": [
             {
               "_template": "dummy",
               "label": "dummy",
               "inputType": "dummy",
-              "autocomplete": "dummy"
+              "autocomplete": "dummy",
+              "image": "../images/cafe-2.jpg"
             }
           ],
           "columnBlocks": [
@@ -65,6 +302,8 @@
               "content": "## block content",
               "name": "dummy",
               "title": "dummy",
+              "type": "h1",
+              "sectionTitle": "dummy",
               "itemsToShow": 0,
               "maxNumberOfColumns": 0,
               "categories": ["test"],
@@ -82,7 +321,8 @@
               "buttonColor": "primary",
               "underline": true,
               "recipient": "dummy",
-              "image": "../images/dummy.jpg",
+              "image": "../images/cafe-2.jpg",
+              "rounded": true,
               "background": "#f7f7f7",
               "fields": [
                 {
@@ -101,17 +341,8 @@
         "inputType": "dummy",
         "autocomplete": true
       },
-      "image": "../images/ISeeTheLightTwo_2.12.1.jpg"
+      "rounded": true
     }
   ],
-  "hero": {
-    "image": "../images/fireworks_three.jpg",
-    "overlay": true,
-    "overlayColor": "#404040",
-    "center": true,
-    "showHero": true,
-    "height": 1
-  },
-  "draft": false,
-  "authors": ["john-yoost"]
+  "draft": false
 }

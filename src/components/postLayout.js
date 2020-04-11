@@ -18,9 +18,9 @@ import SignupModal from './account/SignupModal';
 
 const merge = require('lodash.merge');
 
-export const PageLayout = ({ page, children, isPost }) => {
+export const PostLayout = ({ post, children, isPost }) => {
   const data = useStaticQuery(graphql`
-    query PageLayoutQuery {
+    query PostLayoutQuery {
       nav: settingsJson(
         fileRelativePath: { eq: "/content/settings/menu.json" }
       ) {
@@ -60,6 +60,7 @@ export const PageLayout = ({ page, children, isPost }) => {
         logo
         title
         description
+        author
 
         rawJson
         fileRelativePath
@@ -82,69 +83,22 @@ export const PageLayout = ({ page, children, isPost }) => {
 
   const themeContext = React.useContext(ThemeContext);
   const { theme } = themeContext;
-  const pageTitle =
-    page && page.title
-      ? page.title
-      : page && page.frontmatter && page.frontmatter.title
-      ? page.frontmatter.title
+  const postTitle =
+    post && post.title
+      ? post.title
+      : post && post.frontmatter && post.frontmatter.title
+      ? post.frontmatter.title
       : '';
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
 
-  const closeSignupModal = () => {
-    setShowSignupModal(false);
-  };
-
-  if (page && page.hero) {
-    const pageHero = page.hero;
-    const mergedHero = pageHero
-      ? merge({}, theme.hero, removeNull(pageHero))
-      : theme.hero;
-
-    return (
-      <>
-        {pageTitle && <SEO title={pageTitle} />}
-        {page.hero.showHero ? (
-          <>
-            <Hero
-              title={pageTitle}
-              hero={mergedHero}
-              headerHeight={theme.header.height}
-              theme={theme}
-            />
-          </>
-        ) : null}
-        <PageWrapper showHero={page.hero.showHero}>
-          <>{children}</>
-          {showLoginModal && (
-            <LoginModal
-              pathname={window.location.pathname}
-              show={showLoginModal}
-              toggleFunction={closeLoginModal}
-            />
-          )}
-          {showSignupModal && (
-            <SignupModal
-              pathname={window.location.pathname}
-              show={showSignupModal}
-              toggleFunction={closeSignupModal}
-            />
-          )}
-        </PageWrapper>
-      </>
-    );
-  } else {
-    return (
-      <>
-        {pageTitle && <SEO title={pageTitle} />}
-        <PageWrapper padding>
-          <div>{children}</div>
-        </PageWrapper>
-      </>
-    );
-  }
+  return (
+    <>
+      {postTitle && <SEO title={postTitle} />}
+      <PostWrapper padding>
+        <div>{children}</div>
+      </PostWrapper>
+    </>
+  );
 };
 
 const SiteForm = {
@@ -174,9 +128,17 @@ const SiteForm = {
         return value || '';
       },
     },
+    {
+      label: 'Author',
+      name: 'rawJson.author',
+      component: 'text',
+      parse(value) {
+        return value || '';
+      },
+    },
   ],
 };
 
-const PageWrapper = styled.div`
+const PostWrapper = styled.div`
   padding: 0;
 `;

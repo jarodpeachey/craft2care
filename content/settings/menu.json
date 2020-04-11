@@ -12,10 +12,6 @@
     {
       "label": "Blog",
       "link": "/blog"
-    },
-    {
-      "label": "Contact",
-      "link": "/contact"
     }
   ],
   "__gatsby_resolved": {

@@ -16,7 +16,7 @@
   ],
   "sidebar": {
     "showSidebar": true,
-    "sections": [
+    "sidebarSections": [
       {
         "_template": "SidebarBlock",
         "sectionTitle": "Related",
@@ -56,7 +56,7 @@
                 "columnBlocks": [
                   {
                     "_template": "ContentBlock",
-                    "content": "This is so cool. A blog with a sidebar!! Go find me on so",
+                    "content": "This is so cool. A blog with a sidebar!! Go find me on social media!",
                     "center": false
                   }
                 ]

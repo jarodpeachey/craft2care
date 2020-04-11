@@ -14,7 +14,7 @@ import { Container, ContainerBlock } from '../blocks/container';
 import { Button, ButtonBlock } from '../blocks/button';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
 import { PageLayout } from '../components/pageLayout';
-import { ListAuthors } from '../components/authors';
+// import { ListAuthors } from '../components/author';
 import { ListCategories } from '../components/categories';
 import { formatDate } from '../utils/formatDate';
 import { Posts } from '../blocks/posts';

@@ -10,10 +10,11 @@ import { useLocalJsonForm } from 'gatsby-tinacms-json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Img from 'gatsby-image';
 import Row from '../components/grid/row';
-import { ListAuthors, AuthorsForm } from '../components/authors';
+// import { ListAuthors, AuthorsForm } fro../components/authorors';
 import { DraftBadge } from '../components/style';
 import { ThemeContext } from '../components/theme';
 import { ListCategories } from '../components/categories';
+import { shortenText } from '../utils/shortenText';
 
 let globalCategories = [];
 
@@ -25,22 +26,23 @@ export function Posts({ page, data }) {
     query postsQuery {
       posts: allPostsJson(
         sort: { fields: id, order: DESC }
-        filter: { draft: { eq: false } }
+        filter: { draft: { eq: false }, title: { ne: "Dummy" } }
       ) {
         edges {
           node {
-            authors
             categories
             id
             path
+            blocks {
+              _template
+              content
+            }
             title
             draft
-            hero {
-              image {
-                childImageSharp {
-                  fluid(quality: 70, maxWidth: 1920) {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -62,54 +64,27 @@ export function Posts({ page, data }) {
 
   console.log(globalCategories);
 
-  let rowProps = {};
-  let columnProps = {};
+  const rowProps = {
+    maxColumnSize: 3,
+    breakpoints: [769, 960],
+    spacing: [12],
+  };
+  let widths = [{}];
 
   if (data.itemsToShow === 1) {
-    rowProps = {
-      maxColumnSize: 12 / data.maxNumberOfColumns,
-      breakpoints: [576],
-      spacing: [12],
-    };
-    columnProps = {
-      widths: [12],
-    };
+    widths = [12];
   } else if (data.itemsToShow === 2) {
-    rowProps = {
-      maxColumnSize: 12 / data.maxNumberOfColumns,
-      breakpoints: [576],
-      spacing: [12],
-    };
-    columnProps = {
-      widths: [6],
-    };
+    widths = [6];
   } else if (data.itemsToShow === 3) {
-    rowProps = {
-      maxColumnSize: 12 / data.maxNumberOfColumns,
-      breakpoints: [576, 769],
-      spacing: [12],
-    };
-    columnProps = {
-      widths: [6, 4],
-    };
+    widths = [6, 4];
   } else if (data.itemsToShow === 4 || data.itemsToShow === 5) {
-    rowProps = {
-      maxColumnSize: 12 / data.maxNumberOfColumns,
-      breakpoints: [576, 769, 960],
-      spacing: [12],
-    };
-    columnProps = {
-      widths: [6, 4, 3],
-    };
+    widths = [6, 4];
   } else if (data.itemsToShow >= 6) {
-    rowProps = {
-      maxColumnSize: 12 / data.maxNumberOfColumns,
-      breakpoints: [576, 769, 960],
-      spacing: [12],
-    };
-    columnProps = {
-      widths: [6, 4, 12 / data.maxNumberOfColumns],
-    };
+    widths = [6, 4, 12 / data.maxNumberOfColumns];
+  }
+
+  if (posts.edges.length === 1) {
+    widths = [12];
   }
 
   // const [authors] = useLocalJsonForm(data.authors, AuthorsForm);
@@ -117,7 +92,12 @@ export function Posts({ page, data }) {
   const isPostForDisplay = () => {
     const newArray = [];
     posts.edges.map(({ node }) => {
-      if (data.categories && data.categories.length > 0) {
+      if (
+        data.categories &&
+        data.categories.length > 0 &&
+        node.categories &&
+        node.categories.length > 0
+      ) {
         data.categories.map((category) => {
           if (node.categories.includes(category)) {
             newArray.push(node);
@@ -145,25 +125,31 @@ export function Posts({ page, data }) {
 
   return (
     <>
-      <Row {...rowProps}>
-        {postsToDisplay.map((post, index) => {
-          const authors = ListAuthors(post.authors);
-          const categories = ListCategories(post.categories);
-          if (index < data.itemsToShow) {
-            console.log(post.hero.image);
-            console.log(theme.hero);
-            return (
-              <div
-                className='full-height'
-                key={`product-${index}`}
-                {...columnProps}
-              >
-                <Link className='no-underline' to={post.path}>
+      {data.style === 'Grid' ? (
+        <Row {...rowProps}>
+          {postsToDisplay.map((post, index) => {
+            let excerpt = '';
+            post.blocks.map((block) => {
+              if (block._template === 'ContentBlock') {
+                excerpt = shortenText(block.content, 100);
+              }
+            });
+            // const authors = ListAuthors(post.authors);
+            const categories = ListCategories(post.categories);
+            if (index < data.itemsToShow) {
+              console.log(post.image);
+              console.log(theme.hero);
+              return (
+                <div
+                  className='full-height'
+                  key={`product-${index}`}
+                  widths={widths}
+                >
                   <Card key={post.id}>
                     <PostImage
                       fluid={
-                        post.hero.image
-                          ? post.hero.image.childImageSharp.fluid
+                        post.image
+                          ? post.image.childImageSharp.fluid
                           : theme.hero.image.childImageSharp.fluid // WORK TO DO
                       }
                     />
@@ -175,37 +161,71 @@ export function Posts({ page, data }) {
                       {/* <p>{post.excerpt}</p> */}
                       <PostMeta>
                         <PostDate>{post.date}</PostDate>
-                        {authors && authors.length > 0 && (
-                          <PostAuthors>
-                            by <span>{authors[0].name}</span>
-                          </PostAuthors>
-                        )}
+                        <PostAuthor>
+                          by <span>Test</span>
+                        </PostAuthor>
                         {categories && categories.length > 0 && (
                           <PostCategories>
                             {categories.map((category) => {
                               return (
-                                <PostCategory>{category.name}</PostCategory>
+                                <PostCategory>
+                                  <Link
+                                    className='no-underline'
+                                    to={`/category/${category.id}`}
+                                  >
+                                    {category.name}
+                                  </Link>
+                                </PostCategory>
                               );
                             })}
                           </PostCategories>
                         )}
+                        <PostExcerpt>{excerpt}</PostExcerpt>
                         <PostLink>
-                          Read More
-                          <PostIcon>
-                            <FontAwesomeIcon icon='arrow-right' />
-                          </PostIcon>
+                          <Link className='no-underline' to={post.path}>
+                            Read More
+                            <PostIcon>
+                              <FontAwesomeIcon icon='arrow-right' />
+                            </PostIcon>
+                          </Link>
                         </PostLink>
                       </PostMeta>
                     </CardContent>
                   </Card>
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </Row>
+      ) : (
+        <div>
+          {postsToDisplay.map((post, index) => {
+            let excerpt = '';
+            post.blocks.map((block) => {
+              if (block._template === 'ContentBlock') {
+                excerpt = shortenText(block.content, 100);
+              }
+            });
+            if (index < data.itemsToShow) {
+              console.log(post.image);
+              console.log(theme.hero);
+              return (
+                <Link className='no-underline' to={post.path}>
+                  {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}
+                  <ListTitle>{post.title}</ListTitle>
+                  <ListExcerpt>{excerpt}</ListExcerpt>
+                  {index < data.itemsToShow - 1 ||
+                    (index < postsToDisplay.length - 1 && <ListSeperator />)}
                 </Link>
-              </div>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </Row>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+      )}
     </>
   );
 }
@@ -219,25 +239,6 @@ const Card = styled.div`
   height: fit;
   color: black;
   transition-duration: 0.25s;
-  img,
-  source,
-  picture {
-    transition: all 0.25s linear 0ms !important;
-  }
-  &:hover {
-    img,
-    source,
-    picture {
-      transform: scale(1.05);
-      transition: all 0.25s linear 0ms !important;
-    }
-    transition-duration: 0.25s;
-    color: ${(props) => props.theme.color.primary} !important;
-    h4,
-    small {
-      color: ${(props) => props.theme.color.primary} !important;
-    }
-  }
 `;
 
 const CardContent = styled.div`
@@ -252,13 +253,18 @@ const PostTitle = styled.h2`
     text-decoration: none;
     color: ${(props) => props.theme.color.black};
   }
+  :hover {
+    a {
+      color: ${(props) => props.theme.color.primary};
+    }
+  }
 `;
 
 const PostMeta = styled.div``;
 
 const PostDate = styled.div``;
 
-const PostAuthors = styled.div`
+const PostAuthor = styled.div`
   font-size: 16px;
 `;
 
@@ -271,7 +277,17 @@ const PostCategories = styled.div`
 
 const PostCategory = styled.div`
   // background: ${(props) => props.theme.color.primary}20;
-  color: ${(props) => props.theme.color.black};
+  color: ${(props) => props.theme.color.black} !important;
+  a {
+    color: ${(props) => props.theme.color.black} !important;
+  }
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.color.primary} !important;
+    a {
+      color: ${(props) => props.theme.color.primary} !important;
+    }
+  }
   padding: 0 4px;
   margin: 4px;
   width: fit-content;
@@ -279,6 +295,11 @@ const PostCategory = styled.div`
   border-radius: 4px;
   background: #f7f7f7;
   border: 1px solid #e8e8e8;
+`;
+
+const PostExcerpt = styled.p`
+  margin: 12px 0;
+  color: ${(props) => props.theme.color.black};
 `;
 
 const PostIcon = styled.span`
@@ -293,9 +314,38 @@ const PostLink = styled.div`
   text-align: right;
   a {
     text-decoration: none;
-    color: ${(props) => props.theme.color.primary};
+    color: ${(props) => props.theme.color.black};
+    :hover {
+      color: ${(props) => props.theme.color.primary};
+    }
   }
 `;
+
+const ListFlex = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const ListTitle = styled.div`
+  font-weight: bold;
+`;
+
+const ListExcerpt = styled.p`
+  color: ${(props) => props.theme.color.black}80;
+  font-size: 15px;
+  line-height: 1.4em;
+`;
+
+const ListSeperator = styled.div`
+  width: 30%;
+  background: ${(props) => props.theme.color.primary};
+  margin: 8px 0;
+  height: 2px;
+`;
+
+const ListImage = styled(Img)``;
 
 export const PostsBlock = {
   label: 'Posts Grid',
@@ -366,6 +416,12 @@ export const PostsBlock = {
     //     }
     //   ]
     // },
+    {
+      label: 'Style',
+      name: 'style',
+      component: 'select',
+      options: ['List', 'Grid'],
+    },
     {
       label: 'Add Categories',
       name: 'categories',

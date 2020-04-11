@@ -2,7 +2,7 @@
   "path": "/",
   "blocks": [
     {
-      "background": "#f7f7f7",
+      "background": "fff",
       "_template": "ContainerBlock",
       "containerBlocks": [
         {
@@ -15,7 +15,8 @@
           "itemsToShow": 3,
           "_template": "PostsBlock",
           "maxNumberOfColumns": 4,
-          "categories": ["charity"]
+          "categories": [],
+          "style": "Grid"
         }
       ]
     }
@@ -42,5 +43,11 @@
     "showHero": false
   },
   "displayTitle": true,
-  "title": "Home"
+  "title": "Home",
+  "sidebar": {
+    "rawJson": {
+      "sidebarBlocks": []
+    },
+    "showSidebar": false
+  }
 }

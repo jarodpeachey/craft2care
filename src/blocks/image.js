@@ -4,18 +4,23 @@ import Img from 'gatsby-image';
 import get from 'lodash.get';
 
 export function Image({ data }) {
+  console.log(data);
   return (
-    data.image &&
-    data.image.childImageSharp && (
-      <ImageWrapper>
+    <>
+      {data.image && data.image.childImageSharp && (
+        // <ImageWrapper rounded={data.rounded}>
         <Img fluid={data.image.childImageSharp.fluid} />
-      </ImageWrapper>
-    )
+        // </ImageWrapper>
+      )}
+    </>
   );
 }
 
 const ImageWrapper = styled.div`
   overflow: hidden;
+  img {
+    border-radius: ${(props) => (props.rounded ? '50%' : '')};
+  }
 `;
 
 export const ImageBlock = {
@@ -23,7 +28,7 @@ export const ImageBlock = {
   name: 'image',
   key: 'test',
   defaultItem: {
-    image: ''
+    image: '',
   },
   fields: [
     // {
@@ -92,14 +97,20 @@ export const ImageBlock = {
       label: 'Image',
       name: 'image',
       component: 'image',
-      parse: filename => `../images/${filename}`,
+      parse: (filename) => `../images/${filename}`,
       uploadDir: () => `/content/images/`,
       previewSrc: (formValues, fieldProps) => {
         const pathName = fieldProps.input.name.replace('rawJson', 'jsonNode');
         const imageNode = get(formValues, pathName);
         if (!imageNode || !imageNode.childImageSharp) return '';
         return imageNode.childImageSharp.fluid.src;
-      }
-    }
-  ]
+      },
+    },
+    {
+      label: 'Rounded',
+      name: 'rounded',
+      component: 'toggle',
+      defaultValue: false,
+    },
+  ],
 };

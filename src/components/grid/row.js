@@ -10,7 +10,8 @@ const Row = ({
   children,
   className,
   maxColumnSize = 2,
-  demo
+  demo,
+  vertical,
 }) => {
   return (
     <Wrapper
@@ -19,8 +20,10 @@ const Row = ({
       breakpoint={breakpoints[0]}
       spacingX={spacing[0]}
       spacingY={spacing[1] || spacing[0]}
+      vertical={vertical}
     >
-      {React.Children.toArray(children).map(item => {
+      {React.Children.toArray(children).map((item) => {
+        console.log(item);
         return item ? (
           <>
             {item.props && item.props.noGrid ? (
@@ -46,11 +49,19 @@ const Row = ({
 };
 
 const Wrapper = styled.div`
-  margin: 0 -${props => props.spacingX}px 0 -${props => props.spacingX}px;
-  @media (min-width: ${props => props.breakpoint}px) {
+  ${(props) =>
+    props.vertical
+      ? css`
+          display: flex;
+          flex-direction: column;
+          margin: -${props.spacingY}px -${props.spacingX}px -${props.spacingY}px -${props.spacingX}px;
+        `
+      : css`
+    margin: 0 -${props.spacingX}px 0 -${props.spacingX}px;
+  @media (min-width: ${props.breakpoint}px) {
     display: flex;
     flex-wrap: wrap;
-    ${props =>
+    ${
       props.standardWidth
         ? `
         margin: 0;
@@ -58,19 +69,22 @@ const Wrapper = styled.div`
       `
         : `
         margin: 0 -${props.spacingX}px 0 -${props.spacingX}px;
-    width: calc(100% + ${props.spacing * 2}px);
-      `}
+    width: calc(100% + ${props.spacingX * 2}px);
+      `
+    }
+  `}
+
   }
 `;
 
 Row.propTypes = {
   breakpoint: PropTypes.number,
-  spacing: PropTypes.number
+  spacing: PropTypes.number,
 };
 
 Row.defaultProps = {
   breakpoint: 769,
-  spacing: 8
+  spacing: 8,
 };
 
 export default Row;
