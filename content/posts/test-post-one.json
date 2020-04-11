@@ -10,10 +10,61 @@
     }
   ],
   "draft": false,
-  "authors": [
-    "diane-boykas"
-  ],
   "categories": [
-    "all"
-  ]
+    "charity",
+    null
+  ],
+  "sidebar": {
+    "showSidebar": true,
+    "sections": [
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "Related",
+        "sidebarBlocks": [
+          {
+            "itemsToShow": 3,
+            "_template": "PostsBlock",
+            "maxNumberOfColumns": 4
+          }
+        ]
+      },
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "About Me",
+        "sidebarBlocks": [
+          {
+            "_template": "GridBlock",
+            "maxNumberOfColumns": 4,
+            "columnSpacing": 12,
+            "columns": [
+              {
+                "_template": "ColumnBlock",
+                "widthOne": 3,
+                "widthTwo": 12,
+                "columnBlocks": [
+                  {
+                    "image": "../images/DONE.jpg",
+                    "_template": "ImageBlock",
+                    "rounded": true
+                  }
+                ]
+              },
+              {
+                "_template": "ColumnBlock",
+                "widthOne": 7,
+                "widthTwo": 12,
+                "columnBlocks": [
+                  {
+                    "_template": "ContentBlock",
+                    "content": "This is so",
+                    "center": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }
