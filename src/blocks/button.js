@@ -27,7 +27,9 @@ export function Button({ page, data }) {
     );
   }
 
-  return null;
+  else {
+    return null;
+}
 }
 
 const StyledButton = styled(MaterialButton)`

@@ -11,7 +11,9 @@ export function Spacer ({ page, data, height }) {
     );
   }
 
-  return null;
+  else {
+    return null;
+}
 }
 
 const Wrapper = styled.div`

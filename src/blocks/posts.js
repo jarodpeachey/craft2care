@@ -19,7 +19,6 @@ import { shortenText } from '../utils/shortenText';
 let globalCategories = [];
 
 export function Posts({ page, data }) {
-  console.log(data);
   const { theme } = useContext(ThemeContext);
 
   const { posts, settingsJson } = useStaticQuery(graphql`
@@ -61,8 +60,6 @@ export function Posts({ page, data }) {
   `);
 
   globalCategories = settingsJson.categories;
-
-  console.log(globalCategories);
 
   const rowProps = {
     maxColumnSize: 3,
@@ -117,8 +114,6 @@ export function Posts({ page, data }) {
 
   const postsToDisplay = isPostForDisplay();
 
-  console.log(postsToDisplay);
-
   // const postsToUse = allCategories.categories.filter(
   //   (category) => !postCategories.includes(category.id)
   // );
@@ -138,8 +133,6 @@ export function Posts({ page, data }) {
               // const authors = ListAuthors(post.authors);
               const categories = ListCategories(post.categories);
               if (index < data.itemsToShow) {
-                console.log(post.image);
-                console.log(theme.hero);
                 return (
                   <div
                     className='full-height'
@@ -210,8 +203,6 @@ export function Posts({ page, data }) {
                 }
               });
               if (index < data.itemsToShow) {
-                console.log(post.image);
-                console.log(theme.hero);
                 return (
                   <Link className='no-underline' to={post.path}>
                     {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}

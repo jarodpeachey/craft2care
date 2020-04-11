@@ -1,4 +1,5 @@
 const proxy = require('http-proxy-middleware');
+const path = require('path');
 const theme = require('./content/settings/theme.json');
 const site = require('./content/settings/site.json');
 
@@ -15,8 +16,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/content/images`,
         name: 'images',
+        path: path.join(__dirname, 'content', 'images'),
       },
     },
     {

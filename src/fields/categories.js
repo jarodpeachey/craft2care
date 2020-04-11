@@ -40,9 +40,6 @@ export const CategoriesField = (props) => {
     [field.name, form.mutators]
   );
 
-  console.log('All categories: ', allCategories.categories);
-  console.log('Post categories: ', postCategories);
-
   useEffect(() => {
     // allCategories = field.categories;
     // postCategories = input.value || [];
@@ -74,15 +71,12 @@ export const CategoriesField = (props) => {
   const searchArray = (value) => {
     let removed = 0;
 
-    console.log('Searcing array');
     const filter = value.toUpperCase();
     const div = document.getElementById('dropdown');
     const a = div.getElementsByClassName(`${CategoryOption.styledComponentId}`);
-    console.log(a);
 
     for (let i = 0; i < a.length; i++) {
       const txtValue = a[i].textContent || a[i].innerText;
-      console.log(a[i]);
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
         a[i].style.display = '';
       } else {

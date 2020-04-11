@@ -6,7 +6,6 @@ import { graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Form, { FormBlock } from '../blocks/form';
 import { Title, TitleBlock } from '../blocks/title';
 import { Image, ImageBlock } from '../blocks/image';
 import { Content, ContentBlock } from '../blocks/content';
@@ -21,8 +20,6 @@ import { Posts } from '../blocks/posts';
 // import { useAuthors } from '../components/useAuthors';
 
 export default function (props) {
-  console.log(props);
-
   // console.log(post);
 
   return (
