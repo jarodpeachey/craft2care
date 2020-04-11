@@ -63,12 +63,12 @@ const Header = ({
               </SiteTitle>
               <SiteDescription>{siteDescription}</SiteDescription>
               <Nav backgroundColor={backgroundColor} />
-              <MobileNav backgroundColor={backgroundColor} />
+              <MobileMenu backgroundColor={backgroundColor} />
               {/* <AccountMenu
                 isSignedIn={isSignedIn}
                 backgroundColor={backgroundColor}
               /> */}
-              {/* <MobileNav backgroundColor={backgroundColor} /> */}
+              {/* <MobileMenu backgroundColor={backgroundColor} /> */}
             </Flex>
           </Wrapper>
         );
