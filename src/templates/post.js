@@ -54,120 +54,116 @@ export default function ({ data, ...props }) {
       post.sidebar.showSidebar &&
       post.sidebar.sidebarSections.length > 0 ? (
         <div className='container top bototm'>
-          <Row spacing={[28, 12]} breakpoints={[769]}>
+          <Row spacing={[28, 0]} breakpoints={[769]}>
             <div widths={[8]}>
-              <Row spacing={[0, 28]} breakpoints={[769]}>
-                <div widths={[12]}>
-                  <Card>
-                    <PostImage
-                      fluid={
-                        post.image
-                          ? post.image.childImageSharp.fluid
-                          : theme.hero.image.childImageSharp.fluid // WORK TO DO
-                      }
-                    />
-                    <PostHeader>
-                      <PostTitle>{post.title}</PostTitle>
-                      <PostLink to='/blog'>
-                        <PostIcon>
-                          <FontAwesomeIcon icon='arrow-left' />
-                        </PostIcon>{' '}
-                        Back to Blog
-                      </PostLink>
-                    </PostHeader>
-                    <PostDate>{newDate}</PostDate>
-                    {theme && theme.length > 0 && (
-                      <PostAuthor>
-                        {' - '}
-                        <em>By</em>&nbsp;
-                        <span>{author.name}</span>
-                      </PostAuthor>
-                    )}
-                    {categories && categories.length > 0 && (
-                      <PostCategories>
-                        {categories.map((category) => {
-                          return <PostCategory>{category.name}</PostCategory>;
-                        })}
-                      </PostCategories>
-                    )}
-                    <Spacer height={48} />
-                    {blocks &&
-                      blocks.map(({ _template, ...block }, index) => {
-                        switch (_template) {
-                          case 'TitleBlock':
-                            return (
-                              <div
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                              >
-                                <Title page={post} data={block} />
-                              </div>
-                            );
-                          case 'ButtonBlock':
-                            return (
-                              <div
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                              >
-                                <Button data={block} />
-                              </div>
-                            );
-                          case 'ImageBlock':
-                            return (
-                              <div
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                              >
-                                <Image data={block} />
-                              </div>
-                            );
-                          case 'FormBlock':
-                            return (
-                              <div
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                              >
-                                <Form form={block} />
-                              </div>
-                            );
-                          case 'GridBlock':
-                            return (
-                              <div
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                              >
-                                <Grid page={post} data={block} />
-                              </div>
-                            );
-                          case 'ContentBlock':
-                            if (block.content)
-                              return (
-                                <div
-                                  key={`post-${post.title}-container-${_template}-block-${index}`}
-                                >
-                                  <Content
-                                    key={`post-${post.title}-${_template}-block-${index}`}
-                                    data={block}
-                                  />
-                                </div>
-                              );
-                            break;
-                          case 'ContainerBlock':
-                            return (
-                              <Container
-                                key={`post-${post.title}-${_template}-block-${index}`}
-                                id={index}
-                                page={post}
-                                data={block}
-                              />
-                            );
-                          case 'SpacerBlock':
-                            return <Spacer data={block} />;
-                          default:
-                            return true;
-                        }
+              <Column>
+                <Card>
+                  <PostImage
+                    fluid={
+                      post.image
+                        ? post.image.childImageSharp.fluid
+                        : theme.hero.image.childImageSharp.fluid // WORK TO DO
+                    }
+                  />
+                  <PostHeader>
+                    <PostTitle>{post.title}</PostTitle>
+                    <PostLink to='/blog'>
+                      <PostIcon>
+                        <FontAwesomeIcon icon='arrow-left' />
+                      </PostIcon>{' '}
+                      Back to Blog
+                    </PostLink>
+                  </PostHeader>
+                  <PostDate>{newDate}</PostDate>
+                  {theme && theme.length > 0 && (
+                    <PostAuthor>
+                      {' - '}
+                      <em>By</em>&nbsp;
+                      <span>{author.name}</span>
+                    </PostAuthor>
+                  )}
+                  {categories && categories.length > 0 && (
+                    <PostCategories>
+                      {categories.map((category) => {
+                        return <PostCategory>{category.name}</PostCategory>;
                       })}
-                  </Card>
-                </div>
-                <div widths={[12]}>
-                  <Comments comments={[]} />
-                </div>
-              </Row>
+                    </PostCategories>
+                  )}
+                  <Spacer height={48} />
+                  {blocks &&
+                    blocks.map(({ _template, ...block }, index) => {
+                      switch (_template) {
+                        case 'TitleBlock':
+                          return (
+                            <div
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                            >
+                              <Title page={post} data={block} />
+                            </div>
+                          );
+                        case 'ButtonBlock':
+                          return (
+                            <div
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                            >
+                              <Button data={block} />
+                            </div>
+                          );
+                        case 'ImageBlock':
+                          return (
+                            <div
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                            >
+                              <Image data={block} />
+                            </div>
+                          );
+                        case 'FormBlock':
+                          return (
+                            <div
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                            >
+                              <Form form={block} />
+                            </div>
+                          );
+                        case 'GridBlock':
+                          return (
+                            <div
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                            >
+                              <Grid page={post} data={block} />
+                            </div>
+                          );
+                        case 'ContentBlock':
+                          if (block.content)
+                            return (
+                              <div
+                                key={`post-${post.title}-container-${_template}-block-${index}`}
+                              >
+                                <Content
+                                  key={`post-${post.title}-${_template}-block-${index}`}
+                                  data={block}
+                                />
+                              </div>
+                            );
+                          break;
+                        case 'ContainerBlock':
+                          return (
+                            <Container
+                              key={`post-${post.title}-${_template}-block-${index}`}
+                              id={index}
+                              page={post}
+                              data={block}
+                            />
+                          );
+                        case 'SpacerBlock':
+                          return <Spacer data={block} />;
+                        default:
+                          return true;
+                      }
+                    })}
+                </Card>
+              </Column>
+              <Comments comments={[]} />
             </div>
             <div widths={[4]}>
               <Sidebar page={post} sections={sections} />
@@ -277,10 +273,7 @@ export default function ({ data, ...props }) {
 }
 
 const Column = styled.div`
-  padding: 0 12px 40px 12px;
-  width: calc(100% + 24px);
-  margin-left: -12px;
-  padding-top: ${(props) => (props.marginTop ? '40px' : '0')};
+  padding: 32px 0;
 `;
 
 const Card = styled.div`
@@ -405,7 +398,7 @@ const PostForm = (categories, post) => {
           },
           {
             label: 'Sections',
-            name: 'sections',
+            name: 'sidebarSections',
             component: 'blocks',
             templates: {
               SidebarBlock,

@@ -172,10 +172,7 @@ export function Sidebar({ page, sections }) {
 }
 
 const Column = styled.div`
-  padding: 0 12px 56px 12px;
-  width: calc(100% + 24px);
-  margin-left: -12px;
-  padding-top: ${(props) => (props.marginTop ? '40px' : '0')};
+  padding: 32px 0;
 `;
 
 const Card = styled.div`
@@ -193,7 +190,7 @@ const SidebarTitle = styled.h3`
 
 export const SidebarBlock = {
   label: 'Sidebar Section',
-  name: 'sidebarSections',
+  name: 'sidebarSection',
   fields: [
     {
       label: 'Section Title',

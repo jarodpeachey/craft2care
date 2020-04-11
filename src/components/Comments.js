@@ -455,10 +455,7 @@ const Comments = ({ comments }) => {
 };
 
 const Column = styled.div`
-  padding: 0 12px 40px 12px;
-  width: calc(100% + 24px);
-  margin-left: -12px;
-  padding-top: ${(props) => (props.marginTop ? '40px' : '0')};
+  padding: 32px 0;
 `;
 
 const Card = styled.div`
