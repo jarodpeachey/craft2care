@@ -329,8 +329,6 @@ const PostCategory = styled.div`
 `;
 
 const PostForm = (categories, post) => {
-  console.log(categories);
-
   return {
     // actions: [DeleteAction],
     label: 'Post',

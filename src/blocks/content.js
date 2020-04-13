@@ -5,8 +5,6 @@ import ReactMarkdown from 'react-markdown';
 export function Content({ data }) {
   const centered = data.center ? data.center : false;
 
-  console.log(data);
-
   if (data) {
     return (
       <StyledContent center={centered}>
