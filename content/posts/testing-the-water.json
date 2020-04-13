@@ -1,0 +1,32 @@
+{
+  "title": "Testing The Water",
+  "path": "/blog/testing-the-water",
+  "date": "04/11/2020",
+  "blocks": [
+    {
+      "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
+      "center": false,
+      "_template": "ContentBlock"
+    }
+  ],
+  "draft": false,
+  "categories": [
+    "all"
+  ],
+  "sidebar": {
+    "showSidebar": true,
+    "sidebarSections": [
+      {
+        "_template": "SidebarBlock",
+        "sidebarBlocks": [
+          {
+            "_template": "ContentBlock",
+            "content": "Yipee!",
+            "center": false
+          }
+        ],
+        "sectionTitle": "Content"
+      }
+    ]
+  }
+}

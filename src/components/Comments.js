@@ -108,7 +108,7 @@ const Comments = ({ comments }) => {
     const newElement = document.createElement('div');
 
     newElement.innerHTML = `        <form
-          class=${GrayForm.__linaria.className}
+          class=${Form.__linaria.className}
           name='Comments Awaiting Approval'
           method='post'
           id='form'
@@ -210,7 +210,7 @@ const Comments = ({ comments }) => {
             name='Comments Awaiting Approval'
             method='post'
             id='form'
-            // action='/thanks/'
+            action='/thanks/'
             data-netlify='true'
             onSubmit={handleSubmit}
           >
