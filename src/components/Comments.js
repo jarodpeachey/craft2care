@@ -284,6 +284,7 @@ const Comments = ({ comments }) => {
                     right: true,
                     left: false,
                     buttonText: 'Post Comment',
+                    noLink: true,
                   }}
                 />
               </div>
