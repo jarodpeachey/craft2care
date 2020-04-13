@@ -23,7 +23,6 @@ const Row = ({
       vertical={vertical}
     >
       {React.Children.toArray(children).map((item) => {
-        console.log(item);
         return item ? (
           <>
             {item.props && item.props.noGrid ? (

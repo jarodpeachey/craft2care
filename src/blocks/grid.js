@@ -7,8 +7,6 @@ import { Column, ColumnBlock } from './column';
 import Row from '../components/grid/row';
 
 export function Grid({ page, data }) {
-  console.log(data);
-
   const rowProps = {
     maxColumnSize: 12 / data.maxNumberOfColumns,
     breakpoints: [769, 960],
