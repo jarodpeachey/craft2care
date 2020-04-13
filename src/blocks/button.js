@@ -10,23 +10,42 @@ export function Button({ page, data }) {
   const left = data.left ? data.left : false;
   const right = data.right ? data.right : false;
   const type = data.type ? data.type : 'button';
+  const noLink = data.noLink ? data.noLink : false;
 
   if (data.buttonText) {
     return (
-      <Link
-        className='no-underline'
-        to={data.buttonLink ? data.buttonLink : '/'}
-      >
-        <StyledButton
-          color={data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'}
-          center={centered}
-          left={left}
-          right={right}
-          type={type}
-        >
-          {data && data.buttonText ? data.buttonText : ''}
-        </StyledButton>
-      </Link>
+      <>
+        {noLink ? (
+          <StyledButton
+            color={
+              data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'
+            }
+            center={centered}
+            left={left}
+            right={right}
+            type={type}
+          >
+            {data && data.buttonText ? data.buttonText : ''}
+          </StyledButton>
+        ) : (
+          <Link
+            className='no-underline'
+            to={data.buttonLink ? data.buttonLink : '/'}
+          >
+            <StyledButton
+              color={
+                data.buttonColor ? data.buttonColor.toLowerCase() : 'primary'
+              }
+              center={centered}
+              left={left}
+              right={right}
+              type={type}
+            >
+              {data && data.buttonText ? data.buttonText : ''}
+            </StyledButton>
+          </Link>
+        )}
+      </>
     );
   } else {
     return null;
