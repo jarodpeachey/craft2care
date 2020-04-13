@@ -1,22 +1,57 @@
 {
-  "title": "Test Post One",
+  "title": "Test Post Two",
   "path": "/blog/test-post-one",
-  "date": "04/10/2020",
+  "date": "2020-04-11T00:00:00.000Z",
   "blocks": [
     {
-      "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
-      "center": false,
-      "_template": "ContentBlock"
+      "_template": "ContentBlock",
+      "content": "Content!"
+    },
+    {
+      "image": "../images/DONE.jpg",
+      "_template": "ImageBlock",
+      "rounded": false
+    },
+    {
+      "_template": "ContentBlock",
+      "content": "",
+      "center": false
+    },
+    {
+      "image": "",
+      "_template": "ImageBlock"
     }
   ],
   "draft": false,
   "categories": [
-    "charity",
-    null
+    "shoeboxes"
   ],
   "sidebar": {
     "showSidebar": true,
     "sidebarSections": [
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "Related",
+        "sidebarBlocks": [
+          {
+            "itemsToShow": 3,
+            "_template": "PostsBlock",
+            "maxNumberOfColumns": 4,
+            "style": "List"
+          }
+        ]
+      },
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "Test Two",
+        "sidebarBlocks": [
+          {
+            "_template": "ContentBlock",
+            "content": "This is more content.",
+            "center": false
+          }
+        ]
+      },
       {
         "_template": "SidebarBlock",
         "sectionTitle": "Test",
@@ -39,17 +74,6 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "_template": "SidebarBlock",
-        "sectionTitle": "Related",
-        "sidebarBlocks": [
-          {
-            "itemsToShow": 3,
-            "_template": "PostsBlock",
-            "maxNumberOfColumns": 4
           }
         ]
       }
