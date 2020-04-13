@@ -13,6 +13,9 @@ function encode(data) {
     .join('&');
 }
 
+console.log(process.env.NETLIFY_TOKEN);
+console.log(process.env.SITE_ID);
+
 const Comments = ({ comments }) => {
   const [state, setState] = React.useState({});
   const [parentCommentNumber, setParentCommentNumber] = React.useState(0);
