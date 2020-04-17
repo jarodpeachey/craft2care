@@ -30,7 +30,7 @@ export default function (props) {
             center: true,
             underline: true,
             title: props.data.categories.categories.filter(
-              (category) => category.id === props.pageContext.category
+              (category) => category.toLowerCase().replace(/ /g, "-") === props.pageContext.category
             )[0].name,
           }}
         />
@@ -39,11 +39,11 @@ export default function (props) {
             itemsToShow: 999999,
             maxNumberOfColumns: 3,
             // title: props.data.categories.categories.filter(
-            //   (category) => category.id === props.pageContext.category
+            //   (category) => category.toLowerCase().replace(/ /g, "-") === props.pageContext.category
             // )[0].name,
             categories: [
               props.data.categories.categories.filter(
-                (category) => category.id === props.pageContext.category
+                (category) => category.toLowerCase().replace(/ /g, "-") === props.pageContext.category
               )[0].id,
             ],
           }}
@@ -58,10 +58,7 @@ export const postQuery = graphql`
     categories: settingsJson(
       fileRelativePath: { eq: "/content/settings/categories.json" }
     ) {
-      categories {
-        name
-        id
-      }
+      categories
     }
   }
 `;

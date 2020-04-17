@@ -24,10 +24,7 @@ export const CategoriesField = (props) => {
       allCategories: settingsJson(
         fileRelativePath: { eq: "/content/settings/categories.json" }
       ) {
-        categories {
-          name
-          id
-        }
+        categories
       }
     }
   `);
@@ -50,10 +47,10 @@ export const CategoriesField = (props) => {
   //   console.log(postCategories);
   //   if (postCategories.length !== 0) {
   //     postCategories.map((postCategoryID) => {
-  //       console.log(category.id);
+  //       console.log(category.toLowerCase().replace(/ /g, "-"));
   //       console.log(postCategoryID);
-  //       if (postCategoryID === category.id) {
-  //         console.log(`${postCategoryID} === ${category.id}`);
+  //       if (postCategoryID === category.toLowerCase().replace(/ /g, "-")) {
+  //         console.log(`${postCategoryID} === ${category.toLowerCase().replace(/ /g, "-")}`);
   //         return true;
   //       }
   //     });
@@ -61,7 +58,7 @@ export const CategoriesField = (props) => {
   // };
 
   const unusedCategories = allCategories.categories.filter(
-    (category) => !postCategories.includes(category.id)
+    (category) => !postCategories.includes(category)
   );
 
   const keyUpFunction = (e) => {
@@ -124,10 +121,10 @@ export const CategoriesField = (props) => {
                         <CategoryOption
                           key='key'
                           onClick={() => {
-                            addCategory(category.id);
+                            addCategory(category);
                           }}
                         >
-                          {category.name}
+                          {category}
                         </CategoryOption>
                       ))}
                     </CategoryMenuList>
@@ -155,9 +152,9 @@ export const CategoriesField = (props) => {
         {postCategories.length === 0 && (
           <EmptyList>There's no categories</EmptyList>
         )}
-        {postCategories.map((categoryID, index) => {
+        {postCategories.map((category, index) => {
           const categoryForList = allCategories.categories.filter(
-            (newCategory) => newCategory.id === categoryID
+            (newCategory) => newCategory === category
           );
 
           return (
@@ -183,8 +180,8 @@ const CategoryListItem = ({ category, form, field, index }) => {
   return (
     <ListItem>
       <ItemLabel>
-        {category[0] && category[0].name ? (
-          category[0].name
+        {category[0] ? (
+          category[0]
         ) : (
           <Placeholder>Unknown Category</Placeholder>
         )}

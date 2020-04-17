@@ -1,16 +1,16 @@
 import React from 'react';
 import { useCategories } from './useCategories';
 
-export const ListCategories = (categoryIDs) => {
+export const ListCategories = (categoryNames) => {
   const categories = useCategories().filter((category) =>
-    categoryIDs.find((id) => id === category.id)
+    categoryNames.find((name) => name === category)
   );
 
   const categoryList = categories.map((category, index) => {
     if (categories.length === index + 1) {
-      return category.name;
+      return category;
     } else {
-      return category.name + ', ';
+      return category + ', ';
     }
   });
 

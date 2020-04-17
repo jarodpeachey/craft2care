@@ -2,6 +2,9 @@
   "title": "Testing The Water",
   "path": "/blog/testing-the-water",
   "date": "04/11/2020",
+  "featuredImage": {
+    "image": "../images/cafe-2.jpg"
+  },
   "blocks": [
     {
       "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
@@ -10,9 +13,7 @@
     }
   ],
   "draft": false,
-  "categories": [
-    "all"
-  ],
+  "categories": ["all"],
   "sidebar": {
     "showSidebar": true,
     "sidebarSections": [

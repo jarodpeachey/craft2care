@@ -20,6 +20,7 @@ const Comments = ({ comments }) => {
   const [state, setState] = React.useState({});
   const [parentCommentNumber, setParentCommentNumber] = React.useState(0);
   const [stateComments, setStateComments] = React.useState(comments);
+  const [isReplyOpen, setIsReplyOpen] = React.useState(false);
 
   const apiKey = process.env.NETLIFY_TOKEN;
   const siteID = process.env.SITE_ID;
@@ -105,13 +106,20 @@ const Comments = ({ comments }) => {
   //   }
   // };
 
+  const handleReplyClose = (e) => {
+    setIsReplyOpen(false);
+    document.getElementById('newElement').remove();
+  };
+
   const handleReplyOpen = (e) => {
+    setIsReplyOpen(true);
     const number = e.target.getAttribute('number');
     setState({ ...state, parentCommentNumber: number });
     const newElement = document.createElement('div');
+    newElement.id = 'newElement';
 
     newElement.innerHTML = `        <form
-          class=${Form.__linaria.className}
+          class="form"
           name='Comments Awaiting Approval'
           method='post'
           id='form'
@@ -126,24 +134,24 @@ const Comments = ({ comments }) => {
           />
           <div class='row mobile-lg'>
             <div class='col col-6'>
-              <label class=${HiddenLabel.__linaria.className} for='path'>Path</label>
+              <label class="hidden-label" for='path'>Path</label>
               <input
-                class=${HiddenInput.__linaria.className}
+                class="hidden-input"
                 name='path'
                 id='path'
                 type='text'
                 value=${state.path}
               />
-              <label class=${HiddenLabel.__linaria.className} for='parentCommentNumber'>Parent Comment Number</label>
+              <label class="hidden-label" for='parentCommentNumber'>Parent Comment Number</label>
               <input
-                class=${HiddenInput.__linaria.className}
+                class="hidden-input"
                 name='parentCommentNumber'
                 id='parentCommentNumber'
                 type='text'
                 value=${number}
               />
-              <label class=${HiddenLabel.__linaria.className}  for='name'>Name</label>
-              <input class=${Input.__linaria.className}
+              <label class="hidden-label"  for='name'>Name</label>
+              <input class="input"
                 onChange={handleChange}
                 placeholder="Name"
                 type='text'
@@ -152,8 +160,8 @@ const Comments = ({ comments }) => {
               />
             </div>
             <div class='col col-6'>
-              <label class=${HiddenLabel.__linaria.className}  for='email'>Email</label>
-              <input class=${Input.__linaria.className}
+              <label class="hidden-label"  for='email'>Email</label>
+              <input class="input"
                 onChange={handleChange}
                 type='email'
                 name='email'
@@ -162,9 +170,9 @@ const Comments = ({ comments }) => {
               />
             </div>
             <div class='col col-12'>
-              <label class=${HiddenLabel.__linaria.className}  for='comment'>Comment</label>
+              <label class="hidden-label"  for='comment'>Comment</label>
               <textarea
-                class=${TextArea.__linaria.className}
+                class="textarea"
                 onChange={handleChange}
                 name='comment'
                 id='comment'
@@ -172,7 +180,7 @@ const Comments = ({ comments }) => {
               ></textarea>
             </div>
             <div class='col col-12'>
-              <button class='primary ${Button.__linaria.className}' type='submit'>
+              <button class='button' type='submit'>
                 Reply
               </button>
             </div>
@@ -304,143 +312,147 @@ const Comments = ({ comments }) => {
             type: 'h3',
           }}
         />
-        <Card>
-          {stateComments
-            .filter((comment) =>
-              comment.node
-                ? comment.node.data.parentCommentNumber == 'undefined'
-                : comment.data.parentCommentNumber == 'undefined'
-            )
-            .sort((a, b) =>
-              a.node ? a.node.number - b.node.number : a.number - b.number
-            ) && (
-            <>
-              <CommentsSection>
-                {/* {typeof comments === 'array' ? ( */}
-                {stateComments
-                  .filter((comment) =>
-                    comment.node
-                      ? comment.node.data.parentCommentNumber == 'undefined'
-                      : comment.data.parentCommentNumber == 'undefined'
-                  )
-                  .sort((a, b) =>
-                    a.node ? a.node.number - b.node.number : a.number - b.number
-                  )
-                  .map((parentComment) => {
-                    if (
-                      parentComment.node
-                        ? parentComment.node.data.name !== 'placeholder'
-                        : parentComment.data.name
-                    ) {
-                      return (
-                        <Comment
-                          key={
-                            parentComment.node
-                              ? parentComment.node.data.name
-                              : parentComment.data.name
-                          }
-                        >
-                          <CommentName>
-                            {parentComment.node
-                              ? parentComment.node.data.name
-                              : parentComment.data.name}
-                          </CommentName>
-                          <CommentDate>
-                            on{' '}
-                            {parentComment.node
-                              ? parentComment.node.created_at
-                              : formatDate(parentComment.created_at)}
-                          </CommentDate>
-                          <p>
-                            {parentComment.node
-                              ? parentComment.node.data.comment
-                              : parentComment.data.comment}
-                          </p>
-                          <CommentFooter>
-                            <span
-                              number={
-                                parentComment.node
-                                  ? parentComment.node.number
-                                  : parentComment.number
-                              }
-                              name={`comment${
-                                parentComment.node
-                                  ? parentComment.node.data.name
-                                  : parentComment.data.name
-                              }`}
-                              onClick={handleReplyOpen}
-                            >
-                              Reply
-                            </span>
-                          </CommentFooter>
-                          {stateComments
-                            .filter((comment) =>
-                              comment.node
-                                ? comment.node.data.parentCommentNumber !==
-                                  'undefined'
-                                : comment.data.parentCommentNumber !==
-                                  'undefined'
-                            )
-                            .sort((a, b) =>
-                              a.node
-                                ? a.node.number - b.node.number
-                                : a.number - b.number
-                            )
-                            .map((reply) => {
-                              if (
-                                reply.node
-                                  ? reply.node.data.parentCommentNumber ==
-                                    parentComment.node.number
-                                  : reply.data.parentCommentNumber ==
-                                    parentComment.number
-                              ) {
-                                return (
-                                  <GrayComment>
-                                    <CommentName>
-                                      {reply.node
-                                        ? reply.node.data.name
-                                        : reply.data.name}
-                                    </CommentName>
-                                    <CommentDate>
-                                      on{' '}
-                                      {reply.node
-                                        ? reply.node.created_at
-                                        : formatDate(reply.created_at)}
-                                    </CommentDate>
-                                    <p>
-                                      {reply.node
-                                        ? reply.node.data.comment
-                                        : reply.data.comment}
-                                    </p>
-                                    <CommentFooter>
-                                      <span
-                                        number={
-                                          parentComment.node
-                                            ? parentComment.node.number
-                                            : parentComment.number
-                                        }
-                                        name={`reply${
-                                          reply.node
-                                            ? reply.node.data.name
-                                            : reply.data.name
-                                        }`}
-                                        onClick={handleReplyOpen}
-                                      >
-                                        Reply
-                                      </span>
-                                    </CommentFooter>
-                                  </GrayComment>
-                                );
-                              } else {
-                                return null;
-                              }
-                            })}
-                        </Comment>
-                      );
-                    }
-                  })}
-                {/* ) : ( */}
-                {/* <>
+        {stateComments
+          .filter((comment) =>
+            comment.node
+              ? comment.node.data.parentCommentNumber == 'undefined'
+              : comment.data.parentCommentNumber == 'undefined'
+          )
+          .sort((a, b) =>
+            a.node ? a.node.number - b.node.number : a.number - b.number
+          ) && (
+          <>
+            <CommentsSection>
+              {/* {typeof comments === 'array' ? ( */}
+              {stateComments
+                .filter((comment) =>
+                  comment.node
+                    ? comment.node.data.parentCommentNumber == 'undefined'
+                    : comment.data.parentCommentNumber == 'undefined'
+                )
+                .sort((a, b) =>
+                  a.node ? a.node.number - b.node.number : a.number - b.number
+                )
+                .map((parentComment) => {
+                  if (
+                    parentComment.node
+                      ? parentComment.node.data.name !== 'placeholder'
+                      : parentComment.data.name
+                  ) {
+                    return (
+                      <Card
+                        key={
+                          parentComment.node
+                            ? parentComment.node.data.name
+                            : parentComment.data.name
+                        }
+                      >
+                        <CommentName>
+                          {parentComment.node
+                            ? parentComment.node.data.name
+                            : parentComment.data.name}
+                        </CommentName>
+                        <CommentDate>
+                          on{' '}
+                          {parentComment.node
+                            ? parentComment.node.created_at
+                            : formatDate(parentComment.created_at)}
+                        </CommentDate>
+                        <p>
+                          {parentComment.node
+                            ? parentComment.node.data.comment
+                            : parentComment.data.comment}
+                        </p>
+                        <CommentFooter>
+                          <span
+                            number={
+                              parentComment.node
+                                ? parentComment.node.number
+                                : parentComment.number
+                            }
+                            name={`comment${
+                              parentComment.node
+                                ? parentComment.node.data.name
+                                : parentComment.data.name
+                            }`}
+                            onClick={
+                              isReplyOpen ? handleReplyClose : handleReplyOpen
+                            }
+                          >
+                            Reply
+                          </span>
+                        </CommentFooter>
+                        {stateComments
+                          .filter((comment) =>
+                            comment.node
+                              ? comment.node.data.parentCommentNumber !==
+                                'undefined'
+                              : comment.data.parentCommentNumber !== 'undefined'
+                          )
+                          .sort((a, b) =>
+                            a.node
+                              ? a.node.number - b.node.number
+                              : a.number - b.number
+                          )
+                          .map((reply) => {
+                            if (
+                              reply.node
+                                ? reply.node.data.parentCommentNumber ==
+                                  parentComment.node.number
+                                : reply.data.parentCommentNumber ==
+                                  parentComment.number
+                            ) {
+                              return (
+                                <GrayComment>
+                                  <CommentName>
+                                    {reply.node
+                                      ? reply.node.data.name
+                                      : reply.data.name}
+                                  </CommentName>
+                                  <CommentDate>
+                                    on{' '}
+                                    {reply.node
+                                      ? reply.node.created_at
+                                      : formatDate(reply.created_at)}
+                                  </CommentDate>
+                                  <p>
+                                    {reply.node
+                                      ? reply.node.data.comment
+                                      : reply.data.comment}
+                                  </p>
+                                  <CommentFooter>
+                                    <span
+                                      number={
+                                        parentComment.node
+                                          ? parentComment.node.number
+                                          : parentComment.number
+                                      }
+                                      name={`reply${
+                                        reply.node
+                                          ? reply.node.data.name
+                                          : reply.data.name
+                                      }`}
+                                      onClick={
+                                        isReplyOpen
+                                          ? handleReplyClose
+                                          : handleReplyOpen
+                                      }
+                                    >
+                                      Reply
+                                    </span>
+                                  </CommentFooter>
+                                </GrayComment>
+                              );
+                            } else {
+                              return null;
+                            }
+                          })}
+                      </Card>
+                    );
+                  }
+                })}
+              {/* ) : ( */}
+              {/* <>
               {comments.data.name !== 'placeholder' ? (
                 <Comment key={comments.data.name}>
                   <CommentName>{comments.data.name}</CommentName>
@@ -458,11 +470,10 @@ const Comments = ({ comments }) => {
                 </Comment>
               ) : null}
             </> */}
-                {/* )} */}
-              </CommentsSection>
-            </>
-          )}
-        </Card>
+              {/* )} */}
+            </CommentsSection>
+          </>
+        )}
       </Column>
     </>
   );
@@ -492,12 +503,6 @@ const Label = styled.label`
   font-size: 16px;
 `;
 
-const Error = styled.small`
-  display: block;
-  margin-top: 8px;
-  color: tomato;f
-`;
-
 const Input = styled.input`
   padding: 14px;
   background: #f7f7f7;
@@ -506,6 +511,51 @@ const Input = styled.input`
   margin-bottom: 4px;
   outline: none;
   width: 100%;
+  :focus {
+    border: 2px solid ${(props) => props.theme.color.primary};
+  }
+`;
+
+const HiddenLabel = styled.label`
+  height: 0px !important;
+  width: 0px !important;
+  background: transparent !important;
+  color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  cursor: default !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-height: 0px !important;
+  min-height: 0px !important;
+  display: block;
+`;
+
+const HiddenInput = styled.input`
+  height: 0px !important;
+  width: 0px !important;
+  background: transparent !important;
+  color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  cursor: default !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-height: 0px !important;
+  min-height: 0px !important;
+  display: block;
+`;
+
+const TextArea = styled.textarea`
+  padding: 14px;
+  background: #f7f7f7;
+  border: 2px solid #f7f7f7;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+  vertical-align: top;
   :focus {
     border: 2px solid ${(props) => props.theme.color.primary};
   }
@@ -539,62 +589,17 @@ const GrayInput = styled.input`
   }
 `;
 
-const HiddenLabel = styled.label`
-  height: 0px !important;
-  width: 0px !important;
-  background: transparent !important;
-  color: transparent !important;
-  border: none !important;
-  outline: none !important;
-  cursor: default !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-height: 0px !important;
-  min-height: 0px !important;
-  display: float;
-`;
-
-const HiddenInput = styled.input`
-  height: 0px !important;
-  width: 0px !important;
-  background: transparent !important;
-  color: transparent !important;
-  border: none !important;
-  outline: none !important;
-  cursor: default !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-height: 0px !important;
-  min-height: 0px !important;
-  display: float;
-`;
-
-const TextArea = styled.textarea`
-  padding: 14px;
-  background: #f7f7f7;
-  border: 2px solid #f7f7f7;
-  font-size: 16px;
-  outline: none;
-  width: 100%;
-  resize: vertical;
-  min-height: 100px;
-  vertical-align: top;
-  :focus {
-    border: 2px solid ${(props) => props.theme.color.primary};
-  }
-`;
-
 const CommentsSection = styled.div``;
 
-const Comment = styled.div`
-  padding: 14px;
-  box-shadow: 1px 1px 3px 0px #e7e7e7;
-  font-size: 16px;
-  background: white;
-  outline: none;
-  width: 100%;
-  margin: 12px 0;
-`;
+// const Comment = styled.div`
+//   padding: 14px;
+//   box-shadow: 1px 1px 3px 0px #e7e7e7;
+//   font-size: 16px;
+//   background: white;
+//   outline: none;
+//   width: 100%;
+//   margin: 12px 0;
+// `;
 
 const GrayComment = styled.div`
   padding: 14px;

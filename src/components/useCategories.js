@@ -19,9 +19,6 @@ export const useCategories = () => {
 
 export const categoriesFragment = graphql`
   fragment categories on SettingsJson {
-    categories {
-      name
-      id
-    }
+    categories
   }
 `;

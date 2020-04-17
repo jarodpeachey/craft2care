@@ -21,14 +21,8 @@ const StyledContent = styled.div`
   ${(props) =>
     props.center &&
     css`
-      p {
-        margin-bottom: 0 !important;
-      }
       text-align: center !important;
     `};
-  p {
-    margin-bottom: 0 !important;
-  }
 `;
 
 export const ContentBlock = {

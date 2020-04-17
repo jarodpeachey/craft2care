@@ -1,24 +1,11 @@
 {
   "categories": [
-    {
-      "name": "All"
-    },
-    {
-      "name": "Charity",
-      "id": "charity"
-    },
-    {
-      "name": "Shoeboxes",
-      "id": "shoeboxes"
-    },
-    {
-      "name": "Kids",
-      "id": "kids"
-    },
-    {
-      "name": "Projects",
-      "id": "projects"
-    }
+    "Test",
+    "All",
+    "Charity",
+    "Shoeboxes",
+    "Kids",
+    "Projects"
   ],
   "__gatsby_resolved": {
     "fileRelativePath": "/content/settings/categories.json"
