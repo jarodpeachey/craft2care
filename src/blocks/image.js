@@ -4,8 +4,11 @@ import Img from 'gatsby-image';
 import get from 'lodash.get';
 
 export function Image({ data }) {
-  if (data.image) {
+  console.log(typeof data.image);
+  console.log(data);
+  if (typeof data.image === 'object') {
     return <Img fluid={data.image.childImageSharp.fluid} />;
+    // return <img src={data.image.childImageSharp.fluid.src} alt='' />;
   } else {
     console.log('Returning null');
     return null;
@@ -96,8 +99,12 @@ export const ImageBlock = {
       parse: (filename) => `../images/${filename}`,
       uploadDir: () => `/content/images/`,
       previewSrc: (formValues, fieldProps) => {
+        console.log('formValues: ', formValues);
+        console.log('fieldProps: ', fieldProps);
         const pathName = fieldProps.input.name.replace('rawJson', 'jsonNode');
+        console.log('pathName: ', pathName);
         const imageNode = get(formValues, pathName);
+        console.log('imageNode: ', imageNode);
         if (!imageNode || !imageNode.childImageSharp) return '';
         return imageNode.childImageSharp.fluid.src;
       },

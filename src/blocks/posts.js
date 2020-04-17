@@ -17,6 +17,8 @@ import { ListCategories } from '../components/categories';
 import { shortenText } from '../utils/shortenText';
 import { Button } from './button';
 import { Spacer } from './spacer';
+import { Title } from './title';
+import { Content } from './content';
 
 let globalCategories = [];
 
@@ -40,10 +42,12 @@ export function Posts({ page, data }) {
             }
             title
             draft
-            image {
-              childImageSharp {
-                fluid(quality: 70, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
+            featuredImage {
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
                 }
               }
             }
@@ -53,12 +57,11 @@ export function Posts({ page, data }) {
       categories: settingsJson(
         fileRelativePath: { eq: "/content/settings/categories.json" }
       ) {
-        categories {
-          name
-          id
-        }
+        categories
       }
-      author: settingsJson(fileRelativePath: { eq: "/content/settings/author.json" }) {
+      author: settingsJson(
+        fileRelativePath: { eq: "/content/settings/author.json" }
+      ) {
         name
       }
     }
@@ -120,7 +123,7 @@ export function Posts({ page, data }) {
   const postsToDisplay = isPostForDisplay();
 
   // const postsToUse = allCategories.categories.filter(
-  //   (category) => !postCategories.includes(category.id)
+  //   (category) => !postCategories.includes(category.toLowerCase().replace(/ /g, "-"))
   // );
 
   if (data && postsToDisplay && postsToDisplay.length > 0) {
@@ -129,6 +132,7 @@ export function Posts({ page, data }) {
         {data.style === 'Grid' ? (
           <Row {...rowProps}>
             {postsToDisplay.map((post, index) => {
+              console.log(post);
               let excerpt = '';
               post.blocks.map((block) => {
                 if (block._template === 'ContentBlock') {
@@ -147,9 +151,9 @@ export function Posts({ page, data }) {
                     <Card key={post.id}>
                       <PostImage
                         fluid={
-                          post.image
-                            ? post.image.childImageSharp.fluid
-                            : theme.hero.image.childImageSharp.fluid // WORK TO DO
+                          post.featuredImage.image
+                            ? post.featuredImage.image.childImageSharp.fluid
+                            : theme.hero.image.childImageSharp.fluid
                         }
                       />
                       {/* {post.draft && <DraftBadge>Draft</DraftBadge>} */}
@@ -170,9 +174,11 @@ export function Posts({ page, data }) {
                                   <PostCategory>
                                     <Link
                                       className='no-underline'
-                                      to={`/category/${category.id}`}
+                                      to={`/category/${category
+                                        .toLowerCase()
+                                        .replace(/ /g, '-')}`}
                                     >
-                                      {category.name}
+                                      {category}
                                     </Link>
                                   </PostCategory>
                                 );
@@ -230,7 +236,35 @@ export function Posts({ page, data }) {
     );
   }
 
-  return null;
+  return (
+    <>
+      <Spacer height={24} />
+      <Title
+        data={{
+          title: 'Aw, snap!',
+          center: true,
+          type: 'h1',
+        }}
+      />
+      <Content
+        data={{
+          center: true,
+          content:
+            'There are no posts under this category! But fear not, you can explore the rest of the site!',
+        }}
+      />
+      <Spacer height={24} />
+      <Button
+        data={{
+          buttonText: 'Explore',
+          buttonColor: 'primary',
+          buttonLink: '/',
+          center: true,
+        }}
+      />
+      <Spacer height={64} />
+    </>
+  );
 }
 
 const Card = styled.div`

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Img from 'gatsby-image';
+import get from 'lodash.get';
 import { Title, TitleBlock } from '../blocks/title';
 import { Image, ImageBlock } from '../blocks/image';
 import { Content, ContentBlock } from '../blocks/content';
@@ -43,7 +44,9 @@ export default function ({ data, ...props }) {
 
   const categories = ListCategories(data.post.categories);
 
-  const author = data.author;
+  const { author } = data;
+
+  console.log(post);
 
   return (
     <PostLayout post={post}>
@@ -53,13 +56,19 @@ export default function ({ data, ...props }) {
             <div widths={[8]}>
               <Column>
                 <Card>
-                  <PostImage
-                    fluid={
-                      post.image
-                        ? post.image.childImageSharp.fluid
-                        : theme.hero.image.childImageSharp.fluid // WORK TO DO
-                    }
-                  />
+                  {post.featuredImage.image ? (
+                    <PostImage
+                      fluid={
+                        post.featuredImage.image.childImageSharp.fluid // WORK TO DO
+                      }
+                    />
+                  ) : (
+                    <PostImage
+                      fluid={
+                        theme.hero.image.childImageSharp.fluid // WORK TO DO
+                      }
+                    />
+                  )}
                   <PostHeader>
                     <PostTitle>{post.title}</PostTitle>
                   </PostHeader>
@@ -73,7 +82,7 @@ export default function ({ data, ...props }) {
                   {categories && categories.length > 0 && (
                     <PostCategories>
                       {categories.map((category) => {
-                        return <PostCategory>{category.name}</PostCategory>;
+                        return <PostCategory>{category}</PostCategory>;
                       })}
                     </PostCategories>
                   )}
@@ -153,13 +162,19 @@ export default function ({ data, ...props }) {
       ) : (
         <div className='container top bottom'>
           <Card>
-            <PostImage
-              fluid={
-                post.image
-                  ? post.image.childImageSharp.fluid
-                  : theme.hero.image.childImageSharp.fluid // WORK TO DO
-              }
-            />
+            {post.featuredImage.image ? (
+              <PostImage
+                fluid={
+                  post.featuredImage.image.childImageSharp.fluid // WORK TO DO
+                }
+              />
+            ) : (
+              <PostImage
+                fluid={
+                  theme.hero.image.childImageSharp.fluid // WORK TO DO
+                }
+              />
+            )}
             <PostHeader>
               <PostTitle>{post.title}</PostTitle>
               <PostLink to='/blog'>
@@ -179,7 +194,7 @@ export default function ({ data, ...props }) {
             {categories && categories.length > 0 && (
               <PostCategories>
                 {categories.map((category) => {
-                  return <PostCategory>{category.name}</PostCategory>;
+                  return <PostCategory>{category}</PostCategory>;
                 })}
               </PostCategories>
             )}
@@ -351,15 +366,29 @@ const PostForm = (categories, post) => {
         categories,
       },
       {
-        label: 'Feature Image',
-        name: 'image',
-        component: 'image',
-        parse: (filename) => `../images/${filename}`,
-        uploadDir: () => '/content/images/',
-        previewSrc: (formValues) => {
-          if (!formValues.jsonNode || !formValues.jsonNode.image) return '';
-          return formValues.jsonNode.image.childImageSharp.fluid.src;
-        },
+        label: 'Featured Image',
+        name: 'rawJson.featuredImage',
+        component: 'group',
+        fields: [
+          // {
+          //   label: 'Show Hero',
+          //   name: 'showHero',
+          //   component: 'toggle',
+          //   defaultValue: true
+          // },
+          {
+            label: 'Image',
+            name: 'image',
+            component: 'image',
+            parse: (filename) => `../images/${filename}`,
+            uploadDir: () => '/content/images/',
+            previewSrc: (formValues) => {
+              if (!formValues.jsonNode.hero || !formValues.jsonNode.hero.image)
+                return '';
+              return formValues.jsonNode.hero.image.childImageSharp.fluid.src;
+            },
+          },
+        ],
       },
       {
         label: 'Sidebar',
@@ -382,17 +411,11 @@ const PostForm = (categories, post) => {
           },
         ],
       },
-      {
-        name: 'rawJson.draft',
-        component: 'toggle',
-        label: 'Draft',
-      },
-      {
-        label: 'Date',
-        name: 'rawJson.date',
-        component: 'date',
-        defaultValue: post && post.date ? post.date : '',
-      },
+      // {
+      //   name: 'rawJson.draft',
+      //   component: 'toggle',
+      //   label: 'Draft',
+      // },
       {
         label: 'Post Content',
         name: 'rawJson.blocks',
@@ -418,10 +441,12 @@ export const postQuery = graphql`
       path
       date
       categories
-      image {
-        childImageSharp {
-          fluid(quality: 70, maxWidth: 1920) {
-            src
+      featuredImage {
+        image {
+          childImageSharp {
+            fluid(quality: 70, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
           }
         }
       }
@@ -442,7 +467,7 @@ export const postQuery = graphql`
         image {
           childImageSharp {
             fluid(quality: 70, maxWidth: 1920) {
-              src
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -475,7 +500,7 @@ export const postQuery = graphql`
           image {
             childImageSharp {
               fluid(quality: 70, maxWidth: 1920) {
-                src
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -508,7 +533,7 @@ export const postQuery = graphql`
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  src
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -545,7 +570,7 @@ export const postQuery = graphql`
         image {
           childImageSharp {
             fluid(quality: 70, maxWidth: 1920) {
-              src
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -578,7 +603,7 @@ export const postQuery = graphql`
           image {
             childImageSharp {
               fluid(quality: 70, maxWidth: 1920) {
-                src
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -611,7 +636,7 @@ export const postQuery = graphql`
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  src
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -647,7 +672,7 @@ export const postQuery = graphql`
           image {
             childImageSharp {
               fluid(quality: 70, maxWidth: 1920) {
-                src
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -680,7 +705,7 @@ export const postQuery = graphql`
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  src
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -713,7 +738,7 @@ export const postQuery = graphql`
               image {
                 childImageSharp {
                   fluid(quality: 70, maxWidth: 1920) {
-                    src
+                    ...GatsbyImageSharpFluid_withWebp
                   }
                 }
               }
@@ -749,7 +774,7 @@ export const postQuery = graphql`
             image {
               childImageSharp {
                 fluid(quality: 70, maxWidth: 1920) {
-                  src
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
@@ -782,7 +807,7 @@ export const postQuery = graphql`
               image {
                 childImageSharp {
                   fluid(quality: 70, maxWidth: 1920) {
-                    src
+                    ...GatsbyImageSharpFluid_withWebp
                   }
                 }
               }

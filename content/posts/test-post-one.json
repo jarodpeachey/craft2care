@@ -1,7 +1,10 @@
 {
   "title": "Test Post Two",
   "path": "/blog/test-post-one",
-  "date": "2020-04-11T00:00:00.000Z",
+  "date": "04/17/2020",
+  "featuredImage": {
+    "image": "../images/7e87c415-corvette-c8-zr1-rendering-1.jpg"
+  },
   "blocks": [
     {
       "_template": "ContentBlock",
@@ -10,16 +13,7 @@
     {
       "image": "../images/DONE.jpg",
       "_template": "ImageBlock",
-      "rounded": false
-    },
-    {
-      "_template": "ContentBlock",
-      "content": "",
-      "center": false
-    },
-    {
-      "image": "",
-      "_template": "ImageBlock"
+      "rounded": true
     }
   ],
   "draft": false,

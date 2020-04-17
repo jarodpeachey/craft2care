@@ -128,10 +128,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       categories: settingsJson(
         fileRelativePath: { eq: "/content/settings/categories.json" }
       ) {
-        categories {
-          name
-          id
-        }
+        categories
       }
     }
   `);
@@ -164,10 +161,10 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   result.data.categories.categories.forEach((category) => {
     console.log(category);
     createPage({
-      path: `/category/${category.id}`,
+      path: `/category/${category.toLowerCase().replace(/ /g, "-")}`,
       component: path.resolve('src/templates/category.js'),
       context: {
-        category: category.id,
+        category: category.toLowerCase().replace(/ /g, "-"),
       },
     });
   });

@@ -82,7 +82,7 @@ const StyledButton = styled.button`
         ? props.theme.color.secondary
         : props.theme.color.primary}d9;
     transition-duration: .4s;
-    box-shadow: 4px 5px 20px 0px ${(props) => props.theme.color.black}10;
+    box-shadow: 2px 4px 22px -10px ${(props) => props.theme.color.primary};
     transform: scale(1.04);
   }
 `;

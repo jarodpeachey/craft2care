@@ -3,7 +3,9 @@
   "path": "/blog/dummy",
   "date": "",
   "categories": ["projects", "charity"],
-  "image": "../images/cafe-2.jpg",
+  "featuredImage": {
+    "image": "../images/cafe-2.jpg"
+  },
   "rounded": true,
   "draft": false,
   "blocks": [

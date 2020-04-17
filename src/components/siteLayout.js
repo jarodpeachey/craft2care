@@ -125,6 +125,9 @@ const CreatePostButton = new JsonCreatorPlugin({
       title: form.title,
       path: `/blog/${replaceAll(form.title.toLowerCase(), ' ', '-')}`,
       date: formatDate(new Date().getTime()),
+      featuredImage: {
+        image: null
+      },
       blocks: [
         {
           content:
