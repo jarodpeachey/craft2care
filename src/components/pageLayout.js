@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable import/prefer-default-export */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import { useLocalJsonForm, useGlobalJsonForm } from 'gatsby-tinacms-json';
@@ -67,13 +67,6 @@ export const PageLayout = ({ page, children, isPost }) => {
     }
   `);
 
-  const {
-    showLoginModal,
-    showSignupModal,
-    setShowLoginModal,
-    setShowSignupModal,
-  } = useContext(AppContext);
-
   const [nav] = useLocalJsonForm(data.nav, NavForm);
   const [globalTheme] = useLocalJsonForm(data.theme, ThemeForm);
   const [site] = useGlobalJsonForm(data.site, SiteForm);
@@ -89,13 +82,13 @@ export const PageLayout = ({ page, children, isPost }) => {
       ? page.frontmatter.title
       : '';
 
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
+  // const closeLoginModal = () => {
+  //   setShowLoginModal(false);
+  // };
 
-  const closeSignupModal = () => {
-    setShowSignupModal(false);
-  };
+  // const closeSignupModal = () => {
+  //   setShowSignupModal(false);
+  // };
 
   if (page && page.hero) {
     const pageHero = page.hero;
@@ -118,7 +111,7 @@ export const PageLayout = ({ page, children, isPost }) => {
         ) : null}
         <PageWrapper showHero={page.hero.showHero}>
           <>{children}</>
-          {showLoginModal && (
+          {/* {showLoginModal && (
             <LoginModal
               pathname={window.location.pathname}
               show={showLoginModal}
@@ -131,7 +124,7 @@ export const PageLayout = ({ page, children, isPost }) => {
               show={showSignupModal}
               toggleFunction={closeSignupModal}
             />
-          )}
+          )} */}
         </PageWrapper>
       </>
     );

@@ -1,8 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 // import { AuthorsField } from './src/fields/authors';
+import React from 'react';
 import { CategoriesField } from './src/fields/categories';
 import { RangeNumberField } from './src/fields/number';
 import { AdvancedSelect } from './src/fields/select';
+import AppProvider from './src/components/AppProvider';
+
+export const wrapRootElement = ({ element }) => {
+  return <AppProvider>{element}</AppProvider>;
+};
 
 export const onClientEntry = () => {
   // window.tinacms.fields.add({

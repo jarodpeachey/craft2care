@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
 import { useLocalJsonForm } from 'gatsby-tinacms-json';
@@ -14,10 +14,17 @@ import { Grid, GridBlock } from '../blocks/grid';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
 import { PageLayout } from '../components/pageLayout';
 import Row from '../components/grid/row';
+import { AppContext } from '../components/AppProvider';
 
 export default function Page({ data }) {
   const [page] = useLocalJsonForm(data.page, PageForm);
   const blocks = page.blocks ? page.blocks : [];
+
+  const { setBreadcrumb } = useContext(AppContext);
+
+  useEffect(() => {
+    setBreadcrumb(typeof window !== 'undefined' && window.location.pathname);
+  }, []);
 
   return (
     <PageLayout page={page}>

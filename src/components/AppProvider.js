@@ -10,12 +10,15 @@ export const AppContext = React.createContext({});
 const AppProvider = ({ children }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [breadcrumb, setBreadcrumb] = useState(false);
 
   const ctx = {
     setShowSignupModal,
     setShowLoginModal,
     showSignupModal,
-    showLoginModal
+    showLoginModal,
+    breadcrumb,
+    setBreadcrumb,
   };
 
   return (
@@ -24,7 +27,7 @@ const AppProvider = ({ children }) => {
 };
 
 AppProvider.propTypes = {
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
 };
 
 export default AppProvider;

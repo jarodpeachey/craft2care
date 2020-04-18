@@ -23,10 +23,15 @@ import Row from '../components/grid/row';
 import { ThemeContext } from '../components/theme';
 import { Grid, GridBlock } from '../blocks/grid';
 import Comments from '../components/Comments';
+import { AppContext } from '../components/AppProvider';
 
 export default function ({ data, ...props }) {
   const { theme } = useContext(ThemeContext);
   const newDate = data.post.date;
+
+  const { breadcrumb } = useContext(AppContext);
+
+  console.log(breadcrumb);
 
   const [post] = useLocalJsonForm(
     data.post,
@@ -51,8 +56,39 @@ export default function ({ data, ...props }) {
   return (
     <PostLayout post={post}>
       {post.sidebar && post.sidebar.showSidebar && sections.length > 0 ? (
-        <div className='container top bototm'>
+        <div className='container top bottom'>
           <Row spacing={[20, 0]} breakpoints={[769]}>
+            <div widths={[12]}>
+              {/* {breadcrumb && ( */}
+              <Card breadcrumb>
+                {breadcrumb === '/' ? (
+                  <>
+                    <Breadcrumb>Home</Breadcrumb>
+                    <BreadcrumbIcon>
+                      <FontAwesomeIcon icon='chevron-right' />
+                    </BreadcrumbIcon>
+                    <Breadcrumb active>{post.title}</Breadcrumb>
+                  </>
+                ) : breadcrumb === '/blog' ? (
+                  <>
+                    <Breadcrumb>Blog</Breadcrumb>
+                    <BreadcrumbIcon>
+                      <FontAwesomeIcon icon='chevron-right' />
+                    </BreadcrumbIcon>
+                    <Breadcrumb active>{post.title}</Breadcrumb>
+                  </>
+                ) : (
+                  <>
+                    <Breadcrumb>Home</Breadcrumb>
+                    <BreadcrumbIcon>
+                      <FontAwesomeIcon icon='chevron-right' />
+                    </BreadcrumbIcon>
+                    <Breadcrumb active>{post.title}</Breadcrumb>
+                  </>
+                )}
+              </Card>
+              {/* )} */}
+            </div>
             <div widths={[8]}>
               <Column>
                 <Card>
@@ -161,6 +197,38 @@ export default function ({ data, ...props }) {
         </div>
       ) : (
         <div className='container top bottom'>
+          {/* {breadcrumb && ( */}
+          <Column>
+            <Card breadcrumb>
+              {breadcrumb === '/' ? (
+                <>
+                  <Breadcrumb>Home</Breadcrumb>
+                  <BreadcrumbIcon>
+                    <FontAwesomeIcon icon='chevron-right' />
+                  </BreadcrumbIcon>
+                  <Breadcrumb active>{post.title}</Breadcrumb>
+                </>
+              ) : breadcrumb === '/blog' ? (
+                <>
+                  <Breadcrumb>Blog</Breadcrumb>
+                  <BreadcrumbIcon>
+                    <FontAwesomeIcon icon='chevron-right' />
+                  </BreadcrumbIcon>
+                  <Breadcrumb active>{post.title}</Breadcrumb>
+                </>
+              ) : (
+                <>
+                  <Breadcrumb>Home</Breadcrumb>
+                  <BreadcrumbIcon>
+                    <FontAwesomeIcon icon='chevron-right' />
+                  </BreadcrumbIcon>
+                  <Breadcrumb active>{post.title}</Breadcrumb>
+                </>
+              )}
+            </Card>
+          </Column>
+          {/* )} */}
+
           <Card>
             {post.featuredImage.image ? (
               <PostImage
@@ -177,12 +245,6 @@ export default function ({ data, ...props }) {
             )}
             <PostHeader>
               <PostTitle>{post.title}</PostTitle>
-              <PostLink to='/blog'>
-                <PostIcon>
-                  <FontAwesomeIcon icon='arrow-left' />
-                </PostIcon>{' '}
-                Back to Blog
-              </PostLink>
             </PostHeader>
             <PostDate>{formatDate(post.date)}</PostDate>
             {author && author.name && (
@@ -269,7 +331,7 @@ const Card = styled.div`
   box-shadow: 4px 6px 16px 1px #eee;
   border: 1px solid #ddd;
   background: white;
-  padding: 24px;
+  padding: ${(props) => (props.breadcrumb ? '12px 24px' : '24px')};
 `;
 
 const SidebarTitle = styled.h3`
@@ -341,6 +403,21 @@ const PostCategory = styled.div`
   border-radius: 4px;
   background: #f7f7f7;
   border: 1px solid #e8e8e8;
+`;
+
+const Breadcrumb = styled(Link)`
+  text-decoration: none;
+  font-size: 15px;
+  color: ${(props) => (props.active ? props.theme.color.primary : '#666')};
+`;
+
+const BreadcrumbIcon = styled.span`
+  display: inline-block;
+  font-size: 15px;
+  padding: 0 8px;
+  top: 1px;
+  color: #999;
+  position: relative;
 `;
 
 const PostForm = (categories, post) => {
