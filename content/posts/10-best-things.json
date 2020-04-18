@@ -7,7 +7,7 @@
   },
   "blocks": [
     {
-      "content": "Welcome to my new post! Add sections in the sidebar to make me your own.",
+      "content": "Welcome to my new post! Add sections in the sidebar to make me your own.\n\nAwesome, huh",
       "center": false,
       "_template": "ContentBlock"
     }

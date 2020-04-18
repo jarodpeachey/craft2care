@@ -11,6 +11,7 @@ import {
   faTrash,
   faBars,
   faTimes,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import './style.css';
@@ -27,7 +28,8 @@ library.add(
   faArrowLeft,
   faTrash,
   faBars,
-  faTimes
+  faTimes,
+  faChevronRight
 );
 
 const MasterLayout = ({ children }) => {
@@ -126,7 +128,7 @@ const CreatePostButton = new JsonCreatorPlugin({
       path: `/blog/${replaceAll(form.title.toLowerCase(), ' ', '-')}`,
       date: formatDate(new Date().getTime()),
       featuredImage: {
-        image: null
+        image: null,
       },
       blocks: [
         {
