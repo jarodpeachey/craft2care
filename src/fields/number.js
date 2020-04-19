@@ -5,15 +5,15 @@ import styled from 'styled-components';
 export function RangeNumberField({ input, meta, field }) {
   let inputValue = null;
 
-  console.log(field.min, field.max);
+  // console.log(field.min, field.max);
 
-  if (field.max && input.value > field.max) {
-    inputValue = field.max;
-  } else if (field.min && input.value < field.min) {
-    inputValue = field.min;
-  }
+  // if (field.max && input.value > field.max) {
+  //   inputValue = field.max;
+  // } else if (field.min && input.value < field.min) {
+  //   inputValue = field.min;
+  // }
 
-  console.log(inputValue);
+  // console.log(inputValue);
 
   const newInput = {
     value: inputValue || input.value,
@@ -24,7 +24,13 @@ export function RangeNumberField({ input, meta, field }) {
     <Wrapper>
       <Label htmFor={input.name}>{field.label || field.name}</Label>
       <Description>{field.description}</Description>
-      <Input type='number' defaultValue={0} {...newInput} value={inputValue} />
+      <Input
+        type='number'
+        {...newInput}
+        defaultValue={field.max || 0}
+        min={field.min || 0}
+        max={field.max || 999999}
+      />
       <Error class='field-error'>{meta.error}</Error>
     </Wrapper>
   );
