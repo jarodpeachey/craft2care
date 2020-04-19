@@ -24,7 +24,11 @@ export const onClientEntry = () => {
   window.tinacms.fields.add({
     name: 'rangeNumber',
     Component: RangeNumberField,
-    parse: (value) => +value,
+    parse: (value) => {
+      console.log(value);
+
+      return +value;
+    },
     validate(number, allValues, meta, field) {
       let min, max;
       if (field.max) {
@@ -43,7 +47,7 @@ export const onClientEntry = () => {
       const isInRange = number <= max && number >= min;
 
       if (!isValidNumber) return 'Invalid number';
-      if (!isInRange) return `Please enter a number between ${min} and ${max}.`;
+      if (!isInRange) return `You can only enter a number between ${min} and ${max}.`;
 
       return false;
     },

@@ -10,6 +10,7 @@ import { Content, ContentBlock } from '../blocks/content';
 import { Button, ButtonBlock } from '../blocks/button';
 import { Posts, PostsBlock } from '../blocks/posts';
 import { Container, ContainerBlock } from '../blocks/container';
+import { Sidebar, SidebarBlock } from '../blocks/sidebar';
 import { Grid, GridBlock } from '../blocks/grid';
 import { Spacer, SpacerBlock } from '../blocks/spacer';
 import { PageLayout } from '../components/pageLayout';
@@ -19,6 +20,10 @@ import { AppContext } from '../components/AppProvider';
 export default function Page({ data }) {
   const [page] = useLocalJsonForm(data.page, PageForm);
   const blocks = page.blocks ? page.blocks : [];
+  const sections =
+    page.sidebar && page.sidebar.sidebarSections
+      ? page.sidebar.sidebarSections
+      : [];
 
   const { setBreadcrumb } = useContext(AppContext);
 
@@ -28,290 +33,243 @@ export default function Page({ data }) {
 
   return (
     <PageLayout page={page}>
-      {/* {!page.hero.showHero && <Spacer height={58} />} */}
-      {blocks
-        ? blocks.map(({ _template, ...block }, index) => {
-            // console.log('BLOCK: ', block);
-            switch (_template) {
-              case 'ContainerBlock':
-                return (
-                  <Wrapper
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //       }
-                    // }
-                  >
-                    <Container id={index} page={page} data={block} />
-                  </Wrapper>
-                );
-              case 'TitleBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
+      {page.sidebar &&
+      page.sidebar.showSidebar &&
+      sections.length > 0 &&
+      sections[0].sidebarBlocks &&
+      sections[0].sidebarBlocks.length > 0 ? (
+        <div className='container top bottom'>
+          <Row spacing={[20, 0]} breakpoints={[769]}>
+            <div widths={[8]}>
+              {blocks
+                ? blocks.map(({ _template, ...block }, index) => {
+                    // console.log('BLOCK: ', block);
+                    switch (_template) {
+                      case 'ContainerBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Container id={index} page={page} data={block} />
+                          </Wrapper>
+                        );
+                      case 'TitleBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Title page={page} data={block} />
+                          </Wrapper>
+                        );
+                      case 'SpacerBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Spacer data={block} />
+                          </Wrapper>
+                        );
+                      case 'ButtonBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Button data={block} />
+                          </Wrapper>
+                        );
+                      case 'ImageBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Image data={block} />
+                          </Wrapper>
+                        );
+                      case 'ContentBlock':
+                        if (block.content)
+                          return (
+                            <Wrapper
+                              key={`page-${page.title}-container-${_template}-block-${index}`}
+                            >
+                              <Content
+                                key={`page-${page.title}-${_template}-block-${index}`}
+                                data={block}
+                              />
+                            </Wrapper>
+                          );
+                        break;
+                      case 'PostsBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-container-${_template}-block-${index}`}
+                          >
+                            <Posts data={block} />
+                          </Wrapper>
+                        );
+                      case 'GridBlock':
+                        return (
+                          <Wrapper
+                            key={`page-${page.title}-grid-${_template}-block-${index}`}
+                          >
+                            <Grid page={page} data={block} />
+                          </Wrapper>
+                        );
+                      default:
+                        return true;
                     }
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Title page={page} data={block} />
-                  </Wrapper>
-                );
-              case 'SpacerBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Spacer data={block} />
-                  </Wrapper>
-                );
-              case 'ButtonBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Button data={block} />
-                  </Wrapper>
-                );
-              case 'ImageBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Image data={block} />
-                  </Wrapper>
-                );
-              case 'ContentBlock':
-                if (block.content)
-                  return (
-                    <Wrapper
-                      className={
-                        index === 0 && index === blocks.length - 1
-                          ? 'container section'
-                          : index === 0
-                          ? 'container top'
-                          : index === blocks.length - 1
-                          ? 'container bottom'
-                          : 'container'
-                      }
-                      key={`page-${page.title}-container-${_template}-block-${index}`}
-                      // padding={
-                      //   block.blockPadding ? block.blockPadding.paddingTop : 0
-                      // }
-                      // margin={block.blockMargin ? block.blockMargin.marginTop : 0}
-                    >
-                      <Content
-                        key={`page-${page.title}-${_template}-block-${index}`}
-                        data={block}
-                      />
-                    </Wrapper>
-                  );
-                break;
-              case 'PostsBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                    key={`page-${page.title}-container-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Posts data={block} />
-                  </Wrapper>
-                );
-              case 'GridBlock':
-                return (
-                  <Wrapper
-                    className={
-                      index === 0 && index === blocks.length - 1
-                        ? 'container section'
-                        : index === 0
-                        ? 'container top'
-                        : index === blocks.length - 1
-                        ? 'container bottom'
-                        : 'container'
-                    }
-                    key={`page-${page.title}-grid-${_template}-block-${index}`}
-                    // padding={
-                    //   block.blockPadding
-                    //     ? block.blockPadding
-                    //     : {
-                    //         paddingTop: 0,
-                    //         paddingBottom: 0,
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0
-                    //       }
-                    // }
-                    // margin={
-                    //   block.blockMargin
-                    //     ? block.blockMargin
-                    //     : {
-                    //         marginTop: 0,
-                    //         marginBottom: 0,
-                    //         marginLeft: 0,
-                    //         marginRight: 0
-                    //       }
-                    // }
-                  >
-                    <Grid page={page} data={block} />
-                  </Wrapper>
-                );
-              default:
-                return true;
-            }
-          })
-        : null}
+                  })
+                : null}
+            </div>
+            <div widths={[4]}>
+              <Sidebar page={page} sections={sections} />
+            </div>
+          </Row>
+        </div>
+      ) : (
+        <div>
+          {blocks
+            ? blocks.map(({ _template, ...block }, index) => {
+                // console.log('BLOCK: ', block);
+                switch (_template) {
+                  case 'ContainerBlock':
+                    return (
+                      <Wrapper
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Container id={index} page={page} data={block} />
+                      </Wrapper>
+                    );
+                  case 'TitleBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Title page={page} data={block} />
+                      </Wrapper>
+                    );
+                  case 'SpacerBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Spacer data={block} />
+                      </Wrapper>
+                    );
+                  case 'ButtonBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Button data={block} />
+                      </Wrapper>
+                    );
+                  case 'ImageBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Image data={block} />
+                      </Wrapper>
+                    );
+                  case 'ContentBlock':
+                    if (block.content)
+                      return (
+                        <Wrapper
+                          className={
+                            index === 0 && index === blocks.length - 1
+                              ? 'container section'
+                              : index === 0
+                              ? 'container top'
+                              : index === blocks.length - 1
+                              ? 'container bottom'
+                              : 'container'
+                          }
+                          key={`page-${page.title}-container-${_template}-block-${index}`}
+                        >
+                          <Content
+                            key={`page-${page.title}-${_template}-block-${index}`}
+                            data={block}
+                          />
+                        </Wrapper>
+                      );
+                    break;
+                  case 'PostsBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-container-${_template}-block-${index}`}
+                      >
+                        <Posts data={block} />
+                      </Wrapper>
+                    );
+                  case 'GridBlock':
+                    return (
+                      <Wrapper
+                        className={
+                          index === 0 && index === blocks.length - 1
+                            ? 'container section'
+                            : index === 0
+                            ? 'container top'
+                            : index === blocks.length - 1
+                            ? 'container bottom'
+                            : 'container'
+                        }
+                        key={`page-${page.title}-grid-${_template}-block-${index}`}
+                      >
+                        <Grid page={page} data={block} />
+                      </Wrapper>
+                    );
+                  default:
+                    return true;
+                }
+              })
+            : null}
+        </div>
+      )}
     </PageLayout>
   );
 }
@@ -347,18 +305,11 @@ const PageForm = {
           defaultValue: true,
         },
         {
-          label: 'Sidebar Sections',
-          name: 'blocks',
+          label: 'Sections',
+          name: 'sidebarSections',
           component: 'blocks',
           templates: {
-            TitleBlock,
-            ImageBlock,
-            ContentBlock,
-            ContainerBlock,
-            ButtonBlock,
-            GridBlock,
-            SpacerBlock,
-            PostsBlock,
+            SidebarBlock,
           },
         },
       ],
@@ -505,359 +456,18 @@ export const pageQuery = graphql`
           backgroundColor
         }
       }
-      sidebar {
-        showSidebar
-        blocks {
-          _template
-          content
-          background
-          name
-          title
-          buttonText
-          height
-          style
-          left
-          right
-          buttonLink
-          buttonColor
-          underline
-          center
-          recipient
-          itemsToShow
-          style
-          maxNumberOfColumns
-          type
-          rounded
-          categories
-          demo
-          columnSpacing
-          containerBlocks {
-            _template
-            content
-            background
-            name
-            title
-            underline
-            center
-            recipient
-            itemsToShow
-            style
-            maxNumberOfColumns
-            type
-            rounded
-            categories
-            categories
-            demo
-            columnSpacing
-            columns {
-              _template
-              content
-              background
-              name
-              title
-              underline
-              center
-              recipient
-              itemsToShow
-              style
-              maxNumberOfColumns
-              type
-              rounded
-              categories
-              demo
-              columnSpacing
-              widthOne
-              widthTwo
-              buttonText
-              height
-              style
-              left
-              right
-              buttonLink
-              buttonColor
-              columnBlocks {
-                _template
-                content
-                background
-                name
-                title
-                underline
-                center
-                recipient
-                itemsToShow
-                style
-                maxNumberOfColumns
-                type
-                rounded
-                categories
-                demo
-                columnSpacing
-                widthOne
-                widthTwo
-                buttonText
-                height
-                style
-                left
-                right
-                buttonLink
-                buttonColor
-                image {
-                  childImageSharp {
-                    fluid(quality: 70, maxWidth: 1920) {
-                      ...GatsbyImageSharpFluid_withWebp
-                    }
-                  }
-                }
-              }
-            }
-            buttonText
-            height
-            style
-            left
-            right
-            buttonLink
-            buttonColor
-          }
-          columns {
-            _template
-            content
-            background
-            name
-            title
-            underline
-            center
-            recipient
-            itemsToShow
-            style
-            maxNumberOfColumns
-            type
-            rounded
-            categories
-            demo
-            widthOne
-            widthTwo
-            columnSpacing
-            buttonText
-            height
-            style
-            left
-            right
-            buttonLink
-            buttonColor
-            columnBlocks {
-              _template
-              content
-              background
-              name
-              title
-              underline
-              center
-              recipient
-              itemsToShow
-              style
-              maxNumberOfColumns
-              type
-              rounded
-              categories
-              demo
-              widthOne
-              widthTwo
-              buttonText
-              height
-              style
-              left
-              right
-              buttonLink
-              buttonColor
-              image {
-                childImageSharp {
-                  fluid(quality: 70, maxWidth: 1920) {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-            }
-          }
-          image {
-            childImageSharp {
-              fluid(quality: 70, maxWidth: 1920) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
-        }
-      }
       blocks {
         _template
-        content
         background
         name
         title
+        type
+        content
+        sectionTitle
         buttonText
         height
         style
         left
-        right
-        buttonLink
-        buttonColor
-        underline
-        center
-        recipient
-        itemsToShow
-        style
-        maxNumberOfColumns
-        type
-        rounded
-        categories
-        demo
-        columnSpacing
-        containerBlocks {
-          _template
-          content
-          background
-          name
-          title
-          underline
-          center
-          recipient
-          itemsToShow
-          style
-          maxNumberOfColumns
-          type
-          rounded
-          categories
-          categories
-          demo
-          columnSpacing
-          columns {
-            _template
-            content
-            background
-            name
-            title
-            underline
-            center
-            recipient
-            itemsToShow
-            style
-            maxNumberOfColumns
-            type
-            rounded
-            categories
-            demo
-            columnSpacing
-            widthOne
-            widthTwo
-            buttonText
-            height
-            style
-            left
-            right
-            buttonLink
-            buttonColor
-            columnBlocks {
-              _template
-              content
-              background
-              name
-              title
-              underline
-              center
-              recipient
-              itemsToShow
-              style
-              maxNumberOfColumns
-              type
-              rounded
-              categories
-              demo
-              columnSpacing
-              widthOne
-              widthTwo
-              buttonText
-              height
-              style
-              left
-              right
-              buttonLink
-              buttonColor
-              image {
-                childImageSharp {
-                  fluid(quality: 70, maxWidth: 1920) {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
-                }
-              }
-            }
-          }
-          buttonText
-          height
-          style
-          left
-          right
-          buttonLink
-          buttonColor
-        }
-        columns {
-          _template
-          content
-          background
-          name
-          title
-          underline
-          center
-          recipient
-          itemsToShow
-          style
-          maxNumberOfColumns
-          type
-          rounded
-          categories
-          demo
-          widthOne
-          widthTwo
-          columnSpacing
-          buttonText
-          height
-          style
-          left
-          right
-          buttonLink
-          buttonColor
-          columnBlocks {
-            _template
-            content
-            background
-            name
-            title
-            underline
-            center
-            recipient
-            itemsToShow
-            style
-            maxNumberOfColumns
-            type
-            rounded
-            categories
-            demo
-            widthOne
-            widthTwo
-            buttonText
-            height
-            style
-            left
-            right
-            buttonLink
-            buttonColor
-            image {
-              childImageSharp {
-                fluid(quality: 70, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
-              }
-            }
-          }
-        }
         image {
           childImageSharp {
             fluid(quality: 70, maxWidth: 1920) {
@@ -865,10 +475,838 @@ export const pageQuery = graphql`
             }
           }
         }
+        right
+        rounded
+        maxWidth
+        center
+        buttonLink
+        buttonColor
+        underline
+        recipient
+        itemsToShow
+        maxNumberOfColumns
+        categories
+        demo
+        columnSpacing
+        widthOne
+        widthTwo
+        containerBlocks {
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+          right
+          rounded
+          maxWidth
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columns {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columnBlocks {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+            }
+          }
+        }
+        columns {
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+          right
+          rounded
+          maxWidth
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columnBlocks {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+          }
+        }
+      }
+      sidebar {
+        showSidebar
+        _template
+        background
+        name
+        title
+        type
+        content
+        sectionTitle
+        buttonText
+        height
+        style
+        left
+        image {
+          childImageSharp {
+            fluid(quality: 70, maxWidth: 1920) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+        right
+        rounded
+        maxWidth
+        center
+        buttonLink
+        buttonColor
+        underline
+        recipient
+        itemsToShow
+        maxNumberOfColumns
+        categories
+        demo
+        columnSpacing
+        widthOne
+        widthTwo
+        containerBlocks {
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+          right
+          rounded
+          maxWidth
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columns {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columnBlocks {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+            }
+          }
+        }
+        columns {
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+          right
+          rounded
+          maxWidth
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          columnBlocks {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+          }
+        }
+        sidebarSections {
+          showSidebar
+          _template
+          background
+          name
+          title
+          type
+          content
+          sectionTitle
+          buttonText
+          height
+          style
+          left
+          image {
+            childImageSharp {
+              fluid(quality: 70, maxWidth: 1920) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+          }
+          right
+          rounded
+          maxWidth
+          center
+          buttonLink
+          buttonColor
+          underline
+          recipient
+          itemsToShow
+          maxNumberOfColumns
+          categories
+          demo
+          columnSpacing
+          widthOne
+          widthTwo
+          containerBlocks {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columns {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              columnBlocks {
+                _template
+                background
+                name
+                title
+                type
+                content
+                sectionTitle
+                buttonText
+                height
+                style
+                left
+                image {
+                  childImageSharp {
+                    fluid(quality: 70, maxWidth: 1920) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+                right
+                rounded
+                maxWidth
+                center
+                buttonLink
+                buttonColor
+                underline
+                recipient
+                itemsToShow
+                maxNumberOfColumns
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+              }
+            }
+          }
+          columns {
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            columnBlocks {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+            }
+          }
+          sidebarBlocks {
+            showSidebar
+            _template
+            background
+            name
+            title
+            type
+            content
+            sectionTitle
+            buttonText
+            height
+            style
+            left
+            image {
+              childImageSharp {
+                fluid(quality: 70, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+            right
+            rounded
+            maxWidth
+            center
+            buttonLink
+            buttonColor
+            underline
+            recipient
+            itemsToShow
+            maxNumberOfColumns
+            categories
+            demo
+            columnSpacing
+            widthOne
+            widthTwo
+            containerBlocks {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              columns {
+                _template
+                background
+                name
+                title
+                type
+                content
+                sectionTitle
+                buttonText
+                height
+                style
+                left
+                image {
+                  childImageSharp {
+                    fluid(quality: 70, maxWidth: 1920) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+                right
+                rounded
+                maxWidth
+                center
+                buttonLink
+                buttonColor
+                underline
+                recipient
+                itemsToShow
+                maxNumberOfColumns
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+                columnBlocks {
+                  _template
+                  background
+                  name
+                  title
+                  type
+                  content
+                  sectionTitle
+                  buttonText
+                  height
+                  style
+                  left
+                  image {
+                    childImageSharp {
+                      fluid(quality: 70, maxWidth: 1920) {
+                        ...GatsbyImageSharpFluid_withWebp
+                      }
+                    }
+                  }
+                  right
+                  rounded
+                  maxWidth
+                  center
+                  buttonLink
+                  buttonColor
+                  underline
+                  recipient
+                  itemsToShow
+                  maxNumberOfColumns
+                  categories
+                  demo
+                  columnSpacing
+                  widthOne
+                  widthTwo
+                }
+              }
+            }
+            columns {
+              _template
+              background
+              name
+              title
+              type
+              content
+              sectionTitle
+              buttonText
+              height
+              style
+              left
+              image {
+                childImageSharp {
+                  fluid(quality: 70, maxWidth: 1920) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+              right
+              rounded
+              maxWidth
+              center
+              buttonLink
+              buttonColor
+              underline
+              recipient
+              itemsToShow
+              maxNumberOfColumns
+              categories
+              demo
+              columnSpacing
+              widthOne
+              widthTwo
+              columnBlocks {
+                _template
+                background
+                name
+                title
+                type
+                content
+                sectionTitle
+                buttonText
+                height
+                style
+                left
+                right
+                rounded
+                maxWidth
+                center
+                buttonLink
+                buttonColor
+                underline
+                recipient
+                itemsToShow
+                maxNumberOfColumns
+                categories
+                demo
+                columnSpacing
+                widthOne
+                widthTwo
+              }
+            }
+          }
+        }
       }
 
       rawJson
       fileRelativePath
+    }
+    categories: settingsJson(
+      fileRelativePath: { eq: "/content/settings/categories.json" }
+    ) {
+      name
+      id
+    }
+    author: settingsJson(
+      fileRelativePath: { eq: "/content/settings/author.json" }
+    ) {
+      name
+      email
     }
   }
 `;

@@ -55,7 +55,11 @@ export default function ({ data, ...props }) {
 
   return (
     <PostLayout post={post}>
-      {post.sidebar && post.sidebar.showSidebar && sections.length > 0 ? (
+      {post.sidebar &&
+      post.sidebar.showSidebar &&
+      sections.length > 0 &&
+      sections[0].sidebarBlocks &&
+      sections[0].sidebarBlocks.length > 0 ? (
         <div className='container top bottom'>
           <Row spacing={[20, 0]} breakpoints={[769]}>
             <div widths={[12]}>
@@ -550,6 +554,7 @@ export const postQuery = graphql`
         }
         right
         rounded
+        maxWidth
         center
         buttonLink
         buttonColor
@@ -583,6 +588,7 @@ export const postQuery = graphql`
           }
           right
           rounded
+          maxWidth
           center
           buttonLink
           buttonColor
@@ -616,6 +622,7 @@ export const postQuery = graphql`
             }
             right
             rounded
+            maxWidth
             center
             buttonLink
             buttonColor
@@ -653,6 +660,7 @@ export const postQuery = graphql`
         }
         right
         rounded
+        maxWidth
         center
         buttonLink
         buttonColor
@@ -686,6 +694,7 @@ export const postQuery = graphql`
           }
           right
           rounded
+          maxWidth
           center
           buttonLink
           buttonColor
@@ -719,6 +728,7 @@ export const postQuery = graphql`
             }
             right
             rounded
+            maxWidth
             center
             buttonLink
             buttonColor
@@ -755,6 +765,7 @@ export const postQuery = graphql`
           }
           right
           rounded
+          maxWidth
           center
           buttonLink
           buttonColor
@@ -788,6 +799,7 @@ export const postQuery = graphql`
             }
             right
             rounded
+            maxWidth
             center
             buttonLink
             buttonColor
@@ -821,6 +833,7 @@ export const postQuery = graphql`
               }
               right
               rounded
+              maxWidth
               center
               buttonLink
               buttonColor
@@ -857,6 +870,7 @@ export const postQuery = graphql`
             }
             right
             rounded
+            maxWidth
             center
             buttonLink
             buttonColor
@@ -890,6 +904,7 @@ export const postQuery = graphql`
               }
               right
               rounded
+              maxWidth
               center
               buttonLink
               buttonColor
@@ -916,6 +931,7 @@ export const postQuery = graphql`
                 left
                 right
                 rounded
+                maxWidth
                 center
                 buttonLink
                 buttonColor

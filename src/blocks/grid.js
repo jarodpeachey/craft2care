@@ -107,68 +107,7 @@ export const GridBlock = {
   label: 'Grid',
   name: 'grid',
   fields: [
-    // {
-    //   name: 'blockPadding',
-    //   label: 'Padding',
-    //   component: 'group',
-    //   fields: [
-    //     {
-    //       label: 'Padding Top',
-    //       name: 'paddingTop',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Bottom',
-    //       name: 'paddingBottom',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Left',
-    //       name: 'paddingLeft',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Right',
-    //       name: 'paddingRight',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     }
-    //   ]
-    // },
-    // {
-    //   name: 'blockMargin',
-    //   label: 'Margin',
-    //   component: 'group',
-    //   fields: [
-    //     {
-    //       label: 'Margin Top',
-    //       name: 'marginTop',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Bottom',
-    //       name: 'marginBottom',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Left',
-    //       name: 'marginLeft',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Right',
-    //       name: 'marginRight',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     }
-    //   ]
-    // },
+
     // { name: 'itemsToShow', label: 'Items To Show', component: 'rangeNumber' },
     {
       name: 'maxNumberOfColumns',

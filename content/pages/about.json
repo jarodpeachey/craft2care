@@ -9,6 +9,11 @@
       "type": "h1"
     },
     {
+      "image": "../images/It Is Well - Gospel Guitar.jpg",
+      "_template": "ImageBlock",
+      "rounded": false
+    },
+    {
       "_template": "ContentBlock",
       "content": "### Hi and Welcome to **Craft 2 Care**!\n\nI’m Diane and I began this blog to share my love of crafting and making a difference.  If you have a heart to help others and love to make things and would like to learn how, then join me by helping others through crafting.   \n\nI first realized I could use my crafting for good when I donated some pillowcases and totes that I had sewn to an animal shelter for a bingo fundraiser that they were having.  It was a lightbulb moment. Rather than just making things to give as gifts to family and friends, I could make things that could help causes that were important to me.\n\nShortly after that I met a wonderful woman, Jean, who introduced my children and I to the joy of making all types of items for Operation Christmas Child (OCC) Shoebox gifts that are sent around the world by Samaritans Purse.  My family had packed OCC shoeboxes for several years, but it wasn’t until I met Jean and her fantastic group of church helpers that I realized we could hand craft some items to put in the boxes instead of simply buying everything.  At her monthly ‘Filler Factory’ gatherings at her church we made all kinds of special things like stuffed animals, puppets, ribbon dancers, sewing kits, necklaces, scarves, hats and jump ropes to put in the boxes to share God’s love.  \n\nAs time went by I found more and more people asking me what types of crafts they could make to put in shoeboxes or to donate to different charity organizations.  Meanwhile, my daughters had put a video up on our family’s YouTube channel about how to make jump ropes out of t-shirts. Over time that video received many views and a lot of comments from people who loved the project.  That got me thinking that the best way to share projects would be on YouTube where all types of projects that could be donated and made as gifts could be in one place. Also I realized that there are people like me who find it easier to follow directions that are written out with pictures, instead of videos.  WIth that in mind I decided to add this website where a tutorial will be posted to coincide with each video project on the Craft 2 Care YouTube site. \n\nWhether you are a seasoned crafter or consider yourself ‘not crafty’ my hope is that you find a project or two or twenty that catch your eye.  Together we can Craft 2 Care and make a difference for people in our neighborhoods and towns, and all across the world.  \n\nHugs,\n\nDiane",
       "center": false
@@ -25,5 +30,22 @@
     "overlay": false,
     "showHero": false,
     "height": 1
+  },
+  "sidebar": {
+    "showSidebar": true,
+    "sidebarSections": [
+      {
+        "_template": "SidebarBlock",
+        "sectionTitle": "Hi!",
+        "sidebarBlocks": [
+          {
+            "image": "../images/jarod_profile.png",
+            "_template": "ImageBlock",
+            "rounded": true,
+            "maxWidth": 701
+          }
+        ]
+      }
+    ]
   }
 }

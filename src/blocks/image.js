@@ -17,7 +17,9 @@ export function Image({ data }) {
         ref={element}
         width={0}
         id={`styled-image-${data.image.childImageSharp.fluid}`}
-        fluid={data.image.childImageSharp.fluid}
+        rounded={data.rounded}
+        maxWidth={data.maxWidth}
+        src={data.image.childImageSharp.fluid.src}
       />
     );
     // return <img src={data.image.childImageSharp.fluid.src} alt='' />;
@@ -27,33 +29,13 @@ export function Image({ data }) {
   }
 }
 
-const StyledImage = styled(Img)`
-  overflow: hidden;
-  img {
-    border-radius: ${(props) => (props.rounded ? '50%' : '')};
-  }
-  @media (max-width: 769px) {
-    max-height: 275px !important;
-    object-fit: cover;
-    margin: 0 auto;
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    * {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    * {
-      height: 100% !important;
-      margin: 0 auto;
-      width: auto !important;
-    }
-    img {
-      margin-left: calc(50% - ${(props) => props.width});
-    }
-  }
+const StyledImage = styled.img`
+  border-radius: ${(props) => (props.rounded ? '500px' : '0')} !important;
+  max-width: ${(props) => props.maxWidth}px;
+  height: auto;
+  width: 100%;
+  margin: 36px auto;
+  display: block;
 `;
 
 export const ImageBlock = {
@@ -64,68 +46,6 @@ export const ImageBlock = {
     image: '',
   },
   fields: [
-    // {
-    //   name: 'blockPadding',
-    //   label: 'Padding',
-    //   component: 'group',
-    //   fields: [
-    //     {
-    //       label: 'Padding Top',
-    //       name: 'paddingTop',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Bottom',
-    //       name: 'paddingBottom',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Left',
-    //       name: 'paddingLeft',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Padding Right',
-    //       name: 'paddingRight',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     }
-    //   ]
-    // },
-    // {
-    //   name: 'blockMargin',
-    //   label: 'Margin',
-    //   component: 'group',
-    //   fields: [
-    //     {
-    //       label: 'Margin Top',
-    //       name: 'marginTop',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Bottom',
-    //       name: 'marginBottom',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Left',
-    //       name: 'marginLeft',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     },
-    //     {
-    //       label: 'Margin Right',
-    //       name: 'marginRight',
-    //       component: 'rangeNumber',
-    //       defaultValue: 0
-    //     }
-    //   ]
-    // },
     {
       label: 'Image',
       name: 'image',
@@ -142,6 +62,14 @@ export const ImageBlock = {
         if (!imageNode || !imageNode.childImageSharp) return '';
         return imageNode.childImageSharp.fluid.src;
       },
+    },
+    {
+      label: 'Max Width',
+      name: 'maxWidth',
+      component: 'rangeNumber',
+      defaultValue: 700,
+      min: 100,
+      max: 700,
     },
     {
       label: 'Rounded',
