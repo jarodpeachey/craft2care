@@ -68,7 +68,7 @@ export const ImageBlock = {
       name: 'maxWidth',
       component: 'rangeNumber',
       defaultValue: 700,
-      min: 100,
+      min: 0,
       max: 700,
     },
     {
