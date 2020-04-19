@@ -18,129 +18,68 @@ export function Sidebar({ page, sections }) {
       <>
         {sections &&
           sections.map(({ _template, ...block }, index) => {
+            console.log('Sidebar block: ', block);
             switch (_template) {
               case 'SidebarBlock':
                 return (
                   <>
-                    {block.sidebarBlocks &&
-                      block.sidebarBlocks.map((sidebarBlock, newIndex) => {
-                        switch (sidebarBlock._template) {
-                          case 'TitleBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`page-${page.title}-${sidebarBlock._template}-block-${newIndex}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
+                    {block.sidebarBlocks && (
+                      <Column>
+                        <Card margin>
+                          {' '}
+                          {block.sectionTitle !== null && (
+                            <SidebarTitle>{block.sectionTitle}</SidebarTitle>
+                          )}
+                          {block.sidebarBlocks.map((sidebarBlock, newIndex) => {
+                            switch (sidebarBlock._template) {
+                              case 'TitleBlock':
+                                return (
                                   <Title page={page} data={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
-                          case 'ButtonBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`page-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
-                                  <Button data={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
-                          case 'PostsBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`page-${page.title}-container-${_template}-block-${index}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
-                                  <Posts data={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
-                          case 'ImageBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
-                                  <Image data={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
-                          case 'GridBlock':
-                            return (
-                              <Column>
-                                <Card
-                                  margin
-                                  key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                >
-                                  {block.sectionTitle !== null && (
-                                    <SidebarTitle>
-                                      {block.sectionTitle}
-                                    </SidebarTitle>
-                                  )}
-                                  <Grid page={page} data={sidebarBlock} />
-                                </Card>
-                              </Column>
-                            );
-                          case 'ContentBlock':
-                            if (sidebarBlock.content)
-                              return (
-                                <Column>
-                                  <Card
-                                    margin
-                                    key={`post-${page.title}-container-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                  >
-                                    {block.sectionTitle !== null && (
-                                      <SidebarTitle>
-                                        {block.sectionTitle}
-                                      </SidebarTitle>
-                                    )}
-                                    <Content
-                                      key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                      data={sidebarBlock}
-                                    />
-                                  </Card>
-                                </Column>
-                              );
-                            break;
-                          case 'ContainerBlock':
-                            return (
-                              <Container
-                                key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
-                                id={newIndex}
-                                page={page}
-                                data={sidebarBlock}
-                              />
-                            );
-                          case 'SpacerBlock':
-                            return <Spacer data={sidebarBlock} />;
-                          default:
-                            return true;
-                        }
-                      })}
+                                );
+                              case 'ButtonBlock':
+                                return (
+                                  <>
+                                    <Button data={sidebarBlock} />
+                                  </>
+                                );
+                              case 'PostsBlock':
+                                return (
+                                  <>
+                                    <Posts data={sidebarBlock} />
+                                  </>
+                                );
+                              case 'ImageBlock':
+                                return (
+                                  <>
+                                    <Image data={sidebarBlock} />
+                                  </>
+                                );
+                              case 'GridBlock':
+                                return (
+                                  <>
+                                    <Grid page={page} data={sidebarBlock} />
+                                  </>
+                                );
+                              case 'ContentBlock':
+                                if (sidebarBlock.content)
+                                  return (
+                                    <>
+                                      <Content
+                                        key={`post-${page.title}-${sidebarBlock._template}-sidebarBlock-${newIndex}`}
+                                        data={sidebarBlock}
+                                      />
+                                    </>
+                                  );
+                                break;
+                              case 'SpacerBlock':
+                                return <Spacer data={sidebarBlock} />;
+                              default:
+                                return true;
+                            }
+                          })}
+                        </Card>
+                      </Column>
+                    )}
                   </>
                 );
               default:

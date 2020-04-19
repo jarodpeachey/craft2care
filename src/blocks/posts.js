@@ -12,6 +12,7 @@ import Img from 'gatsby-image';
 import Row from '../components/grid/row';
 // import { ListAuthors, AuthorsForm } fro../components/authorors';
 import { DraftBadge } from '../components/style';
+import ReactMarkdown from 'react-markdown';
 import { ThemeContext } from '../components/theme';
 import { ListCategories } from '../components/categories';
 import { shortenText } from '../utils/shortenText';
@@ -185,7 +186,9 @@ export function Posts({ page, data }) {
                               })}
                             </PostCategories>
                           )}
-                          <PostExcerpt>{excerpt}</PostExcerpt>
+                          <PostExcerpt>
+                            <ReactMarkdown source={excerpt} />
+                          </PostExcerpt>
                           <Spacer height={24} />
                           <Button
                             data={{

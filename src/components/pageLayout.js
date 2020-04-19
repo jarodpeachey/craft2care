@@ -172,4 +172,5 @@ const SiteForm = {
 
 const PageWrapper = styled.div`
   padding: 0;
+  background: white;
 `;

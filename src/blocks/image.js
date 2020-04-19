@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Img from 'gatsby-image';
 import get from 'lodash.get';
+import { useLayoutEffect } from 'react';
 
 export function Image({ data }) {
-  console.log(typeof data.image);
-  console.log(data);
-  if (typeof data.image === 'object') {
-    return <Img fluid={data.image.childImageSharp.fluid} />;
+  const element = useRef();
+
+  if (
+    typeof data.image === 'object' &&
+    data.image &&
+    data.image.childImageSharp
+  ) {
+    return (
+      <StyledImage
+        ref={element}
+        width={0}
+        id={`styled-image-${data.image.childImageSharp.fluid}`}
+        fluid={data.image.childImageSharp.fluid}
+      />
+    );
     // return <img src={data.image.childImageSharp.fluid.src} alt='' />;
   } else {
     console.log('Returning null');
@@ -15,10 +27,32 @@ export function Image({ data }) {
   }
 }
 
-const ImageWrapper = styled.div`
+const StyledImage = styled(Img)`
   overflow: hidden;
   img {
     border-radius: ${(props) => (props.rounded ? '50%' : '')};
+  }
+  @media (max-width: 769px) {
+    max-height: 275px !important;
+    object-fit: cover;
+    margin: 0 auto;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    * {
+      height: 100% !important;
+      margin: 0 auto;
+      width: auto !important;
+    }
+    img {
+      margin-left: calc(50% - ${(props) => props.width});
+    }
   }
 `;
 
