@@ -42,7 +42,7 @@
             "image": "../images/jarod_profile.png",
             "_template": "ImageBlock",
             "rounded": true,
-            "maxWidth": 701
+            "maxWidth": 250
           }
         ]
       }
