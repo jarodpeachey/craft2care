@@ -17,57 +17,23 @@
     }
   ],
   "draft": false,
-  "categories": [
-    "shoeboxes"
-  ],
+  "categories": [],
   "sidebar": {
     "showSidebar": true,
     "sidebarSections": [
       {
         "_template": "SidebarBlock",
-        "sectionTitle": "Related",
-        "sidebarBlocks": [
-          {
-            "itemsToShow": 3,
-            "_template": "PostsBlock",
-            "maxNumberOfColumns": 4,
-            "style": "List"
-          }
-        ]
-      },
-      {
-        "_template": "SidebarBlock",
         "sectionTitle": "Test Two",
         "sidebarBlocks": [
           {
-            "_template": "ContentBlock",
-            "content": "This is more content.",
-            "center": false
-          }
-        ]
-      },
-      {
-        "_template": "SidebarBlock",
-        "sectionTitle": "Test",
-        "sidebarBlocks": [
+            "image": "../images/jarod_profile.png",
+            "_template": "ImageBlock",
+            "rounded": true
+          },
           {
-            "_template": "GridBlock",
-            "maxNumberOfColumns": 4,
-            "columnSpacing": 12,
-            "columns": [
-              {
-                "_template": "ColumnBlock",
-                "widthOne": 0,
-                "widthTwo": 0,
-                "columnBlocks": [
-                  {
-                    "_template": "ContentBlock",
-                    "content": "Sweet! Some content about me!",
-                    "center": false
-                  }
-                ]
-              }
-            ]
+            "_template": "ContentBlock",
+            "content": "### Me!",
+            "center": false
           }
         ]
       }
