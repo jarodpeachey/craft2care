@@ -5,20 +5,26 @@ import styled from 'styled-components';
 export function RangeNumberField({ input, meta, field }) {
   let inputValue = null;
 
-  if (typeof input.value !== 'number') {
-    inputValue = 0;
+  console.log(field.min, field.max);
+
+  if (field.max && input.value > field.max) {
+    inputValue = field.max;
+  } else if (field.min && input.value < field.min) {
+    inputValue = field.min;
   }
+
+  console.log(inputValue);
 
   const newInput = {
     value: inputValue || input.value,
-    ...input
+    ...input,
   };
 
   return (
     <Wrapper>
       <Label htmFor={input.name}>{field.label || field.name}</Label>
       <Description>{field.description}</Description>
-      <Input type='number' defaultValue={0} {...newInput} />
+      <Input type='number' defaultValue={0} {...newInput} value={inputValue} />
       <Error class='field-error'>{meta.error}</Error>
     </Wrapper>
   );
