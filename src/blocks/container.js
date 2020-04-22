@@ -7,7 +7,8 @@ import { Button, ButtonBlock } from './button';
 import { Image, ImageBlock } from './image';
 import { Content, ContentBlock } from './content';
 import { Posts, PostsBlock } from './posts';
-import { Grid, GridBlock } from '../blocks/grid';
+import { Grid, GridBlock } from './grid';
+import { Spacer, SpacerBlock } from './spacer';
 import { useStaticQuery } from 'gatsby';
 
 export function Container({ page, data, id }) {
@@ -22,8 +23,8 @@ export function Container({ page, data, id }) {
             {blocks &&
               blocks.map(({ _template, ...block }, index) => {
                 switch (_template) {
-                  case 'ParamBlock':
-                    return <Param />;
+                  case 'SpacerBlock':
+                    return <Spacer height={block.height} />;
                   case 'TitleBlock':
                     return (
                       <Wrapper
@@ -137,7 +138,7 @@ export function Container({ page, data, id }) {
       </>
     );
   } else {
-    console.log("Returning null");
+    console.log('Returning null');
     return null;
   }
 }
@@ -164,7 +165,6 @@ export const ContainerBlock = {
     background: 'f7f7f7',
   },
   fields: [
-
     {
       name: 'background',
       label: 'Background',
@@ -182,6 +182,7 @@ export const ContainerBlock = {
         PostsBlock,
         ButtonBlock,
         GridBlock,
+        SpacerBlock,
       },
     },
   ],
