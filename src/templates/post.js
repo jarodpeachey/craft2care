@@ -192,7 +192,7 @@ export default function ({ data, ...props }) {
                     })}
                 </Card>
               </Column>
-              <Comments comments={[]} />
+              <Comments />
             </div>
             <div widths={[4]}>
               <Sidebar page={post} sections={sections} />
@@ -320,6 +320,9 @@ export default function ({ data, ...props }) {
                 }
               })}
           </Card>
+          <Column>
+            <Comments comments={[]} />
+          </Column>
         </div>
       )}
     </PostLayout>
