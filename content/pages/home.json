@@ -6,6 +6,22 @@
       "_template": "ContainerBlock",
       "containerBlocks": [
         {
+          "title": "Welcome!",
+          "center": true,
+          "underline": true,
+          "_template": "TitleBlock",
+          "type": "h1"
+        },
+        {
+          "_template": "ContentBlock",
+          "content": "Hi and Welcome to Craft 2 Care!\n\nI’m Diane and I began this blog to share my love of crafting and making a difference.  If you have a heart to help others and love to make things and would like to learn how, then join me by helping others through crafting.",
+          "center": true
+        },
+        {
+          "height": 42,
+          "_template": "SpacerBlock"
+        },
+        {
           "title": "Charity",
           "center": true,
           "underline": true,
