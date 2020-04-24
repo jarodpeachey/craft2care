@@ -13,6 +13,12 @@
           "type": "h1"
         },
         {
+          "image": "../images/IMG_0974.JPG",
+          "_template": "ImageBlock",
+          "maxWidth": 400,
+          "rounded": false
+        },
+        {
           "_template": "ContentBlock",
           "content": "Hi and Welcome to Craft 2 Care!\n\nI’m Diane and I began this blog to share my love of crafting and making a difference.  If you have a heart to help others and love to make things and would like to learn how, then join me by helping others through crafting.",
           "center": true
