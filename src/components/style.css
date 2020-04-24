@@ -10,11 +10,11 @@ html, body {
 }
 
 p {
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.05em;
   line-height: 1.6em;
   font-weight: 500;
-  color: #444;
+  color: rgb(49, 53, 49);
   font-family: 'Raleway', sans-serif;
 }
 
