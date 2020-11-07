@@ -5,21 +5,25 @@ import { useStaticQuery, graphql, withPrefix } from "gatsby";
 import "../styles/_layout.scss";
 
 const Head = ({ title, description, image = null, article, slug, bodyClass = "home" }) => {
-  const { pathname } = useLocation();
-  const { site } = useStaticQuery(graphql`
-    query Head {
-      site {
-        siteMetadata {
-          defaultTitle: title
-          defaultDescription: description
-          baseUrl
-          author
-        }
-      }
-    }
-  `);
+  if (typeof window !== "undefined") {
+    const { pathname } = useLocation();
+  }
 
-  const { defaultTitle, defaultDescription, baseUrl, author } = site.siteMetadata;
+  const siteMetadata = {
+    title: "Craft 2 Care",
+    description: "Simple craft ideas for Operation Christmas Child",
+    defaultTitle: "Craft 2 Care",
+    defaultDescription: "Simple craft ideas for Operation Christmas Child",
+    baseUrl: "https://craft2care.netlify.app",
+    siteUrl: "https://craft2care.netlify.app",
+    author: "@jarodpeachey",
+    socials: {
+      twitter: `https://twitter.com/jarodpeachey`,
+      github: `https://github.com/jarodpeachey/craft2care`,
+    },
+  };
+
+  const { defaultTitle, defaultDescription, baseUrl, author } = siteMetadata;
 
   console.log(image);
   const defaultImage = "/images/seo.png";
