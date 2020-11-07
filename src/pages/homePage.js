@@ -12,7 +12,7 @@ const Home = () => {
 
         <section className="hero">
           <div className="container">
-            <img src="/media/img/logos/logo--craft2care.svg" />
+            <img src="/media/img/logos/logo--craft2care.svg" alt="Craft2Care" />
             <h1 className="section-heading">Welcome to Craft2Care!</h1>
             <p className="section-description">I'm so glad you're here.</p>
             <p className="section-description">Click the "Download" button below to get printable templates for the projects listed below,</p>
