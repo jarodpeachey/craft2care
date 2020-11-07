@@ -1,0 +1,26 @@
+{
+  "title": "Blog",
+  "path": "/blog",
+  "blocks": [
+    {
+      "background": "",
+      "_template": "ContainerBlock",
+      "containerBlocks": [
+        {
+          "itemsToShow": 3,
+          "_template": "PostsBlock",
+          "maxNumberOfColumns": 4,
+          "style": "Grid"
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "image": "../images/",
+    "headline": "Blog",
+    "center": true,
+    "height": 480,
+    "showHero": false,
+    "headlineColor": ""
+  }
+}

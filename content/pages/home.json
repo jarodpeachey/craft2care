@@ -1,0 +1,76 @@
+{
+  "path": "/",
+  "blocks": [
+    {
+      "background": "fff",
+      "_template": "ContainerBlock",
+      "containerBlocks": [
+        {
+          "title": "Welcome!",
+          "center": true,
+          "underline": true,
+          "_template": "TitleBlock",
+          "type": "h1"
+        },
+        {
+          "image": "../images/IMG_0974.JPG",
+          "_template": "ImageBlock",
+          "maxWidth": 400,
+          "rounded": false
+        },
+        {
+          "_template": "ContentBlock",
+          "content": "Hi and Welcome to Craft 2 Care!\n\nI’m Diane and I began this blog to share my love of crafting and making a difference.  If you have a heart to help others and love to make things and would like to learn how, then join me by helping others through crafting.",
+          "center": true
+        },
+        {
+          "height": 42,
+          "_template": "SpacerBlock"
+        },
+        {
+          "title": "Charity",
+          "center": true,
+          "underline": true,
+          "_template": "TitleBlock",
+          "type": "h1"
+        },
+        {
+          "itemsToShow": 3,
+          "_template": "PostsBlock",
+          "maxNumberOfColumns": 4,
+          "categories": [],
+          "style": "Grid"
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "headline": "Welcome",
+    "ctas": [
+      {
+        "label": "Contact Us",
+        "link": "/contact",
+        "arrow": false,
+        "primary": false,
+        "backgroundColor": "primary"
+      }
+    ],
+    "image": "../image/cafe-2.jpg",
+    "center": false,
+    "textline": "Welcome to our website.",
+    "headlineColor": "#fff",
+    "textlineColor": "white",
+    "overlay": true,
+    "overlayColor": "#404040",
+    "height": 375,
+    "showHero": false
+  },
+  "displayTitle": true,
+  "title": "Home",
+  "sidebar": {
+    "rawJson": {
+      "sidebarBlocks": []
+    },
+    "showSidebar": false
+  }
+}

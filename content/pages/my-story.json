@@ -1,0 +1,56 @@
+{
+  "title": "My Story",
+  "path": "/my-story",
+  "blocks": [
+    {
+      "title": "Title",
+      "center": true,
+      "underline": true,
+      "_template": "TitleBlock",
+      "type": "h1"
+    },
+    {
+      "_template": "GridBlock",
+      "maxNumberOfColumns": 4,
+      "columnSpacing": 12,
+      "columns": [
+        {
+          "_template": "ColumnBlock",
+          "widthOne": 4,
+          "widthTwo": 4,
+          "columnBlocks": [
+            {
+              "image": "../images/fireworks_two.jpg",
+              "_template": "ImageBlock",
+              "rounded": false
+            }
+          ]
+        },
+        {
+          "_template": "ColumnBlock",
+          "widthOne": 0,
+          "widthTwo": 0,
+          "columnBlocks": [
+            {
+              "_template": "ContentBlock",
+              "content": "This is a test content block. This is **wonderfulness**. And is amazing. It's really, _really_ cool!",
+              "center": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "headline": "My Story",
+    "center": true,
+    "overlay": true,
+    "overlayColor": "#867E7E",
+    "height": 120,
+    "showHero": true
+  },
+  "draft": false,
+  "sidebar": {
+    "showSidebar": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "color": {
+    "black": "#3A3A3A",
+    "white": "#FFFFFF",
+    "primary": "#94E536",
+    "secondary": "#E98FEF"
+  },
+  "breakpoints": {
+    "small": "576",
+    "medium": "769",
+    "large": "960",
+    "huge": "1200"
+  },
+  "header": {
+    "transparent": false,
+    "backgroundColor": "White",
+    "height": 54
+  },
+  "hero": {
+    "image": "../images/cafe.jpg"
+  },
+  "__gatsby_resolved": {
+    "fileRelativePath": "/content/settings/theme.json"
+  }
+}

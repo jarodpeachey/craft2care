@@ -1,0 +1,20 @@
+{
+  "menuItems": [
+    {
+      "label": "Home",
+      "link": "/",
+      "subMenu": []
+    },
+    {
+      "label": "About",
+      "link": "/about"
+    },
+    {
+      "label": "Blog",
+      "link": "/blog"
+    }
+  ],
+  "__gatsby_resolved": {
+    "fileRelativePath": "/content/settings/menu.json"
+  }
+}
