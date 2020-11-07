@@ -5,10 +5,6 @@ import { useStaticQuery, graphql, withPrefix } from "gatsby";
 import "../styles/_layout.scss";
 
 const Head = ({ title, description, image = null, article, slug, bodyClass = "home" }) => {
-  if (typeof window !== "undefined") {
-    const { pathname } = useLocation();
-  }
-
   const siteMetadata = {
     title: "Craft 2 Care",
     description: "Simple craft ideas for Operation Christmas Child",

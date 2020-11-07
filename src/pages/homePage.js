@@ -6,7 +6,7 @@ import { Row, Column } from "@react-tiny-grid/core";
 const Home = () => {
   return (
     <>
-      <Head title={"TribeSafe"} bodyClass="home" />
+      <Head bodyClass="home" />
       <header>
         {/* <Navigation showButton={true} /> */}
 
