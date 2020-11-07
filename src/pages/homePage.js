@@ -1,10 +1,6 @@
 import React from "react";
 import Head from "../components/Head";
-import Navigation from "../components/Navigation";
 import "../styles/partials/pages/_home.scss";
-
-import Footer from "../components/Footer";
-import Collapse from "../components/Collapse";
 import { Row, Column } from "@react-tiny-grid/core";
 
 const Home = () => {

@@ -6,7 +6,18 @@ import "../styles/_layout.scss";
 
 const Head = ({ title, description, image = null, article, slug, bodyClass = "home" }) => {
   const { pathname } = useLocation();
-  const { site } = useStaticQuery(query);
+  const { site } = useStaticQuery(graphql`
+    query Head {
+      site {
+        siteMetadata {
+          defaultTitle: title
+          defaultDescription: description
+          baseUrl
+          author
+        }
+      }
+    }
+  `);
 
   const { defaultTitle, defaultDescription, baseUrl, author } = site.siteMetadata;
 
@@ -31,18 +42,5 @@ const Head = ({ title, description, image = null, article, slug, bodyClass = "ho
     </Helmet>
   );
 };
-
-const query = graphql`
-  query Head {
-    site {
-      siteMetadata {
-        defaultTitle: title
-        defaultDescription: description
-        baseUrl
-        author
-      }
-    }
-  }
-`;
 
 export default Head;
