@@ -1,0 +1,45 @@
+@use "partials/_typography" as *;
+@use "vendor/_grid" as *;
+@use "partials/_sections" as *;
+@use "partials/_buttons" as *;
+
+// @media (prefers-color-scheme: light) {
+:root {
+  --color--background:#ffffff;
+  --color--foreground: #ffffff;
+  --color--heading: #1e1e20;
+  --color--text: #313136;
+  --color--link: #ff1880;
+  --shadow--light: 0px 4px 20px rgba(165, 168, 180, 0.1);
+  --shadow--mid: 0px 4px 80px rgba(162, 165, 177, 0.25);
+  --color--background-secondary: #f7f7f7;
+}
+// }
+
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --color--background: #0a1925;
+//     --color--foreground: #213749;
+//     --color--heading: #ffffff;
+//     --color--text: #ffffff;
+//     --color--link: #3095d4;
+//     --shadow--light: 0px 4px 10px rgba(0, 0, 0, 0.1);
+//     --shadow--mid: 0px 4px 80px rgba(0, 0, 0, 0.25);
+//     --outlined-button: #ffffff;
+//     --color--background-secondary: rgba(255, 255, 255, 0.05);
+//     --filter: brightness(8) grayscale(100%);
+//   }
+// }
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  background: var(--color--background);
+  transition: background 0.3s;
+}

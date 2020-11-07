@@ -1,0 +1,70 @@
+@use "colors" as *;
+
+.error-message {
+  color: #ce3a3a;
+  font-family: "Lato", "Raleway Extrabold";
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.75rem;
+  display: none;
+}
+
+label {
+  color: $color--text;
+  font-family: "Nunito Sans", "Raleway";
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: block;
+  line-height: 1.5rem;
+
+  &.error {
+    .error-message {
+      display: block;
+    }
+  }
+
+  .required {
+    color: #ce3a3a;
+    font-weight: bolder;
+    font-size: 1.125rem;
+  }
+}
+
+input {
+  border: 2px solid $color--gray-two;
+  padding: 0.625rem 0.875rem;
+  border-radius: 4px;
+  display: block;
+  margin-top: 0.5rem;
+  width: 100%;
+  outline: none !important;
+  transition: 0.1s;
+  color: $color--text;
+  font-family: "Lato", "Raleway Extrabold";
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  &:focus {
+    border: 2px solid $color--primary;
+  }
+
+  &.error {
+    border: 2px solid #ce3a3a;
+  }
+
+  &::placeholder {
+    font-family: "Lato", "Raleway Extrabold";
+    font-weight: 400;
+    color: $color--gray-three;
+  }
+
+  &[type="submit"] {
+    margin: 0;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+    border-width: 1px;
+  }
+}
+

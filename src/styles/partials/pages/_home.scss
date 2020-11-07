@@ -1,0 +1,78 @@
+@use "../breakpoints" as *;
+@use "../shadows" as *;
+@use "../colors" as *;
+
+.home {
+  .hero {
+    padding-bottom: 0;
+    img {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    h1 {
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+      margin: 0 auto;
+      margin-bottom: 1.75rem;
+      max-width: 600px;
+
+      &:last-child {
+        padding-bottom: 5rem;
+        border-bottom: 1px dashed $color--primary;
+        margin-bottom: 5rem;
+      }
+    }
+
+    .btn {
+      width: fit-content;
+      margin: 0 auto;
+
+      @include media-breakpoint-up(lg) {
+        margin: 0;
+      }
+    }
+
+    .col-lg-5 {
+      display: none;
+
+      @include media-breakpoint-up(lg) {
+        display: block;
+      }
+
+      img {
+        width: 524px;
+        height: 461px;
+        position: relative;
+        top: -10%;
+      }
+    }
+  }
+
+  .download {
+    padding-top: 0;
+    .download__item {
+      text-align: center;
+      img {
+        border-radius: 6px;
+        margin: 0 auto;
+      }
+
+      h3 {
+        font-weight: bold;
+      }
+
+      .btn {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+}

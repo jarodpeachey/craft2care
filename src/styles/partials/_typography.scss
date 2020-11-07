@@ -1,0 +1,150 @@
+@use "colors" as *;
+@use "breakpoints" as *;
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/media/fonts/nunito/nunitosans-black-webfont.woff2") format("woff2"), url("/media/fonts/nunito/nunitosans-black-webfont.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/media/fonts/nunito/nunitosans-bold-webfont.woff2") format("woff2"), url("/media/fonts/nunito/nunitosans-bold-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("/media/fonts/lato/lato-bold-webfont.woff2") format("woff2"), url("/media/fonts/lato/lato-bold-webfont.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("/media/fonts/lato/lato-regular-webfont.woff2") format("woff2"), url("/media/fonts/lato/lato-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body,
+div,
+p,
+span,
+input,
+::placeholder {
+  color: var(--color--text);
+  transition: color .3s;
+  font-family: "Nunito Sans", "Raleway";
+  font-weight: normal;
+  line-break: strict;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color--heading);
+  transition: color .3s;
+  font-weight: bold;
+  font-family: "Lato", "Raleway";
+  margin-bottom: 1.125rem;
+
+  span {
+    color: var(--color--heading);
+    transition: color .3s;
+    font-weight: 900;
+    font-family: "Lato", "Raleway";
+    margin-bottom: 1.125rem;
+  }
+}
+
+h1 {
+  font-size: 2.675rem;
+  line-height: 3.675rem;
+}
+h2 {
+  font-size: 2.3rem;
+  line-height: 3.175rem;
+}
+h3 {
+  font-size: 1.55rem;
+  line-height: 2.175rem;
+  font-weight: 400;
+}
+
+p {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.875rem;
+  font-family: "Lato", "Raleway Extrabold";
+}
+
+@include media-breakpoint-up(md) {
+  h1 {
+    font-size: 2.875rem;
+    line-height: 3.875rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+    line-height: 3.375rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+    line-height: 2.375rem;
+    font-weight: 400;
+  }
+  p {
+    font-size: 1.125rem;
+  }
+}
+
+a {
+  color: var(--color--link);
+  transition: color .3s;
+}
+
+.section-heading {
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  max-width: 960px;
+}
+
+.section-description {
+  font-size: 1.25rem;
+  text-align: center;
+  margin-top: 0;
+  max-width: 960px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.375rem;
+  }
+}
+
+.section-description:last-of-type {
+  margin-bottom: 2.25rem;
+}
+
+.accent {
+  color: $color--primary;
+}
+
+a:-webkit-any-link:focus, #toggle:focus {
+  outline: 2px auto $color--primary;
+  outline-offset: 3px;
+  outline-style: solid;
+  transition: 0s !important;
+}

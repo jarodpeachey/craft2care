@@ -1,0 +1,14 @@
+@use "../shadows" as *;
+
+.card {
+  display: block;
+  background: var(--color--foreground);
+transition: background .3s;
+  box-shadow: var(--shadow--light);
+  padding: 2.5rem 1.875rem;
+  height: 100%;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: transform ease-in-out 0.1s;
+  font-size: 1rem;
+}
