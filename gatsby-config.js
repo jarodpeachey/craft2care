@@ -4,6 +4,7 @@ module.exports = {
   plugins: [
     "gatsby-plugin-sass",
     "gatsby-plugin-react-helmet",
+    "gatsby-plugin-split-css",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -11,7 +12,6 @@ module.exports = {
         path: `${__dirname}/static/media/img`,
       },
     },
-    "gatsby-plugin-split-css",
     {
       resolve: "gatsby-plugin-no-javascript",
       options: {},
@@ -24,7 +24,7 @@ module.exports = {
         removeReactHelmetAttrs: true,
         noInlineStyles: false,
         removeGatsbyAnnouncer: true,
-        removeFocusWrapper: true,
+        removeFocusWrapper: false,
         removePreloadLinks: false,
       },
     },
